@@ -148,7 +148,7 @@ jobs:
         run: |
           KERNEL_VERSION=4.19
           cd $GITHUB_WORKSPACE/device_kernel/
-          cp ../NonGKI_Kernel_Patches/KernelSU-Next.patch KernelSU-Next/
+          cp ../../NonGKI_Kernel_Patches/KernelSU-Next.patch KernelSU-Next/
           cp susfs4ksu/kernel_patches/50_add_susfs_in_kernel-$KERNEL_VERSION.patch
 
           cd KernelSU-Next
