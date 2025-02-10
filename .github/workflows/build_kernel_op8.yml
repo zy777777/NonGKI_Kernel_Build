@@ -69,7 +69,7 @@ jobs:
           
           # Variable
           GCC_64_BIN=aarch64-linux-android-
-          GCC_32_BIN=arm-linux-androidkernel-
+          GCC_32_BIN=arm-linux-androideabi-
           
           # Set GCC Aarch64
           if [[ ${{ env.GCC_64_SOURCE }} =~ git ]]; then
@@ -121,6 +121,7 @@ jobs:
               mkdir clang-custom
               unzip clang.zip -d clang-custom/
           fi
+          ls -al gcc-32/bin/
 
       - name: Get Kernel Source
         run: |
