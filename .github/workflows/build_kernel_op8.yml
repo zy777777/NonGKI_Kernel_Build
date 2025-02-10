@@ -160,8 +160,7 @@ jobs:
           curl -sSL $KERNELSU_SETUP | bash -s next
           git clone $SUSFS_SOURCE -b $SUSFS_BRANCH susfs4ksu --depth=1
           git clone https://github.com/JackA1ltman/NonGKI_Kernel_Patches.git -b op_kernel NonGKI_Kernel_Patches --depth=1
-          ls -al $GITHUB_WORKSPACE/device_kernel
-          ls- al $GITHUB_WORKSPACE/device_kernel/NonGKI_Kernel_Patches
+          ls -al $GITHUB_WORKSPACE/device_kernel/NonGKI_Kernel_Patches
 
           KSU_VERSION=$(cd KernelSU-Next && expr $(/usr/bin/git rev-list --count HEAD) + 10200)
           echo "UPLOADNAME=-KernelSU-Next_$KSU_VERSION" >> $GITHUB_ENV
@@ -171,11 +170,11 @@ jobs:
         run: |
           KERNEL_VERSION=4.19
           cd $GITHUB_WORKSPACE/device_kernel/
-          cp NonGKI_Kernel_Patches/KernelSU-Next.patch KernelSU-Next/
+          cp NonGKI_Kernel_PatchesKernelSU-Next-Implement-SUSFS-v1.5.5-Universal.patch KernelSU-Next/
           cp susfs4ksu/kernel_patches/50_add_susfs_in_kernel-$KERNEL_VERSION.patch
 
           cd KernelSU-Next
-          patch -p1 < KernelSU-Next.patch
+          patch -p1 < KernelSU-Next-Implement-SUSFS-v1.5.5-Universal.patch || true
           cd ../
           patch -p1 < /50_add_susfs_in_kernel-$KERNEL_VERSION.patch || true
 
