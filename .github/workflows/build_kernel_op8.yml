@@ -143,7 +143,7 @@ jobs:
           echo "UPLOADNAME=-KernelSU-Next_$KSU_VERSION" >> $GITHUB_ENV
 
       - name: Patch Kernel of SUSFS
-        if: env.SUSFS_ENABLE='true'
+        if: env.SUSFS_ENABLE == 'true'
         run: |
           KERNEL_VERSION=4.19
           cd $GITHUB_WORKSPACE/kernel_workspace/device_kernel/
@@ -156,7 +156,7 @@ jobs:
           patch -p1 < /50_add_susfs_in_kernel-$KERNEL_VERSION.patch || true
 
       - name: Fixed Kernel Patch
-        if: env.SUSFS_ENABLE='true' && env.SUSFS_FIXED='true'
+        if: env.SUSFS_ENABLE == 'true' && env.SUSFS_FIXED == 'true'
         run: |
           cd $GITHUB_WORKSPACE/kernel_workspace/device_kernel/
 
