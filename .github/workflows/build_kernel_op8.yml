@@ -69,7 +69,7 @@ jobs:
           
           # Variable
           GCC_64_BIN=aarch64-linux-android-
-          GCC_32_BIN=arm-linux-androideabi-
+          GCC_32_BIN=arm-linux-androidkernel-
           
           # Set GCC Aarch64
           if [[ ${{ env.GCC_64_SOURCE }} =~ git ]]; then
