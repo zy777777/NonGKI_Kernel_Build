@@ -35,6 +35,7 @@ jobs:
               ROM_TEXT
 
           )
+          ls -al ./
 
           for CONFIG in "${CONFIG_LIST[@]}"; do
               if [[ "$CONFIG" == "EXTRA_CMDS" || "$CONFIG" == "CUSTOM_CMDS" ]]; then
@@ -63,7 +64,7 @@ jobs:
 
       - name: Set Compile Environment
         run: |
-          cd $GITHUB_WORKSPACE/kernel_workspace
+          cd $GITHUB_WORKSPACE
           # Set GCC Aarch64
           if [[ ${{ env.GCC_64_SOURCE }} =~ git ]]; then
               if [[ ${{ env.GCC_64_SOURCE }} == *'.tar.gz' ]]; then
@@ -117,7 +118,7 @@ jobs:
 
       - name: Get Kernel Source
         run: |
-          cd $GITHUB_WORKSPACE/kernel_workspace
+          cd $GITHUB_WORKSPACE
           git clone --recursive ${{ env.KERNEL_SOURCE }} -b ${{ env.KERNEL_BRANCH }} device_kernel --depth=1
           if [[ -n "${{ env.DEFCONFIG_SOURCE }}" ]]; then
             wget ${{ env.DEFCONFIG_SOURCE }} -O device_kernel/arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
@@ -132,7 +133,7 @@ jobs:
           KERNEL_PATCHES=https://github.com/JackA1ltman/NonGKI_Kernel_Patches.git
 
           # Set AK3 and more
-          cd $GITHUB_WORKSPACE/kernel_workspace/device_kernel
+          cd $GITHUB_WORKSPACE/device_kernel
           git clone ${{ env.AK3_SOURCE }} -b ${{ env.AK3_BRANCH }} Anykernel3 --depth=1
           curl -sSL $KERNELSU_SETUP | bash -s next
           git clone ${{ env.SUSFS_SOURCE }} -b ${{ env.SUSFS_BRANCH }} susfs4ksu --depth=1
@@ -146,7 +147,7 @@ jobs:
         if: env.SUSFS_ENABLE == 'true'
         run: |
           KERNEL_VERSION=4.19
-          cd $GITHUB_WORKSPACE/kernel_workspace/device_kernel/
+          cd $GITHUB_WORKSPACE/device_kernel/
           cp ../NonGKI_Kernel_Patches/KernelSU-Next.patch KernelSU-Next/
           cp susfs4ksu/kernel_patches/50_add_susfs_in_kernel-$KERNEL_VERSION.patch
 
@@ -158,7 +159,7 @@ jobs:
       - name: Fixed Kernel Patch
         if: env.SUSFS_ENABLE == 'true' && env.SUSFS_FIXED == 'true'
         run: |
-          cd $GITHUB_WORKSPACE/kernel_workspace/device_kernel/
+          cd $GITHUB_WORKSPACE/device_kernel/
 
       - name: Setup ccache
         uses: hendrikmuhs/ccache-action@v1.2
@@ -177,7 +178,7 @@ jobs:
           IMAGE_DIR="$GITHUB_WORKSPACE/kernel_workspace/device_kernel/out/arch/arm64/boot"
           TIME=$(date +"%Y%m%d%H%M%S")
 
-          cd $GITHUB_WORKSPACE/kernel_workspace/device_kernel/
+          cd $GITHUB_WORKSPACE/device_kernel/
           mkdir -p tmp
           cp -fp $IMAGE_DIR/Image.gz tmp
           cp -fp $IMAGE_DIR/dtbo.img tmp
