@@ -1,4 +1,4 @@
-name: Build Kernel OnePlus 8 (OOS13) with KSU and SUSFS
+name: Build Kernel Xiaomi K20Pro (Based-AOSP A15) with KSU and SUSFS
 on:
   workflow_dispatch:
 
@@ -18,7 +18,6 @@ jobs:
           CONFIG_LIST=(
               DEVICE_NAME
               DEVICE_CODENAME
-              CUSTOM_CMDS
               EXTRA_CMDS
               KERNEL_SOURCE
               KERNEL_BRANCH
@@ -58,8 +57,8 @@ jobs:
           sudo apt-get install libncurses5-dev libncurses5-dev:i386 binutils binutils-arm-linux-gnueabi binutils-aarch64-linux-gnu gcc-aarch64-linux-gnu g++-aarch64-linux-gnu cpp-aarch64-linux-gnu -y
 
       - name: Set Compile Environment
-        run: |
-          cd $GITHUB_WORKSPACE
+	run: |
+ 	  cd $GITHUB_WORKSPACE
           mkdir clang-custom
 	  cd clang-custom
 	  curl -LO "https://raw.githubusercontent.com/Neutron-Toolchains/antman/main/antman"
@@ -96,7 +95,7 @@ jobs:
             echo "CONFIG_KSU_SUSFS_OPEN_REDIRECT=y" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
           fi
 
-      - name: Set Anykernel3 and Others
+      - name: Set KSU and SUSFS
         run: |
           # Variable
           KERNELSU_SETUP=https://raw.githubusercontent.com/rifsxd/KernelSU-Next/refs/heads/next/kernel/setup.sh
@@ -104,7 +103,7 @@ jobs:
           SUSFS_BRANCH=kernel-4.19
           KERNEL_PATCHES=https://github.com/JackA1ltman/NonGKI_Kernel_Patches.git
 
-          # Set AK3 and KSU
+          # Set KSU
           cd $GITHUB_WORKSPACE/device_kernel
           curl -sSL $KERNELSU_SETUP | bash -s next
           KSU_VERSION=$(cd KernelSU-Next && expr $(/usr/bin/git rev-list --count HEAD) + 10200)
@@ -160,7 +159,7 @@ jobs:
 
       - name: Make Anykernel3 Flasher
         run: |
-          IMAGE_DIR="$GITHUB_WORKSPACE/kernel_workspace/device_kernel/out/arch/arm64/boot"
+          IMAGE_DIR="$GITHUB_WORKSPACE/device_kernel/out/arch/arm64/boot"
           TIME=$(date +"%Y%m%d%H%M%S")
 
           cd $GITHUB_WORKSPACE/device_kernel/
