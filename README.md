@@ -32,7 +32,7 @@ SUSFS_FIXED - 是否启用SUSFS错误修补，一般用于内核修补时产生�
 AK3_SOURCE - Anykernel3所在之处，若需要的话，仅支持git<br>
 AK3_BRANCH - Anykernel3所需分支<br>
 <br>
-BOOT_SOURCE - 若你已经启用MKBOOTIMG的方式，要填写原始干净内核的地址，仅限img格式
+BOOT_SOURCE - 若你已经启用MKBOOTIMG的方式，要填写原始干净内核的地址，仅限img格式<br>
 <br>
 ROM_TEXT - 用于编译成功后用于上传文件标题，声明内核可用的ROM
 
