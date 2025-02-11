@@ -236,4 +236,4 @@ jobs:
         with:
           name: kernel-${{ env.DEVICE_CODENAME }}-${{ env.ROM_TEXT }}
           path: |
-            $GITHUB_WORKSPACE/kernel_workspace/device_kernel/kernel_out/*.img
+            *.img
