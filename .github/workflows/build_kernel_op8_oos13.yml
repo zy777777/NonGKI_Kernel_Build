@@ -176,8 +176,9 @@ jobs:
           cp susfs4ksu/kernel_patches/fs/* fs/
           cp susfs4ksu/kernel_patches/include/linux/* include/linux/
 
-      - name: Debug Outout
+      - name: Debug Output
         run: |
+          cd $GITHUB_WORKSPACE/device_kernel
           cat drivers/kernelsu/Makefile
 
       - name: Extra Kernel Options
