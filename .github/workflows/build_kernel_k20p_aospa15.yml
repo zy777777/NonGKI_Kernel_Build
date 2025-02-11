@@ -23,6 +23,7 @@ jobs:
               KERNEL_BRANCH
               DEFCONFIG_SOURCE
               DEFCONFIG_NAME
+              KERNEL_VERSION
               SUSFS_ENABLE
               SUSFS_FIXED
               ROM_TEXT
@@ -99,7 +100,7 @@ jobs:
           # Variable
           KERNELSU_SETUP=https://raw.githubusercontent.com/rifsxd/KernelSU-Next/refs/heads/next/kernel/setup.sh
           SUSFS_SOURCE=https://gitlab.com/simonpunk/susfs4ksu.git
-          SUSFS_BRANCH=kernel-4.14
+          SUSFS_BRANCH=kernel-${{ env.KERNEL_VERSION }}
           KERNEL_PATCHES=https://github.com/JackA1ltman/NonGKI_Kernel_Patches.git
 
           # Set KSU
@@ -123,7 +124,7 @@ jobs:
       - name: Patch Kernel of SUSFS
         if: env.SUSFS_ENABLE == 'true'
         run: |
-          KERNEL_VERSION=4.19
+          KERNEL_VERSION=${{ env.KERNEL_VERSION }}
           cd $GITHUB_WORKSPACE/device_kernel/
           cp NonGKI_Kernel_Patches/KernelSU-Next-Implement-SUSFS-v1.5.5-Universal.patch KernelSU-Next/
           cp susfs4ksu/kernel_patches/50_add_susfs_in_kernel-$KERNEL_VERSION.patch ./
