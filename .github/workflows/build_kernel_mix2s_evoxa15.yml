@@ -163,7 +163,8 @@ jobs:
 
           # Set MKBOOTIMG and KSU
           cd $GITHUB_WORKSPACE/device_kernel
-          git clone https://android.googlesource.com/platform/system/tools/mkbootimg mkboottools -b master-kernel-build-2022 --depth=1
+          git clone https://android.googlesource.com/platform/system/tools/mkbootimg $GITHUB_WORKSPACE/mkboottools -b master-kernel-build-2022 --depth=1
+          wget ${{ env.BOOT_SOURCE }} -O $GITHUB_WORKSPACE/boot_source_$ROM_CURRENT.img
           curl -sSL $KERNELSU_SETUP | bash -s next
           KSU_VERSION=$(cd KernelSU-Next && expr $(/usr/bin/git rev-list --count HEAD) + 10200)
           echo "UPLOADNAME=-KernelSU-Next_$KSU_VERSION" >> $GITHUB_ENV
@@ -220,16 +221,16 @@ jobs:
 
       - name: Make Latest Boot Image
         run: |
+          cd $GITHUB_WORKSPACE/
           ROM_CURRENT=evox_a15_mix2s
-          IMAGE_DIR="$GITHUB_WORKSPACE/kernel_workspace/device_kernel/out/arch/arm64/boot"
+          IMAGE_DIR="$GITHUB_WORKSPACE/device_kernel/out/arch/arm64/boot"
           TIME=$(date +"%Y%m%d%H%M%S")
-          FORMAT_MKBOOTING=$(echo `mkboottools/unpack_bootimg.py --boot_img=$GITHUB_WORKSPACE/kernel_workspace/device_kernel/boot_source_$ROM_CURRENT.img --format mkbootimg`)
+          FORMAT_MKBOOTING=$(echo `mkboottools/unpack_bootimg.py --boot_img=$GITHUB_WORKSPACE/device_kernel/boot_source_$ROM_CURRENT.img --format mkbootimg`)
 
-          cd $GITHUB_WORKSPACE/device_kernel/
-          mkdir kernel_out
-          wget ${{ env.BOOT_SOURCE }} -O boot_source_$ROM_CURRENT.img
-          mkboottools/unpack_bootimg.py --boot_img $GITHUB_WORKSPACE/kernel_workspace/device_kernel/boot_source_$ROM_CURRENT.img
-          mkboottools/mkbootimg.py $FORMAT_MKBOOTING -o $GITHUB_WORKSPACE/kernel_workspace/device_kernel/kernel_out/boot_${ROM_CURRENT}_${TIME}.img
+          mkdir out
+          mkboottools/unpack_bootimg.py --boot_img $GITHUB_WORKSPACE/device_kernel/boot_source_$ROM_CURRENT.img
+          cp $GITHUB_WORKSPACE/device_kernel/out/arch/arm64/boot/Image.gz-dtb out/kernel
+          mkboottools/mkbootimg.py $FORMAT_MKBOOTING -o $GITHUB_WORKSPACE/device_kernel/kernel_out/boot_${ROM_CURRENT}_${TIME}.img
 
 
       - name: Upload Build Artifacts
