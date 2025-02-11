@@ -189,6 +189,8 @@ jobs:
           echo "CONFIG_INIT_STACK_ALL_PATTERN=n" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
           echo "CONFIG_INIT_STACK_ALL_ZERO=n" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
 
+          sed -i 's|\$(obj)/config_data.gz: [^ ]* FORCE|\$(obj)/config_data.gz: $(KCONFIG_CONFIG) FORCE|' kernel/Makefile
+
       - name: Patch Kernel of SUSFS
         if: env.SUSFS_ENABLE == 'true'
         run: |
