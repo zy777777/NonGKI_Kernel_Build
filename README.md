@@ -6,7 +6,7 @@ Automatic build Non-GKI Kernel with KSU and SUSFS
 # 使用例
 ## Profiles/设备名称_ROM名称.env
 总共由以下内容组成：
-CONFIG_ENV - 用来表明在Action环境中具体配置文件位置
+CONFIG_ENV - 用来表明在Action环境中具体配置文件位置<br>
 DEVICE_NAME - 设备全程，格式：设备品牌_型号_地区
 DEVICE_CODENAME - 设备代号
 CUSTOM_CMDS - 通常用于指明所用编译器/备用编译器
