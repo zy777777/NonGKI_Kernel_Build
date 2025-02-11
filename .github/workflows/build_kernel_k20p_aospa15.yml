@@ -61,7 +61,7 @@ jobs:
           cd clang-custom
           wget https://raw.githubusercontent.com/Neutron-Toolchains/antman/main/antman -O antman
           chmod +x antman
-          bash antman
+          bash antman -S
 
       - name: Get Kernel Source
         run: |
