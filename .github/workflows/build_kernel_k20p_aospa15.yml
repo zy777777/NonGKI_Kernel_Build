@@ -57,13 +57,13 @@ jobs:
           sudo apt-get install libncurses5-dev libncurses5-dev:i386 binutils binutils-arm-linux-gnueabi binutils-aarch64-linux-gnu gcc-aarch64-linux-gnu g++-aarch64-linux-gnu cpp-aarch64-linux-gnu -y
 
       - name: Set Compile Environment
-	run: |
- 	  cd $GITHUB_WORKSPACE
+        run: |
+          cd $GITHUB_WORKSPACE
           mkdir clang-custom
-	  cd clang-custom
-	  curl -LO "https://raw.githubusercontent.com/Neutron-Toolchains/antman/main/antman"
-	  chmod +x antman
-	  ./antman -S
+          cd clang-custom
+          wget https://raw.githubusercontent.com/Neutron-Toolchains/antman/main/antman -O antman
+          chmod +x antman
+          bash antman
 
       - name: Get Kernel Source
         run: |
