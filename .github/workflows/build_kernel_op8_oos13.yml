@@ -1,4 +1,4 @@
-name: Build Kernel OnePlus 8 with KSU and SUSFS
+name: Build Kernel OnePlus 8 (OOS13) with KSU and SUSFS
 on:
   workflow_dispatch:
 
@@ -225,7 +225,7 @@ jobs:
           export PATH=$GITHUB_WORKSPACE/clang-custom/bin:$PATH
           cd $GITHUB_WORKSPACE/device_kernel/
           make CC="ccache clang" O=out ARCH=arm64 ${{ env.CUSTOM_CMDS }} ${{ env.EXTRA_CMDS }} ${{ env.GCC_64 }} ${{ env.GCC_32 }} ${{ env.DEFCONFIG_NAME }}
-          make -j$(nproc --all) CC="ccache clang" O=out ARCH=arm64 V=1 ${{ env.CUSTOM_CMDS }} ${{ env.EXTRA_CMDS }} ${{ env.GCC_64 }} ${{ env.GCC_32 }}
+          make -j$(nproc --all) CC="ccache clang" O=out ARCH=arm64 ${{ env.CUSTOM_CMDS }} ${{ env.EXTRA_CMDS }} ${{ env.GCC_64 }} ${{ env.GCC_32 }}
 
       - name: Make Anykernel3 Flasher
         run: |
