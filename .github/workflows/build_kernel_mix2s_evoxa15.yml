@@ -157,7 +157,7 @@ jobs:
           # Variable
           KERNELSU_SETUP=https://raw.githubusercontent.com/rifsxd/KernelSU-Next/refs/heads/next/kernel/setup.sh
           SUSFS_SOURCE=https://gitlab.com/simonpunk/susfs4ksu.git
-          SUSFS_BRANCH=kernel-4.19
+          SUSFS_BRANCH=kernel-4.9
           KERNEL_PATCHES=https://github.com/JackA1ltman/NonGKI_Kernel_Patches.git
 
           # Set MKBOOTIMG and KSU
