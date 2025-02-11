@@ -60,8 +60,6 @@ jobs:
       - name: Set Compile Environment
         run: |
           cd $GITHUB_WORKSPACE
-          
-          # Set Clang
           mkdir clang-custom
 	  cd clang-custom
 	  curl -LO "https://raw.githubusercontent.com/Neutron-Toolchains/antman/main/antman"
