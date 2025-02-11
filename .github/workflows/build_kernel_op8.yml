@@ -18,6 +18,8 @@ jobs:
           CONFIG_LIST=(
               DEVICE_NAME
               DEVICE_CODENAME
+              CUSTOM_CMDS
+              EXTRA_CMDS
               KERNEL_SOURCE
               KERNEL_BRANCH
               CLANG_SOURCE
