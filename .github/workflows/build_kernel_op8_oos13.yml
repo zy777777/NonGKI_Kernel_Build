@@ -5,7 +5,7 @@ on:
 jobs:
   build:
     name: Build Kernel by ${{ github.actor }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       CCACHE_COMPILERCHECK: "%compiler% -dumpmachine; %compiler% -dumpversion"
       CCACHE_NOHASHDIR: "true"
@@ -160,7 +160,7 @@ jobs:
       - name: Set Anykernel3 and Others
         run: |
           # Variable
-          KERNELSU_SETUP=https://raw.githubusercontent.com/rifsxd/KernelSU-Next/refs/heads/next/kernel/setup.sh
+          KERNELSU_SETUP=https://raw.githubusercontent.com/backslashxx/KernelSU/refs/heads/magic/kernel/setup.sh
           SUSFS_SOURCE=https://gitlab.com/simonpunk/susfs4ksu.git
           SUSFS_BRANCH=kernel-${{ env.KERNEL_VERSION }}
           KERNEL_PATCHES=https://github.com/JackA1ltman/NonGKI_Kernel_Patches.git
@@ -168,9 +168,9 @@ jobs:
           # Set AK3 and KSU
           cd $GITHUB_WORKSPACE/device_kernel
           git clone ${{ env.AK3_SOURCE }} -b ${{ env.AK3_BRANCH }} Anykernel3 --depth=1
-          curl -sSL $KERNELSU_SETUP | bash -s next
-          KSU_VERSION=$(cd KernelSU-Next && expr $(/usr/bin/git rev-list --count HEAD) + 10200)
-          echo "UPLOADNAME=-KernelSU-Next_$KSU_VERSION" >> $GITHUB_ENV
+          curl -sSL $KERNELSU_SETUP | bash -s magic
+          KSU_VERSION=$(cd KernelSU && expr $(/usr/bin/git rev-list --count HEAD) + 10200)
+          echo "UPLOADNAME=-KernelSU_$KSU_VERSION" >> $GITHUB_ENV
 
           # Set SUSFS
           git clone $SUSFS_SOURCE -b $SUSFS_BRANCH susfs4ksu --depth=1
@@ -201,7 +201,7 @@ jobs:
           cp NonGKI_Kernel_Patches/KernelSU-Next-Implement-SUSFS-v1.5.5-Universal.patch KernelSU-Next/
           cp susfs4ksu/kernel_patches/50_add_susfs_in_kernel-$KERNEL_VERSION.patch ./
 
-          cd KernelSU-Next
+          cd KernelSU
           patch -p1 < KernelSU-Next-Implement-SUSFS-v1.5.5-Universal.patch || true
           cd ../
           patch -p1 < 50_add_susfs_in_kernel-$KERNEL_VERSION.patch || true
