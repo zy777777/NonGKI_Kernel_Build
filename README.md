@@ -8,7 +8,7 @@ Automatic build Non-GKI Kernel with KSU and SUSFS<br>
 总共由以下内容组成：<br>
 CONFIG_ENV - 用来表明在Action环境中具体配置文件位置<br>
 <br>
-DEVICE_NAME - 设备全程，格式：设备品牌_型号_地区<br>
+DEVICE_NAME - 设备全称，格式：设备品牌_型号_地区<br>
 DEVICE_CODENAME - 设备代号<br>
 <br>
 CUSTOM_CMDS - 通常用于指明所用编译器/备用编译器<br>
@@ -37,6 +37,6 @@ BOOT_SOURCE - 若你已经启用MKBOOTIMG的方式，要填写原始干净内核
 ROM_TEXT - 用于编译成功后用于上传文件标题，声明内核可用的ROM
 
 ## .github/workflow/build_kernel_设备简称型号_ROM.yml
-这里仅指出大概可供修改的地方，具体可按需求修改<br>
-runs-on: ubuntu-XX.XX - 不同内核所需系统不同，默认为22.04<br>
+这里仅指出大概可供修改的地方，具体可按需求修改，我们不建议过度修改步骤和顺序<br>
+runs-on: ubuntu-XX.XX - 不同内核所需系统不同，默认为22.04，我们预先提供了两套包安装选项（适配22.04和24.04），可以通过修改注释的方式进行选择<br>
 Extra Kernel Options - 有些内核编译时需要提供更多设置项
