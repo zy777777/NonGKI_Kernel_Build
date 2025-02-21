@@ -191,7 +191,7 @@ jobs:
           echo "CONFIG_INIT_STACK_ALL_PATTERN=n" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
           echo "CONFIG_INIT_STACK_ALL_ZERO=n" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
 
-          sed -i 's|\$(obj)/config_data.gz: [^ ]* FORCE|\$(obj)/config_data.gz: $(KCONFIG_CONFIG) FORCE|' kernel/Makefile
+          # sed -i 's|\$(obj)/config_data.gz: [^ ]* FORCE|\$(obj)/config_data.gz: $(KCONFIG_CONFIG) FORCE|' kernel/Makefile
 
       - name: Patch Kernel of SUSFS
         if: env.SUSFS_ENABLE == 'true'
@@ -212,9 +212,11 @@ jobs:
           cd $GITHUB_WORKSPACE/device_kernel/
           cp NonGKI_Kernel_Patches/kona_oos/namespace_fixed.patch ./
           cp NonGKI_Kernel_Patches/kona_oos/task_mmu_fixed.patch ./
+          cp NonGKI_Kernel_Patches/kona_oos/ksu_backport.patch ./
 
-          patch -p1 < namespace_fixed.patch
-          patch -p1 < task_mmu_fixed.patch
+          patch -p1 < namespace_fixed.patch || true
+          patch -p1 < task_mmu_fixed.patch || true
+          patch -p1 < ksu_backport.patch || true
 
       - name: Setup ccache
         uses: hendrikmuhs/ccache-action@v1.2
