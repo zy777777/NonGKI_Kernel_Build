@@ -23,12 +23,13 @@ jobs:
               KERNEL_BRANCH
               DEFCONFIG_SOURCE
               DEFCONFIG_NAME
-              KERNEL_VERSION
               KERNELSU_SOURCE
               KERNELSU_BRANCH
               KERNELSU_NAME
               SUSFS_ENABLE
               SUSFS_FIXED
+              AK3_SOURCE
+              AK3_BRANCH
               ROM_TEXT
 
           )
@@ -83,6 +84,7 @@ jobs:
           if [[ -n "${{ env.DEFCONFIG_SOURCE }}" ]]; then
             wget ${{ env.DEFCONFIG_SOURCE }} -O device_kernel/arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
           fi
+          echo "KERNEL_VERSION=$(head -n 4 Makefile | grep -E 'VERSION|PATCHLEVEL' | awk '{print $3}' | paste -sd '.')" >> $GITHUB_ENV
 
       - name: Set KSU and SUSFS for DEFCONFIG
         run: |
@@ -106,20 +108,25 @@ jobs:
             echo "CONFIG_KSU_SUSFS_OPEN_REDIRECT=y" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
           fi
 
-      - name: Set KSU and SUSFS
+      - name: Set Anykernel3 and Others
         run: |
+          cd $GITHUB_WORKSPACE/device_kernel
+
           # Variable
           SUSFS_SOURCE=https://gitlab.com/simonpunk/susfs4ksu.git
           SUSFS_BRANCH=kernel-${{ env.KERNEL_VERSION }}
           KERNEL_PATCHES=https://github.com/JackA1ltman/NonGKI_Kernel_Patches.git
+          KERNEL_LOCATION=$(pwd)
 
-          # Set KSU
-          cd $GITHUB_WORKSPACE/device_kernel
-          git clone -b ${{ env.KERNELSU_BRANCH }} https://github.com/rifsxd/KernelSU-Next.git
-          ln -sf "$(realpath --relative-to="$GITHUB_WORKSPACE/device_kernel/drivers" "$GITHUB_WORKSPACE/device_kernel/KernelSU-Next/kernel")" "kernelsu"
-          grep -q "kernelsu" "$GITHUB_WORKSPACE/device_kernel/drivers/Makefile" || printf "\nobj-\$(CONFIG_KSU) += kernelsu/\n" >> $GITHUB_WORKSPACE/device_kernel/drivers/Makefile
-          grep -q "source \"drivers/kernelsu/Kconfig\"" "$GITHUB_WORKSPACE/device_kernel/drivers/Kconfig" || sed -i "/endmenu/i\source \"drivers/kernelsu/Kconfig\"" "$GITHUB_WORKSPACE/device_kernel/drivers/Kconfig"
+          # Set Anykernel3
+          git clone ${{ env.AK3_SOURCE }} -b ${{ env.AK3_BRANCH }} Anykernel3 --depth=1
 
+          # Set KernelSU(Manual)
+          git clone ${{ env.KERNELSU_SOURCE }} -b ${{ env.KERNELSU_BRANCH }} ${{ env.KERNELSU_NAME }}
+          ln -sf "$(realpath --relative-to="$KERNEL_LOCATION/drivers" "$KERNEL_LOCATION/KernelSU-Next/kernel")" "kernelsu"
+          grep -q "kernelsu" "$KERNEL_LOCATION/drivers/Makefile" || printf "\nobj-\$(CONFIG_KSU) += kernelsu/\n" >> $KERNEL_LOCATION/drivers/Makefile
+          grep -q "source \"drivers/kernelsu/Kconfig\"" "$KERNEL_LOCATION/drivers/Kconfig" || sed -i "/endmenu/i\source \"drivers/kernelsu/Kconfig\"" "$KERNEL_LOCATION/drivers/Kconfig"
+          echo "KernelSU Settings done."
           KSU_VERSION=$(cd ${{ env.KERNELSU_NAME }} && expr $(/usr/bin/git rev-list --count HEAD) + 10200)
           echo "UPLOADNAME=-${{ env.KERNELSU_NAME }}_$KSU_VERSION" >> $GITHUB_ENV
 
@@ -178,6 +185,7 @@ jobs:
           IMAGE_DIR="$GITHUB_WORKSPACE/device_kernel/out/arch/arm64/boot"
           TIME=$(date +"%Y%m%d%H%M%S")
           echo "TIME=$TIME" >> $GITHUB_ENV
+          echo "UPLOAD=image" >> $GITHUB_ENV
 
           cd $GITHUB_WORKSPACE/device_kernel/
           mkdir -p tmp
@@ -201,6 +209,6 @@ jobs:
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Kernel(with KSU and SUSFS)-${{ env.DEVICE_CODENAME }}-${{ env.ROM_TEXT }}
+          name: Kernel-${{ env.DEVICE_CODENAME }}-${{ env.ROM_TEXT }}-${{ env.UPLOAD }}
           path: |
             device_kernel/${{ env.DEVICE_CODENAME }}-${{ env.TIME }}.zip
