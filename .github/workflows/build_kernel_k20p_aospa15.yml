@@ -200,4 +200,4 @@ jobs:
         with:
           name: Kernel(with KSU and SUSFS)-${{ env.DEVICE_CODENAME }}-${{ env.ROM_TEXT }}
           path: |
-            $GITHUB_WORKSPACE/device_kernel/${{ env.DEVICE_CODENAME }}-${{ env.TIME }}.zip
+            device_kernel/${{ env.DEVICE_CODENAME }}-${{ env.TIME }}.zip

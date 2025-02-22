@@ -257,8 +257,6 @@ jobs:
           7za a -mx9 tmp.zip *
           cd ..
           cp -fp tmp/tmp.zip ${{ env.DEVICE_CODENAME }}-$TIME.zip
-          cp -fp ${{ env.DEVICE_CODENAME }}-$TIME.zip ${{ env.DEVICE_CODENAME }}.zip
-          ls -al ./
           rm -rf tmp
 
       - name: Upload Build Artifacts
@@ -266,4 +264,4 @@ jobs:
         with:
           name: Kernel(with KSU and SUSFS)-${{ env.DEVICE_CODENAME }}-${{ env.ROM_TEXT }}
           path: |
-            $GITHUB_WORKSPACE/device_kernel/${{ env.DEVICE_CODENAME }}.zip
+            device_kernel/${{ env.DEVICE_CODENAME }}.zip
