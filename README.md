@@ -26,9 +26,9 @@ GCC_XX_BRANCH - GCC所需分支，但前提是git<br>
 DEFCONFIG_SOURCE - 若有自定义DEFCONFIG文件需求可提供具体文件所在地址<br>
 DEFCONFIG_NAME - 不管是否自定义，都需要提供用于编译的必要DEFCONFIG文件，通常格式为：设备_defconfig、vendor/设备_defconfig<br>
 <br>
-KERNELSU_SOURCE - 你可以自行设定KernelSU的来源，支持git、setup.sh
-KERNELSU_BRANCH - 提供KernelSU的所属分支
-KERNELSU_NAME - 部分KernelSU分支存在不同的名称，所以你需要填写正确名称，默认为KernelSU
+KERNELSU_SOURCE - 你可以自行设定KernelSU的来源，支持git、setup.sh<br>
+KERNELSU_BRANCH - 提供KernelSU的所属分支<br>
+KERNELSU_NAME - 部分KernelSU分支存在不同的名称，所以你需要填写正确名称，默认为KernelSU<br>
 <br>
 SUSFS_ENABLE - 是否在编译时启用SUSFS，true或false<br>
 SUSFS_FIXED - 是否启用SUSFS错误修补，一般用于内核修补时产生错误后，二次补充修补<br>
