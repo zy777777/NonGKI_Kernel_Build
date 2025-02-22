@@ -253,4 +253,4 @@ jobs:
         with:
           name: Kernel(with KSU and SUSFS)-${{ env.DEVICE_CODENAME }}-${{ env.ROM_TEXT }}
           path: |
-            device_kernel/boot_${{ env.DEVICE_NAME }}_${{ env.TIME }}.img
+            boot_${{ env.DEVICE_NAME }}_${{ env.TIME }}.img
