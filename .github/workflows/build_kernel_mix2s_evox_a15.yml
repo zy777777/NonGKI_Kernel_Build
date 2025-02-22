@@ -1,7 +1,11 @@
 name: Build Kernel Xiaomi Mix2s (EVOX-A15-Official) with KSU and SUSFS
 on:
-  workflow_dispatch:
-
+  workflow_call:
+    inputs:
+      build_option:
+        description: 'Build option for Mix2s Evox A15'
+        required: true
+        type: string
 jobs:
   build:
     name: Build Kernel by ${{ github.actor }}
