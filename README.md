@@ -40,7 +40,7 @@ BOOT_SOURCE - 若你已经启用MKBOOTIMG的方式，要填写原始干净内核
 <br>
 ROM_TEXT - 用于编译成功后用于上传文件标题，声明内核可用的ROM
 
-## .github/workflow/build_kernel_设备简称型号_ROM.yml
+## .github/workflow/build_kernel_设备简称_型号_ROM_Android版本.yml
 这里仅指出大概可供修改的地方，具体可按需求修改，我们不建议过度修改步骤和顺序<br>
 runs-on: ubuntu-XX.XX - 不同内核所需系统不同，默认为22.04，我们预先提供了两套包安装选项（适配22.04和24.04），我们通过检测系统版本进行决定包安装<br>
 Set KernelSU - 我们提供了执行setup.sh一键脚本的方式，但我们在一次意外中发现该脚本在某些环境下会出现git错误，因此我们提供了手动安装的方式。虽然是手动安装，但实际上并不需要维护者修改任何内容<br>
