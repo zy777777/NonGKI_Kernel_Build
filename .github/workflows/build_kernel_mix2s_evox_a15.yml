@@ -176,7 +176,6 @@ jobs:
           cd $GITHUB_WORKSPACE/device_kernel
           git clone https://android.googlesource.com/platform/system/tools/mkbootimg $GITHUB_WORKSPACE/mkboottools -b master-kernel-build-2022 --depth=1
           wget ${{ env.BOOT_SOURCE }} -O $GITHUB_WORKSPACE/boot_source_${{ env.DEVICE_NAME }}.img
-          echo "FORMAT_MKBOOTING=$(echo `mkboottools/unpack_bootimg.py --boot_img=boot_source_${{ env.DEVICE_NAME }}.img --format mkbootimg`)" >> $GITHUB_ENV
 
           curl -sSL ${{ env.KERNELSU_SOURCE }} | bash -s ${{ env.KERNELSU_BRANCH }}
           KSU_VERSION=$(cd ${{ env.KERNELSU_NAME }} && expr $(/usr/bin/git rev-list --count HEAD) + 10200)
@@ -187,6 +186,10 @@ jobs:
           git clone https://github.com/JackA1ltman/NonGKI_Kernel_Patches.git -b mi_kernel NonGKI_Kernel_Patches --depth=1
           cp susfs4ksu/kernel_patches/fs/* fs/
           cp susfs4ksu/kernel_patches/include/linux/* include/linux/
+
+          # Set MKBOOTIMG Variable
+          cd $GITHUB_WORKSPACE
+          echo "FORMAT_MKBOOTING=$(echo `mkboottools/unpack_bootimg.py --boot_img=boot_source_${{ env.DEVICE_NAME }}.img --format mkbootimg`)" >> $GITHUB_ENV
 
       - name: Extra Kernel Options
         run: |
