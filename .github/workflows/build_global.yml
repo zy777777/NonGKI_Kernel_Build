@@ -27,15 +27,15 @@ jobs:
   build_kernel_op8_oos131_a13:
     uses: ./.github/workflows/build_kernel_op8_oos13.1_a13.yml
     secrets: inherit
-    if: ${{ inputs.build_op11 }}
+    if: ${{ inputs.build_kernel_op8_oos131_a13 }}
   build_kernel_k20p_aosp_a15:
     uses: ./.github/workflows/build_kernel_k20p_aosp_a15.yml
     secrets: inherit
-    if: ${{ inputs.build_op11r }}
+    if: ${{ inputs.build_kernel_k20p_aosp_a15 }}
   build_kernel_mix2s_evox_a15:
     uses: ./.github/workflows/build_kernel_mix2s_evox_a15.yml
     secrets: inherit
-    if: ${{ inputs.build_op12 }}
+    if: ${{ inputs.build_kernel_mix2s_evox_a15 }}
 
   trigger-release:
     runs-on: ubuntu-latest
@@ -77,10 +77,6 @@ jobs:
             # Create the tag in the repository
             git tag $NEW_TAG
             git push origin $NEW_TAG
-
-      - name: Download Artifacts
-        uses: actions/download-artifact@v4
-        with:
           path: ./downloaded-artifacts
 
       # Create GitHub Release and upload files if make_release is true
