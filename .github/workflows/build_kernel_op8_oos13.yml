@@ -31,6 +31,9 @@ jobs:
               DEFCONFIG_SOURCE
               DEFCONFIG_NAME
               KERNEL_VERSION
+              KERNELSU_SOURCE
+              KERNELSU_BRANCH
+              KERNELSU_NAME
               SUSFS_ENABLE
               SUSFS_FIXED
               AK3_SOURCE
@@ -157,10 +160,9 @@ jobs:
             echo "CONFIG_KSU_SUSFS_OPEN_REDIRECT=y" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
           fi
 
-      - name: Set Anykernel3 and Others
+      - name: Set Anykernel3 and KernelSU and Others
         run: |
           # Variable
-          KERNELSU_SETUP=https://raw.githubusercontent.com/backslashxx/KernelSU/refs/heads/magic/kernel/setup.sh
           SUSFS_SOURCE=https://gitlab.com/simonpunk/susfs4ksu.git
           SUSFS_BRANCH=kernel-${{ env.KERNEL_VERSION }}
           KERNEL_PATCHES=https://github.com/JackA1ltman/NonGKI_Kernel_Patches.git
@@ -168,9 +170,9 @@ jobs:
           # Set AK3 and KSU
           cd $GITHUB_WORKSPACE/device_kernel
           git clone ${{ env.AK3_SOURCE }} -b ${{ env.AK3_BRANCH }} Anykernel3 --depth=1
-          curl -sSL $KERNELSU_SETUP | bash -s 12052-sus155
-          KSU_VERSION=$(cd KernelSU && expr $(/usr/bin/git rev-list --count HEAD) + 10200)
-          echo "UPLOADNAME=-KernelSU_$KSU_VERSION" >> $GITHUB_ENV
+          curl -sSL ${{ env.KERNELSU_SOURCE }} | bash -s ${{ env.KERNELSU_BRANCH }}
+          KSU_VERSION=$(cd ${{ env.KERNELSU_NAME }} && expr $(/usr/bin/git rev-list --count HEAD) + 10200)
+          echo "UPLOADNAME=-$(cd ${{ env.KERNELSU_NAME }}_$KSU_VERSION" >> $GITHUB_ENV
 
           # Set SUSFS
           git clone $SUSFS_SOURCE -b $SUSFS_BRANCH susfs4ksu --depth=1
@@ -192,15 +194,14 @@ jobs:
       - name: Patch Kernel of SUSFS
         if: env.SUSFS_ENABLE == 'true'
         run: |
-          KERNEL_VERSION=${{ env.KERNEL_VERSION }}
           cd $GITHUB_WORKSPACE/device_kernel/
-          # cp NonGKI_Kernel_Patches/KernelSU-Next-Implement-SUSFS-v1.5.5-Universal.patch KernelSU/
+          # cp susfs4ksu/kernel_patches/10_enable_susfs_for_ksu.patch $(cd ${{ env.KERNELSU_NAME }}/
           cp susfs4ksu/kernel_patches/50_add_susfs_in_kernel-$KERNEL_VERSION.patch ./
 
-          # cd KernelSU
-          # patch -p1 < KernelSU-Next-Implement-SUSFS-v1.5.5-Universal.patch || true
+          # cd $(cd ${{ env.KERNELSU_NAME }}
+          # patch -p1 < 10_enable_susfs_for_ksu.patch || true
           # cd ../
-          patch -p1 < 50_add_susfs_in_kernel-$KERNEL_VERSION.patch || true
+          patch -p1 < 50_add_susfs_in_kernel-${{ env.KERNEL_VERSION }}.patch || true
 
       - name: Fixed Kernel Patch
         if: env.SUSFS_ENABLE == 'true' && env.SUSFS_FIXED == 'true'
@@ -236,12 +237,18 @@ jobs:
           mkdir -p tmp
           cp -fp $IMAGE_DIR/Image.gz tmp
           cp -fp $IMAGE_DIR/dtbo.img tmp
-          #cp -fp $IMAGE_DIR/dtb tmp
+          
+          if [ -f "$IMAGE_DIR/dtb" ]; then
+            echo "Found DTB!"
+            cp -fp $IMAGE_DIR/dtb tmp
+          else
+            echo "Doesn't found DTB! u device maybe needn't the file."
+          fi
+          
           cp -rp ./Anykernel3/* tmp
           cd tmp
           7za a -mx9 tmp.zip *
           cd ..
-          rm *.zip
           cp -fp tmp/tmp.zip ${{ env.DEVICE_CODENAME }}-$TIME.zip
           rm -rf tmp
 
