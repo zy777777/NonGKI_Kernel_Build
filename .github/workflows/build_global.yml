@@ -27,14 +27,14 @@ jobs:
   build_kernel_op8_oos131_a13:
     uses: ./.github/workflows/build_kernel_op8_oos13.1_a13.yml
     secrets: inherit
-    if: ${{ inputs.build_kernel_op8_oos131_a13 == 'true' }}
+    if: ${{ inputs.build_kernel_op8_oos131_a13 }}
 
   build_kernel_k20p_aosp_a15:
     uses: ./.github/workflows/build_kernel_k20p_aosp_a15.yml
     secrets: inherit
-    if: ${{ inputs.build_kernel_k20p_aosp_a15 == 'true' }}
+    if: ${{ inputs.build_kernel_k20p_aosp_a15 }}
 
   build_kernel_mix2s_evox_a15:
     uses: ./.github/workflows/build_kernel_mix2s_evox_a15.yml
     secrets: inherit
-    if: ${{ inputs.build_kernel_mix2s_evox_a15 == 'true' }}
+    if: ${{ inputs.build_kernel_mix2s_evox_a15 }}
