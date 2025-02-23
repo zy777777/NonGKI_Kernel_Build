@@ -1,0 +1,97 @@
+name: Build Global
+
+permissions:
+  contents: write  # Allow writing to repository contents (for pushing tags)
+  actions: write   # Allows triggering actions
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_kernel_op8_oos131_a13:
+        description: 'Build Kernel OnePlus 8 (OOS13.1)?'
+        required: true
+        type: boolean
+        default: true
+      build_kernel_k20p_aosp_a15:
+        description: 'Build Kernel Redmi K20Pro (Soviet-Star-OSS)(Based-AOSP A15)?'
+        required: true
+        type: boolean
+        default: true
+      build_kernel_mix2s_evox_a15:
+        description: 'Build Kernel Xiaomi Mix2s (EVOX-A15-Official)?'
+        required: true
+        type: boolean
+        default: true
+
+jobs:
+  build_kernel_op8_oos131_a13:
+    uses: ./.github/workflows/build_kernel_op8_oos13.1_a13.yml
+    secrets: inherit
+    if: ${{ inputs.build_kernel_op8_oos131_a13 }}
+
+  build_kernel_k20p_aosp_a15:
+    uses: ./.github/workflows/build_kernel_k20p_aosp_a15.yml
+    secrets: inherit
+    if: ${{ inputs.build_kernel_k20p_aosp_a15 }}
+
+  build_kernel_mix2s_evox_a15:
+    uses: ./.github/workflows/build_kernel_mix2s_evox_a15.yml
+    secrets: inherit
+    if: ${{ inputs.build_kernel_mix2s_evox_a15 }}
+
+
+  trigger-release:
+    runs-on: ubuntu-latest
+    needs:
+        - build_kernel_op8_oos131_a13
+        - build_kernel_k20p_aosp_a15
+        - build_kernel_mix2s_evox_a15
+    if: ${{ inputs.make_release }}
+    env:
+      REPO_OWNER: JackA1ltman
+      REPO_NAME: NonGKI_Kernel_Build
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      RELEASE_NAME: "NonGKI Kernel Pre-built"
+      RELEASE_NOTES: |
+        First Upload.
+
+    steps:
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Download Artifacts for A12 (Only if A12 Build is successful or input is true or empty)
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./downloaded-artifacts
+
+      # Create GitHub Release and upload files if make_release is true
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        with:
+          tag_name: "test"  # Use the generated tag for the release
+          prerelease: true  # Mark the release as a pre-release
+          release_name: "test"  # Pass the RELEASE_NAME to the action
+          body: "test"  # Pass the RELEASE_NOTES to the action
+
+      - name: Upload Release Assets Dynamically
+        run: |
+          # Loop through all files in the downloaded-artifacts directory
+          for file in ./downloaded-artifacts/*; do
+              # Skip directories
+              if [ -d "$file" ]; then
+                  continue
+              fi
+
+              # Upload the file to the GitHub release
+              echo "Uploading $file..."
+              gh release upload ${{ env.NEW_TAG }} "$file"
+          done
+
+      # Display Files Uploaded
+      - name: Display Files Uploaded
+        run: |
+          echo "GitHub release created with the following files:"
+          ls ./downloaded-artifacts/**/*
+
