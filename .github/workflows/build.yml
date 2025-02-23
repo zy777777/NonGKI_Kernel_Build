@@ -61,7 +61,7 @@ jobs:
         Below is the codename reference table. Please select the image or archive you need based on this table.
         There is a discrepancy between the codename in the table and the actual device codename, as some devices have multiple similar models that are compatible with each other. Therefore, the processor codename has been chosen.
 
-        | Device Name | Codename | System | Android | Status |
+        | Device Name | Codename | System | Android | Method |
         |----------|----------|----------|----------|----------|
         | OnePlus 8 (CN) | instantnoodle | OxygenOS/ColorOS 13.1 | 13 | AnyKernel3 |
         | Xiaomi MIX2S (CN) | polaris | Evolution X 10.2.1 | 15 | Boot Image |
