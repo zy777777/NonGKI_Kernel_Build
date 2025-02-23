@@ -47,6 +47,10 @@ jobs:
 
   trigger-release:
     runs-on: ubuntu-latest
+    needs:
+        - build_kernel_op8_oos131_a13
+        - build_kernel_k20p_aosp_a15
+        - build_kernel_mix2s_evox_a15
     if: ${{ inputs.make_release }}
     env:
       REPO_OWNER: JackA1ltman
