@@ -58,7 +58,14 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       RELEASE_NAME: "NonGKI Kernel Pre-built"
       RELEASE_NOTES: |
-        First Upload.
+        Below is the codename reference table. Please select the image or archive you need based on this table.
+        There is a discrepancy between the codename in the table and the actual device codename, as some devices have multiple similar models that are compatible with each other. Therefore, the processor codename has been chosen.
+
+        | Device Name | Codename | System | Android | Status |
+        |----------|----------|----------|----------|----------|
+        | OnePlus 8 (CN) | instantnoodle | OxygenOS/ColorOS 13.1 | 13 | AnyKernel3 |
+        | Xiaomi MIX2S (CN) | polaris | Evolution X 10.2.1 | 15 | Boot Image |
+        | Redmi K20 Pro | raphael | AOSP-based | 15 | AnyKernel3 |
 
     steps:
       # Checkout the code
@@ -95,6 +102,11 @@ jobs:
             # Create the tag in the repository
             git tag $NEW_TAG
             git push --tags
+
+            # Input release note
+            echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
+            echo "$RELEASE_NOTES" >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
             
       # Create GitHub Release and upload files if make_release is true
       - name: Create GitHub Release
@@ -102,17 +114,8 @@ jobs:
         with:
           tag_name: ${{ env.NEW_TAG }}
           prerelease: true
-          release_name: "Pre-built ${{ env.TIME }}"
-          body: "
-Below is the codename reference table. Please select the image or archive you need based on this table.<br>
-There is a discrepancy between the codename in the table and the actual device codename, as some devices have multiple similar models that are compatible with each other. Therefore, the processor codename has been chosen.<br>
-<br>
-| Device Name | Codename | System | Android | Status |
-|----------|----------|----------|----------|----------|
-| OnePlus 8 (CN) | instantnoodle | OxygenOS/ColorOS 13.1 | 13 | AnyKernel3 |
-| Xiaomi MIX2S (CN) | polaris | Evolution X 10.2.1 | 15 | Boot Image |
-| Redmi K20 Pro | raphael | AOSP-based | 15 | AnyKernel3 |
-          "
+          release_name: "${{ env.RELEASE_NAME }} ${{ env.TIME }}"
+          body: ${{ env.RELEASE_NOTES }}
 
       - name: Upload Release Assets Dynamically
         run: |
