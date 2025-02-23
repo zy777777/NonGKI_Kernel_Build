@@ -70,12 +70,35 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: ./downloaded-artifacts
+          
+      # Get the Latest Tag from GitHub
+      - name: Generate and Create New Tag
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+            # Fetch the latest tag from GitHub (this is the latest tag based on the GitHub API)
+            LATEST_TAG=$(gh api repos/$REPO_OWNER/$REPO_NAME/tags --jq '.[0].name')
+            if [ -z "$LATEST_TAG" ]; then
+              LATEST_TAG="v1"
+            fi
+            
+            NEW_TAG=$(echo "$LATEST_TAG" | awk -F'-r' '{suffix=$2; if (!suffix) suffix=0; suffix++; printf "%s-r%d", $1, suffix}')
+    
+            # Output the new tag to be used
+            echo "New tag: $NEW_TAG"
+    
+            # Set the new tag as an environment variable to be used in later steps
+            echo "NEW_TAG=${NEW_TAG}" >> $GITHUB_ENV
 
+            # Create the tag in the repository
+            git tag $NEW_TAG
+            git push --tags
+            
       # Create GitHub Release and upload files if make_release is true
       - name: Create GitHub Release
         uses: actions/create-release@v1
         with:
-          tag_name: "test"  # Use the generated tag for the release
+          tag_name: ${{ env.NEW_TAG }}  # Use the generated tag for the release
           prerelease: true  # Mark the release as a pre-release
           release_name: "test"  # Pass the RELEASE_NAME to the action
           body: "test"  # Pass the RELEASE_NOTES to the action
