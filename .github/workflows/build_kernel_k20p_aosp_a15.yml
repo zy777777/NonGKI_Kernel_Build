@@ -205,7 +205,6 @@ jobs:
           7za a -mx9 tmp.zip *
           cd ..
           cp -fp tmp/tmp.zip ${{ env.DEVICE_CODENAME }}-$TIME.zip
-          cp -fp ${{ env.DEVICE_CODENAME }}-$TIME.zip
           rm -rf tmp
 
       - name: Upload Build Artifacts
