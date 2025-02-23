@@ -258,4 +258,4 @@ jobs:
         with:
           name: Kernel-${{ env.DEVICE_CODENAME }}-${{ env.ROM_TEXT }}-${{ env.UPLOAD }}
           path: |
-            ${{ env.DEVICE_CODENAME }}-${{ env.ROM_TEXT }}-$TIME-image.img
+            ${{ env.DEVICE_CODENAME }}-${{ env.ROM_TEXT }}-${{ env.TIME }}-${{ env.UPLOAD }}.img

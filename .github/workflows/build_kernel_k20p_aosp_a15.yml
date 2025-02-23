@@ -212,4 +212,4 @@ jobs:
         with:
           name: Kernel-${{ env.DEVICE_CODENAME }}-${{ env.ROM_TEXT }}-${{ env.UPLOAD }}
           path: |
-            device_kernel/${{ env.DEVICE_CODENAME }}-${{ env.ROM_TEXT }}-$TIME-Anykernel3.zip
+            device_kernel/${{ env.DEVICE_CODENAME }}-${{ env.ROM_TEXT }}-${{ env.TIME }}-${{ env.UPLOAD }}.zip
