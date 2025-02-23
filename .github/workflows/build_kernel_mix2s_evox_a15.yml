@@ -249,7 +249,7 @@ jobs:
 
           mkboottools/unpack_bootimg.py --boot_img $GITHUB_WORKSPACE/boot_source_${{ env.DEVICE_NAME }}.img
           cp $IMAGE_DIR/Image.gz-dtb out/kernel
-          mkboottools/mkbootimg.py ${{ env.FORMAT_MKBOOTING }} -o boot_${{ env.DEVICE_NAME }}_$TIME.img
+          mkboottools/mkbootimg.py ${{ env.FORMAT_MKBOOTING }} -o ${{ env.DEVICE_CODENAME }}-${{ env.ROM_TEXT }}-$TIME-image.img
 
           rm -f $GITHUB_WORKSPACE/boot_source_${{ env.DEVICE_NAME }}.img
 
@@ -258,4 +258,4 @@ jobs:
         with:
           name: Kernel-${{ env.DEVICE_CODENAME }}-${{ env.ROM_TEXT }}-${{ env.UPLOAD }}
           path: |
-            boot_${{ env.DEVICE_NAME }}_${{ env.TIME }}.img
+            ${{ env.DEVICE_CODENAME }}-${{ env.ROM_TEXT }}-$TIME-image.img
