@@ -65,7 +65,7 @@ jobs:
         |----------|----------|----------|----------|----------|
         | OnePlus 8 (CN) | instantnoodle | OxygenOS/ColorOS 13.1 | 13 | AnyKernel3 |
         | Xiaomi MIX2S (CN) | polaris | Evolution X 10.2.1 | 15 | Boot Image |
-        | Redmi K20 Pro | raphael | AOSP-based | 15 | AnyKernel3 |
+        | Redmi K20 Pro (CN) | raphael | AOSP-based | 15 | AnyKernel3 |
 
     steps:
       # Checkout the code
@@ -86,7 +86,7 @@ jobs:
             # Fetch the latest tag from GitHub (this is the latest tag based on the GitHub API)
             LATEST_TAG=$(gh api repos/$REPO_OWNER/$REPO_NAME/tags --jq '.[0].name')
             if [ -z "$LATEST_TAG" ]; then
-              LATEST_TAG="v1.0-prelease"
+              LATEST_TAG="v1.1"
             fi
             
             NEW_TAG=$(echo "$LATEST_TAG" | awk -F'-r' '{suffix=$2; if (!suffix) suffix=0; suffix++; printf "%s-r%d", $1, suffix}')
@@ -113,7 +113,7 @@ jobs:
         uses: actions/create-release@v1
         with:
           tag_name: ${{ env.NEW_TAG }}
-          prerelease: true
+          prerelease: false
           release_name: "${{ env.RELEASE_NAME }} ${{ env.TIME }}"
           body: ${{ env.RELEASE_NOTES }}
 
