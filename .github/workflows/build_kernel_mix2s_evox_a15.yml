@@ -206,7 +206,11 @@ jobs:
           patch -p1 < 50_add_susfs_in_kernel-${{ env.KERNEL_VERSION }}.patch || true
 
           if [[ ${{ env.KERNELSU_NAME }}  == "KernelSU-Next" ]]; then
-            git clone ${{ env.KERNELSU_SOURCE }} -b ${{ env.KERNELSU_BRANCH }}-susfs susfs_fixed
+            if [[ ${{ env.KERNELSU_SOURCE }} =~ ".sh" ]]; then
+                git clone https://github.com/KernelSU-Next/KernelSU-Next.git -b ${{ env.KERNELSU_BRANCH }}-susfs susfs_fixed
+            else
+                git clone ${{ env.KERNELSU_SOURCE }} -b ${{ env.KERNELSU_BRANCH }}-susfs susfs_fixed
+            fi
             rsync -av --exclude='.git' susfs_fixed/kernel/ KernelSU-Next/kernel/
           else
             cp susfs4ksu/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch ./${{ env.KERNELSU_NAME }}
