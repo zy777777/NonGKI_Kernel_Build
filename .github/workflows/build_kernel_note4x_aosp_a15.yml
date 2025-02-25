@@ -215,7 +215,7 @@ jobs:
 
           # Set SUSFS
           git clone $SUSFS_SOURCE -b $SUSFS_BRANCH susfs4ksu --depth=1
-          git clone https://github.com/[your_name]/[your_patch].git -b [patch_branch] NonGKI_Kernel_Patches --depth=1 # It's not necessary.
+          # git clone https://github.com/[your_name]/[your_patch].git -b [patch_branch] NonGKI_Kernel_Patches --depth=1 # It's not necessary.
           cp susfs4ksu/kernel_patches/fs/* fs/
           cp susfs4ksu/kernel_patches/include/linux/* include/linux/
 
