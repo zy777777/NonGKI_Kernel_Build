@@ -78,11 +78,11 @@ jobs:
       - name: Set Compile Environment
         run: |
           cd $GITHUB_WORKSPACE
-          
+
           # Variable
           GCC_64_BIN=aarch64-linux-android-
           GCC_32_BIN=arm-linux-androideabi-
-          
+
           # Set GCC Aarch64
           if [[ ${{ env.GCC_64_SOURCE }} =~ git ]]; then
               git clone ${{ env.GCC_64_SOURCE }} -b ${{ env.GCC_64_BRANCH }} gcc-64 --depth=1
@@ -133,7 +133,6 @@ jobs:
               mkdir clang-custom
               unzip clang.zip -d clang-custom/
           fi
-          ls -al gcc-32/bin/
 
       - name: Get Kernel Source
         run: |
