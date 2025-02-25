@@ -1,4 +1,4 @@
-name: Build Kernel Tamplate (Cannot be used for direct compilation)
+name: Build Kernel Tamplate (Cannot be used for compilation directly)
 on:
   workflow_call:
   workflow_dispatch:
