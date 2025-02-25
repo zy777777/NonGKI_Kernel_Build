@@ -56,7 +56,7 @@ Set Pack Method and KernelSU and SUSFS
   - 有关KernelSU，我们提供了执行setup.sh一键脚本的方式，但我们在一次意外中发现该脚本在某些环境下会出现git错误，因此我们提供了手动安装的方式。虽然是手动安装，但实际上并不需要维护者修改任何内容
   - yml文件中变量PACK_METHOD和KERNELSU_METHOD分别对应，打包方式（条1）和KernelSU调用方式（条2），变量可设定值参考yml文件对应位置
 <br>
-Extra Kernel Options - 有些内核编译时需要提供更多设置项
+Extra Kernel Options - 有些内核编译时需要提供更多设置项<br>
 <br>
 Patch Kernel - 分为两个部分，主要的SUSFS修补和补充修补
   - 一切基于env中SUSFS_ENABLE和env.SUSFS_FIXED为true，但不一定都为true
