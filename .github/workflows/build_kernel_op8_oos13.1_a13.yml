@@ -234,7 +234,7 @@ jobs:
           patch -p1 < ksu_backport.patch || true
 
           cd ${{ env.KERNELSU_NAME }}
-          patch -p1 < /ksu_magic_fixed.patch
+          patch -p1 < ksu_magic_fixed.patch
 
       - name: Setup ccache
         uses: hendrikmuhs/ccache-action@v1.2
