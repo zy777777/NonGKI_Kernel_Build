@@ -133,7 +133,7 @@ jobs:
             wget -O clang.zip ${{ env.CLANG_SOURCE }}
             mkdir clang-custom
             unzip clang.zip -d clang-custom/
-          elif [[ ${{ env.CLANG_SOURCE }} =~ antman ]]
+          elif [[ ${{ env.CLANG_SOURCE }} =~ antman ]]; then
             mkdir clang-custom
             cd clang-custom
             wget ${{ env.CLANG_SOURCE }} -O antman
