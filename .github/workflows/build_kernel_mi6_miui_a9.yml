@@ -42,7 +42,6 @@ jobs:
               ROM_TEXT
 
           )
-          ls -al ./
 
           for CONFIG in "${CONFIG_LIST[@]}"; do
               if [[ "$CONFIG" == "EXTRA_CMDS" || "$CONFIG" == "CUSTOM_CMDS" ]]; then
@@ -72,6 +71,7 @@ jobs:
           if [ $UBUNTU_VERSION == "22.04" ]; then
             sudo apt-get install git ccache automake flex lzop bison gperf build-essential zip curl zlib1g-dev g++-multilib libxml2-utils bzip2 libbz2-dev libbz2-1.0 libghc-bzlib-dev squashfs-tools pngcrush schedtool dpkg-dev liblz4-tool make optipng maven libssl-dev pwgen libswitch-perl policycoreutils minicom libxml-sax-base-perl libxml-simple-perl bc libc6-dev-i386 lib32ncurses5-dev libx11-dev lib32z-dev libgl1-mesa-dev xsltproc unzip device-tree-compiler python2 python3
             sudo apt-get install p7zip p7zip-full -y
+            sudo apt-get install gcc-10-aarch64-linux-gnu gcc-10-arm-linux-gnueabi
           else
             sudo apt-get install git ccache automake flex lzop bison gperf build-essential zip curl zlib1g-dev g++-multilib libxml2-utils bzip2 libbz2-dev libbz2-1.0 libghc-bzlib-dev squashfs-tools pngcrush schedtool dpkg-dev make optipng maven libssl-dev pwgen libswitch-perl policycoreutils minicom libxml-sax-base-perl libxml-simple-perl bc libc6-dev-i386 libx11-dev lib32z-dev libgl1-mesa-dev xsltproc unzip device-tree-compiler python3
             sudo apt-get install zstd libc6 binutils libc6-dev-i386 gcc g++ p7zip p7zip-full -y
@@ -98,7 +98,7 @@ jobs:
             unzip gcc-64.zip -d gcc-64/
             export GCC_64_BIN=aarch64-linux-android-
           fi
-          echo "GCC_64=CROSS_COMPILE=$GITHUB_WORKSPACE/gcc-64/bin/$GCC_64_BIN" >> $GITHUB_ENV
+          echo "GCC_64=CROSS_COMPILE=aarch64-linux-gnu-" >> $GITHUB_ENV
 
           # Set GCC ARM32
           if [[ ${{ env.GCC_32_SOURCE }} == *".git" ]]; then
@@ -117,7 +117,7 @@ jobs:
             unzip gcc-32.zip -d gcc-32/
             export GCC_32_BIN=arm-linux-androideabi-
           fi
-          echo "GCC_32=CROSS_COMPILE_ARM32=$GITHUB_WORKSPACE/gcc-32/bin/$GCC_32_BIN" >> $GITHUB_ENV
+          echo "GCC_32=CROSS_COMPILE_ARM32=arm-linux-gnueabi-" >> $GITHUB_ENV
 
           # Set Clang
           if [[ ${{ env.CLANG_SOURCE }} == *".git" ]]; then

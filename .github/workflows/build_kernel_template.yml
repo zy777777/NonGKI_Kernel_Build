@@ -42,7 +42,6 @@ jobs:
               ROM_TEXT
 
           )
-          ls -al ./
 
           for CONFIG in "${CONFIG_LIST[@]}"; do
               if [[ "$CONFIG" == "EXTRA_CMDS" || "$CONFIG" == "CUSTOM_CMDS" ]]; then
