@@ -193,6 +193,9 @@ jobs:
           elif [[ $PACK_METHOD == "MKBOOTIMG" ]]; then
             git clone https://android.googlesource.com/platform/system/tools/mkbootimg $GITHUB_WORKSPACE/mkboottools -b master-kernel-build-2022 --depth=1
             wget ${{ env.BOOT_SOURCE }} -O $GITHUB_WORKSPACE/boot_source_${{ env.DEVICE_NAME }}.img
+            cd ../
+            echo "FORMAT_MKBOOTING=$(echo `mkboottools/unpack_bootimg.py --boot_img=boot_source_${{ env.DEVICE_NAME }}.img --format mkbootimg`)" >> $GITHUB_ENV
+            cd device_kernel
           else
             exit
           fi
@@ -219,6 +222,31 @@ jobs:
           git clone $KERNEL_PATCHES -b [patch_branch] NonGKI_Kernel_Patches --depth=1 # It's not necessary.
           cp susfs4ksu/kernel_patches/fs/* fs/
           cp susfs4ksu/kernel_patches/include/linux/* include/linux/
+
+      - name: Patch Kernel for no-kprobe
+        run: |
+          cd $GITHUB_WORKSPACE/device_kernel
+          if [[ -d "NonGKI_Kernel_Patches" ]]
+            echo "Folder existed."
+          else
+            git clone https://github.com/JackA1ltman/NonGKI_Kernel_Patches.git -b op_kernel NonGKI_Kernel_Patches
+          fi
+
+          if grep -q "vfs_statx" "$GITHUB_WORKSPACE/device_kernel/fs/stat.c"; then
+            echo "Detected the presence of vfs_statx in the kernel."
+            patch -p1 < ksu_vfs_statx_fixed.patch
+          elif grep -q "vfs_fstatat" "$GITHUB_WORKSPACE/device_kernel/fs/stat.c"; then
+            if grep -q "__do_execve_file" "$GITHUB_WORKSPACE/device_kernel/fs/exec.c"; then
+              echo "Detected the presence of __do_execve_file in the low-version kernel."
+              patch -p1 < ksu_vfs_fstatat_fixed.patch
+            else
+              echo "Enable the fallback patch if no conditions match."
+              patch -p1 < ksu_vfs_fstatat_fixed_other.patch
+            fi
+          else
+            echo "File not found!"
+            exit
+          fi
 
       - name: Extra Kernel Options
         run: |
@@ -339,7 +367,19 @@ jobs:
           TIME=$(date +"%Y%m%d%H%M%S")
 
           mkboottools/unpack_bootimg.py --boot_img $GITHUB_WORKSPACE/boot_source_${{ env.DEVICE_NAME }}.img
-          cp $IMAGE_DIR/Image.gz-dtb out/kernel
+
+          if [[ -f "$IMAGE_DIR/Image.gz-dtb" ]]; then
+            cp -fp $IMAGE_DIR/Image.gz-dtb out/kernel
+            echo "Found Image.gz-dtb !"
+          elif [[ -f "$IMAGE_DIR/Image.gz" ]]; then
+            cp -fp $IMAGE_DIR/Image.gz out/kernel
+            echo "Found Image.gz !"
+          elif [[ -f "$IMAGE_DIR/Image" ]]; then
+            gzip -c $IMAGE_DIR/Image > $IMAGE_DIR/Image.gz
+            cp -fp $IMAGE_DIR/Image.gz out/kernel
+            echo "Found Image ! Automatic convert Image.gz ! "
+          fi
+
           mkboottools/mkbootimg.py ${{ env.FORMAT_MKBOOTING }} -o ${{ env.DEVICE_CODENAME }}-${{ env.ROM_TEXT }}-$TIME-image.img
 
           echo "PACK_NAME=${{ env.DEVICE_CODENAME }}-${{ env.ROM_TEXT }}-$TIME-image.img" >> $GITHUB_ENV
