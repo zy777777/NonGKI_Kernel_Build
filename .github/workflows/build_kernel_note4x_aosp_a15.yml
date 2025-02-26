@@ -254,7 +254,7 @@ jobs:
         if: env.SUSFS_ENABLE == 'true' && env.SUSFS_FIXED == 'true'
         run: |
           cd $GITHUB_WORKSPACE/device_kernel/
-          cp NonGKI_Kernel_Patches/mido_aosp_a13/mido_fixed.patch ./
+          cp NonGKI_Kernel_Patches/note4x_aosp_a13/mido_fixed.patch ./
 
           patch -p1 < mido_fixed.patch || true
 
