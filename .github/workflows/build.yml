@@ -22,6 +22,11 @@ on:
         required: true
         type: boolean
         default: true
+      build_kernel_note4x_aosp_a13:
+        description: 'Build Kernel Redmi Note4X (Based-AOSP A13)?'
+        required: true
+        type: boolean
+        default: true
       make_release:
         description: 'Do you want to create a release?'
         required: true
@@ -43,6 +48,10 @@ jobs:
     uses: ./.github/workflows/build_kernel_mix2s_evox_a15.yml
     secrets: inherit
     if: ${{ inputs.build_kernel_mix2s_evox_a15 }}
+  build_kernel_note4x_aosp_a13:
+    uses: ./.github/workflows/build_kernel_note4x_aosp_a13.yml
+    secrets: inherit
+    if: ${{ inputs.build_kernel_note4x_aosp_a13 }}
 
 
   trigger-release:
@@ -51,6 +60,7 @@ jobs:
         - build_kernel_op8_oos131_a13
         - build_kernel_k20p_aosp_a15
         - build_kernel_mix2s_evox_a15
+        - build_kernel_note4x_aosp_a13
     if: ${{ inputs.make_release }}
     env:
       REPO_OWNER: JackA1ltman
@@ -59,13 +69,18 @@ jobs:
       RELEASE_NAME: "NonGKI Kernel Pre-built"
       RELEASE_NOTES: |
         Below is the codename reference table. Please select the image or archive you need based on this table.
-        There is a discrepancy between the codename in the table and the actual device codename, as some devices have multiple similar models that are compatible with each other. Therefore, the processor codename has been chosen.
 
-        | Device Name | Codename | System | Android | Method |
-        |----------|----------|----------|----------|----------|
-        | OnePlus 8 (CN) | instantnoodle | OxygenOS/ColorOS 13.1 | 13 | AnyKernel3 |
-        | Xiaomi MIX2S (CN) | polaris | Evolution X 10.2.1 | 15 | Boot Image |
-        | Redmi K20 Pro (CN) | raphael | AOSP-based | 15 | AnyKernel3 |
+        | Device Name | Codename | System | Android | Method | KernelSU | SuSFS |
+        |----------|----------|----------|----------|----------|----------|----------|
+        | OnePlus 8 (CN) | instantnoodle | OxygenOS/ColorOS 13.1 | 13 | AnyKernel3 | Magic | Yes |
+        | Xiaomi MIX2S (CN) | polaris | Evolution X 10.2.1 | 15 | Boot Image | Next | Yes |
+        | Redmi K20 Pro (CN) | raphael | AOSP-based | 15 | AnyKernel3 | Next | Yes |
+        | Redmi Note 4X (CN) | mido | AOSP-based | 13 | AnyKernel3 | Next | Yes |
+
+        - Redmi Note 4X (CN) can only be used for the **Qualcomm** version. Please do not attempt it on the MediaTek version.
+        - OnePlus 8 (CN) has been tested and can be used on the OnePlus 9R. Theoretically, it should also work on the OnePlus 8T/8Pro.
+        - The version of KernelSU Magic patched with SuSFS is not the latest.
+        
 
     steps:
       # Checkout the code
@@ -103,9 +118,17 @@ jobs:
             git tag $NEW_TAG
             git push --tags
 
+            # Get KernelSU version
+            git clone -b next-susfs https://github.com/KernelSU-Next/KernelSU-Next.git
+            KSU_NEXT_VERSION=$(cd KernelSU-Next && expr $(/usr/bin/git rev-list --count HEAD) + 10200)
+            git clone -b magic https://github.com/backslashxx/KernelSU.git KernelSU-Magic
+            KSU_MAGIC_VERSION=$(cd KernelSU-Magic && expr $(/usr/bin/git rev-list --count HEAD) + 10200)
+
             # Input release note
             echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
             echo "$RELEASE_NOTES" >> $GITHUB_ENV
+            echo "KernelSU-Next Version: $KSU_NEXT_VERSION  " >> $GITHUB_ENV
+            echo "KernelSU-Magic Version: $KSU_MAGIC_VERSION  " >> $GITHUB_ENV
             echo "EOF" >> $GITHUB_ENV
             
       # Create GitHub Release and upload files if make_release is true
