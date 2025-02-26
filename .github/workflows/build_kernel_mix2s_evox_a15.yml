@@ -197,9 +197,8 @@ jobs:
           if [[ -d "NonGKI_Kernel_Patches" ]]; then
             echo "Folder existed."
           else
-            git clone https://github.com/JackA1ltman/KernelSU_Action.git -b main NonGKI_Kernel_Patches
+            git clone https://github.com/JackA1ltman/NonGKI_Kernel_Patches.git -b main NonGKI_Kernel_Patches
           fi
-          git clone https://github.com/JackA1ltman/KernelSU_Action.git -b main Fixed
 
           cp Fixed/patches/patches.sh ./
 
