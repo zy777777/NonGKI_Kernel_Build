@@ -199,8 +199,9 @@ jobs:
           else
             git clone https://github.com/JackA1ltman/KernelSU_Action.git -b main NonGKI_Kernel_Patches
           fi
+          git clone https://github.com/JackA1ltman/KernelSU_Action.git -b main Fixed
 
-          cp NonGKI_Kernel_Patches/patches/patches.sh ./
+          cp Fixed/patches/patches.sh ./
 
           bash patches.sh
 
