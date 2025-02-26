@@ -82,41 +82,9 @@ jobs:
           cd $GITHUB_WORKSPACE
 
           # Set GCC Aarch64
-          if [[ ${{ env.GCC_64_SOURCE }} == *".git" ]]; then
-            git clone ${{ env.GCC_64_SOURCE }} -b ${{ env.GCC_64_BRANCH }} gcc-64 --depth=1
-            export GCC_64_BIN=aarch64-linux-android-
-          fi
-          if [[ ${{ env.GCC_64_SOURCE }} == *'.tar.gz' ]]; then
-            wget -O gcc-64.tar.gz ${{ env.GCC_64_SOURCE }}
-            mkdir gcc-64
-            tar -C gcc-64/ -zxvf gcc-64.tar.gz
-            export GCC_64_BIN=aarch64-linux-android-
-          fi
-          if [[ ${{ env.GCC_64_SOURCE }} == *'.zip' ]]; then
-            wget -O gcc-64.zip ${{ env.GCC_64_SOURCE }}
-            mkdir gcc-64
-            unzip gcc-64.zip -d gcc-64/
-            export GCC_64_BIN=aarch64-linux-android-
-          fi
           echo "GCC_64=CROSS_COMPILE=aarch64-linux-gnu-" >> $GITHUB_ENV
 
           # Set GCC ARM32
-          if [[ ${{ env.GCC_32_SOURCE }} == *".git" ]]; then
-            git clone ${{ env.GCC_32_SOURCE }} -b ${{ env.GCC_32_BRANCH }} gcc-32 --depth=1
-            export GCC_32_BIN=arm-linux-androideabi-
-          fi
-          if [[ ${{ env.GCC_32_SOURCE }} == *'.tar.gz' ]]; then
-            wget -O gcc-32.tar.gz ${{ env.GCC_32_SOURCE }}
-            mkdir gcc-32
-            tar -C gcc-32/ -zxvf gcc-32.tar.gz
-            export GCC_32_BIN=arm-linux-androideabi-
-          fi
-          if [[ ${{ env.GCC_32_SOURCE }} == *'.zip' ]]; then
-            wget -O gcc-32.zip ${{ env.GCC_32_SOURCE }}
-            mkdir gcc-32
-            unzip gcc-32.zip -d gcc-32/
-            export GCC_32_BIN=arm-linux-androideabi-
-          fi
           echo "GCC_32=CROSS_COMPILE_ARM32=arm-linux-gnueabi-" >> $GITHUB_ENV
 
           # Set Clang
@@ -282,13 +250,8 @@ jobs:
         run: |
           export PATH=$GITHUB_WORKSPACE/clang-custom/bin:$PATH
           cd $GITHUB_WORKSPACE/device_kernel/
-          if [[ -z ${{ env.GCC_32 }} && -z ${{ env.GCC_64 }} ]]; then
-            make CC="ccache clang" O=out ARCH=arm64 ${{ env.CUSTOM_CMDS }} ${{ env.EXTRA_CMDS }} ${{ env.DEFCONFIG_NAME }}
-            make -j$(nproc --all) CC="ccache clang" O=out ARCH=arm64 ${{ env.CUSTOM_CMDS }} ${{ env.EXTRA_CMDS }}
-          else
-            make CC="ccache clang" O=out ARCH=arm64 ${{ env.CUSTOM_CMDS }} ${{ env.EXTRA_CMDS }} ${{ env.GCC_64 }} ${{ env.GCC_32 }} ${{ env.DEFCONFIG_NAME }}
-            make -j$(nproc --all) CC="ccache clang" O=out ARCH=arm64 ${{ env.CUSTOM_CMDS }} ${{ env.EXTRA_CMDS }} ${{ env.GCC_64 }} ${{ env.GCC_32 }}
-          fi
+          make CC="ccache clang" O=out ARCH=arm64 ${{ env.CUSTOM_CMDS }} ${{ env.EXTRA_CMDS }} ${{ env.GCC_64 }} ${{ env.GCC_32 }} ${{ env.DEFCONFIG_NAME }}
+          make -j$(nproc --all) CC="ccache clang" O=out ARCH=arm64 ${{ env.CUSTOM_CMDS }} ${{ env.EXTRA_CMDS }} ${{ env.GCC_64 }} ${{ env.GCC_32 }}
 
       - name: Make Anykernel3 Flasher
         if: env.PACK_METHOD == 'Anykernel3'
