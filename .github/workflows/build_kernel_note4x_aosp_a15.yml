@@ -177,7 +177,7 @@ jobs:
           # Variable
           SUSFS_SOURCE=https://gitlab.com/simonpunk/susfs4ksu.git
           SUSFS_BRANCH=kernel-${{ env.KERNEL_VERSION }}
-          KERNEL_PATCHES=https://github.com/[your_name]/[your_patch].git
+          KERNEL_PATCHES=https://github.com/JackA1ltman/NonGKI_Kernel_Patches.git
           PACK_METHOD=Anykernel3 # Anykernel3 need SOURCE and BRANCH,but MKBOOTIMG needn't it.
           KERNELSU_METHOD=shell # shell and manual
 
@@ -215,7 +215,7 @@ jobs:
 
           # Set SUSFS
           git clone $SUSFS_SOURCE -b $SUSFS_BRANCH susfs4ksu --depth=1
-          # git clone https://github.com/[your_name]/[your_patch].git -b [patch_branch] NonGKI_Kernel_Patches --depth=1 # It's not necessary.
+          git clone $KERNEL_PATCHES -b mi_kernel NonGKI_Kernel_Patches --depth=1 # It's not necessary.
           cp susfs4ksu/kernel_patches/fs/* fs/
           cp susfs4ksu/kernel_patches/include/linux/* include/linux/
 
@@ -254,9 +254,9 @@ jobs:
         if: env.SUSFS_ENABLE == 'true' && env.SUSFS_FIXED == 'true'
         run: |
           cd $GITHUB_WORKSPACE/device_kernel/
-          cp NonGKI_Kernel_Patches/[patch_folder]/[patch_file].patch ./
+          cp NonGKI_Kernel_Patches/mido_aosp_a13/mido_fixed.patch ./
 
-          patch -p1 < [patch_file].patch || true
+          patch -p1 < mido_fixed.patch || true
 
       - name: Setup ccache
         uses: hendrikmuhs/ccache-action@v1.2
