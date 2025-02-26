@@ -250,8 +250,8 @@ jobs:
         run: |
           export PATH=$GITHUB_WORKSPACE/clang-custom/bin:$PATH
           cd $GITHUB_WORKSPACE/device_kernel/
-          make O=out ARCH=arm64 ${{ env.EXTRA_CMDS }} ${{ env.GCC_64 }} ${{ env.GCC_32 }} ${{ env.DEFCONFIG_NAME }}
-          make -j$(nproc --all)  O=out ARCH=arm64 ${{ env.EXTRA_CMDS }} ${{ env.GCC_64 }} ${{ env.GCC_32 }}
+          make O=out ARCH=arm64 ${{ env.EXTRA_CMDS }} ${{ env.DEFCONFIG_NAME }}
+          make -j$(nproc --all)  O=out ARCH=arm64 ${{ env.EXTRA_CMDS }}
 
       - name: Make Anykernel3 Flasher
         if: env.PACK_METHOD == 'Anykernel3'
