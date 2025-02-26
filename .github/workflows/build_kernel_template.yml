@@ -82,7 +82,7 @@ jobs:
           cd $GITHUB_WORKSPACE
 
           # Set GCC Aarch64
-          if [[ ${{ env.GCC_64_SOURCE }} =~ git ]]; then
+          if [[ "${{ env.GCC_64_SOURCE }}" == *".git" ]]; then
             git clone ${{ env.GCC_64_SOURCE }} -b ${{ env.GCC_64_BRANCH }} gcc-64 --depth=1
             export GCC_64_BIN=aarch64-linux-android-
           fi
@@ -101,7 +101,7 @@ jobs:
           echo "GCC_64=CROSS_COMPILE=$GITHUB_WORKSPACE/gcc-64/bin/$GCC_64_BIN" >> $GITHUB_ENV
 
           # Set GCC ARM32
-          if [[ ${{ env.GCC_32_SOURCE }} =~ git ]]; then
+          if [[ ${{ env.GCC_32_SOURCE }} == *".git" ]]; then
             git clone ${{ env.GCC_32_SOURCE }} -b ${{ env.GCC_32_BRANCH }} gcc-32 --depth=1
             export GCC_32_BIN=arm-linux-androideabi-
           fi
@@ -120,7 +120,7 @@ jobs:
           echo "GCC_32=CROSS_COMPILE_ARM32=$GITHUB_WORKSPACE/gcc-32/bin/$GCC_32_BIN" >> $GITHUB_ENV
 
           # Set Clang
-          if [[ ${{ env.CLANG_SOURCE }} =~ git ]]; then
+          if [[ ${{ env.CLANG_SOURCE }} == *".git" ]]; then
             git clone ${{ env.CLANG_SOURCE }} -b ${{ env.CLANG_BRANCH }} clang-custom --depth=1
           elif [[ ${{ env.CLANG_SOURCE }} == *'.tar.gz' ]]; then
             wget -O clang.tar.gz ${{ env.CLANG_SOURCE }}
@@ -134,7 +134,7 @@ jobs:
             wget -O clang.zip ${{ env.CLANG_SOURCE }}
             mkdir clang-custom
             unzip clang.zip -d clang-custom/
-          elif [[ ${{ env.CLANG_SOURCE }} =~ antman ]]; then
+          elif [[ ${{ env.CLANG_SOURCE }} == *"antman" ]]; then
             mkdir clang-custom
             cd clang-custom
             wget ${{ env.CLANG_SOURCE }} -O antman
