@@ -234,13 +234,16 @@ jobs:
 
           if grep -q "vfs_statx" "$GITHUB_WORKSPACE/device_kernel/fs/stat.c"; then
             echo "Detected the presence of vfs_statx in the kernel."
+            cp NonGKI_Kernel_Patches/ksu_vfs_statx_fixed.patch ./
             patch -p1 < ksu_vfs_statx_fixed.patch
           elif grep -q "vfs_fstatat" "$GITHUB_WORKSPACE/device_kernel/fs/stat.c"; then
             if grep -q "__do_execve_file" "$GITHUB_WORKSPACE/device_kernel/fs/exec.c"; then
               echo "Detected the presence of __do_execve_file in the low-version kernel."
+              cp NonGKI_Kernel_Patches/ksu_vfs_fstatat_fixed.patch ./
               patch -p1 < ksu_vfs_fstatat_fixed.patch
             else
               echo "Enable the fallback patch if no conditions match."
+              cp NonGKI_Kernel_Patches/ksu_vfs_fstatat_fixed_other.patch ./
               patch -p1 < ksu_vfs_fstatat_fixed_other.patch
             fi
           else
