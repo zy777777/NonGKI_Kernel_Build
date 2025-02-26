@@ -215,10 +215,10 @@ jobs:
           echo "UPLOADNAME=-${{ env.KERNELSU_NAME }}_$KSU_VERSION" >> $GITHUB_ENV
 
           # Set SUSFS
-          git clone $SUSFS_SOURCE -b $SUSFS_BRANCH susfs4ksu --depth=1
+          # git clone $SUSFS_SOURCE -b $SUSFS_BRANCH susfs4ksu --depth=1
           # git clone $KERNEL_PATCHES -b [patch_branch] NonGKI_Kernel_Patches --depth=1 # It's not necessary.
-          cp susfs4ksu/kernel_patches/fs/* fs/
-          cp susfs4ksu/kernel_patches/include/linux/* include/linux/
+          # cp susfs4ksu/kernel_patches/fs/* fs/
+          # cp susfs4ksu/kernel_patches/include/linux/* include/linux/
 
       - name: Patch Kernel for no-kprobe
         run: |
