@@ -74,8 +74,8 @@ jobs:
         |----------|----------|----------|----------|----------|----------|----------|
         | OnePlus 8 (CN) | instantnoodle | OxygenOS/ColorOS 13.1 | 13 | AnyKernel3 | Magic | Yes | No |
         | Xiaomi MIX2S (CN) | polaris | Evolution X 10.2.1 | 15 | AnyKernel3 | Next | Yes | No |
-        | Redmi K20 Pro (CN) | raphael | AOSP-based | 15 | AnyKernel3 | Next | Yes | No |
-        | Redmi Note 4X (CN) | mido | AOSP-based | 13 | AnyKernel3 | Next | Yes | No |
+        | Redmi K20 Pro (CN) | raphael | Based-AOSP | 15 | AnyKernel3 | Next | Yes | No |
+        | Redmi Note 4X (CN) | mido | Based-AOSP | 13 | AnyKernel3 | Next | Yes | No |
 
         - Redmi Note 4X (CN) can only be used for the **Qualcomm** version. Please do not attempt it on the MediaTek version.
         - OnePlus 8 (CN) has been tested and can be used on the OnePlus 9R. Theoretically, it should also work on the OnePlus 8T/8Pro.
