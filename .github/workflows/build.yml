@@ -71,7 +71,7 @@ jobs:
         Below is the codename reference table. Please select the image or archive you need based on this table.
 
         | Device Name | Codename | Kernel | System | Android | Method | KernelSU | SuSFS | LXC |
-        |----------|----------|----------|----------|----------|----------|----------|
+        |----------|----------|----------|----------|----------|----------|----------|----------|----------|
         | OnePlus 8 (CN) | instantnoodle | 4.19 | OxygenOS/ColorOS 13.1 | 13 | AnyKernel3 | Magic | Yes | No |
         | Xiaomi MIX2S (CN) | polaris | 4.9 | Evolution X 10.2.1 | 15 | AnyKernel3 | Next | Yes | No |
         | Redmi K20 Pro (CN) | raphael | 4.14 | Based-AOSP | 15 | AnyKernel3 | Next | Yes | No |
