@@ -36,7 +36,8 @@ jobs:
               KERNELSU_NAME
               SUSFS_ENABLE
               SUSFS_FIXED
-              BOOT_SOURCE
+              AK3_SOURCE
+              AK3_BRANCH
               ROM_TEXT
 
           )
@@ -174,8 +175,7 @@ jobs:
 
           # Set MKBOOTIMG and KSU
           cd $GITHUB_WORKSPACE/device_kernel
-          git clone https://android.googlesource.com/platform/system/tools/mkbootimg $GITHUB_WORKSPACE/mkboottools -b master-kernel-build-2022 --depth=1
-          wget ${{ env.BOOT_SOURCE }} -O $GITHUB_WORKSPACE/boot_source_${{ env.DEVICE_NAME }}.img
+          git clone ${{ env.AK3_SOURCE }} -b ${{ env.AK3_BRANCH }} Anykernel3 --depth=1
 
           curl -sSL ${{ env.KERNELSU_SOURCE }} | bash -s ${{ env.KERNELSU_BRANCH }}
           KSU_VERSION=$(cd ${{ env.KERNELSU_NAME }} && expr $(/usr/bin/git rev-list --count HEAD) + 10200)
@@ -186,10 +186,6 @@ jobs:
           git clone https://github.com/JackA1ltman/NonGKI_Kernel_Patches.git -b mi_kernel NonGKI_Kernel_Patches --depth=1
           cp susfs4ksu/kernel_patches/fs/* fs/
           cp susfs4ksu/kernel_patches/include/linux/* include/linux/
-
-          # Set MKBOOTIMG Variable
-          cd $GITHUB_WORKSPACE
-          echo "FORMAT_MKBOOTING=$(echo `mkboottools/unpack_bootimg.py --boot_img=boot_source_${{ env.DEVICE_NAME }}.img --format mkbootimg`)" >> $GITHUB_ENV
 
       - name: Patch Kernel for no-kprobe
         run: |
@@ -255,20 +251,59 @@ jobs:
           make CC="ccache clang" O=out ARCH=arm64 ${{ env.CUSTOM_CMDS }} ${{ env.EXTRA_CMDS }} ${{ env.GCC_64 }} ${{ env.GCC_32 }} ${{ env.DEFCONFIG_NAME }}
           make -j$(nproc --all) CC="ccache clang" O=out ARCH=arm64 ${{ env.CUSTOM_CMDS }} ${{ env.EXTRA_CMDS }} ${{ env.GCC_64 }} ${{ env.GCC_32 }}
 
-      - name: Make Latest Boot Image
+      - name: Make Anykernel3 Flasher
+        if: env.PACK_METHOD == 'Anykernel3'
         run: |
-          cd $GITHUB_WORKSPACE/
           IMAGE_DIR="$GITHUB_WORKSPACE/device_kernel/out/arch/arm64/boot"
           TIME=$(date +"%Y%m%d%H%M%S")
 
-          echo "TIME=$TIME" >> $GITHUB_ENV
-          echo "UPLOAD=image" >> $GITHUB_ENV
+          cd $GITHUB_WORKSPACE/device_kernel/
 
-          mkboottools/unpack_bootimg.py --boot_img $GITHUB_WORKSPACE/boot_source_${{ env.DEVICE_NAME }}.img
-          cp $IMAGE_DIR/Image.gz-dtb out/kernel
-          mkboottools/mkbootimg.py ${{ env.FORMAT_MKBOOTING }} -o ${{ env.DEVICE_CODENAME }}-${{ env.ROM_TEXT }}-$TIME-image.img
+          mkdir -p tmp
 
-          rm -f $GITHUB_WORKSPACE/boot_source_${{ env.DEVICE_NAME }}.img
+          if [[ "${{ env.AK3_SOURCE }}" =~ "osm0sis" ]]; then
+            sed -i 's/do.devicecheck=1/do.devicecheck=0/g' Anykernel3/anykernel.sh
+            sed -i 's!BLOCK=/dev/block/platform/omap/omap_hsmmc.0/by-name/boot;!BLOCK=auto;!g' Anykernel3/anykernel.sh
+            sed -i 's/IS_SLOT_DEVICE=0;/is_slot_device=auto;/g' Anykernel3/anykernel.sh
+            echo "Now using official Anykernel3."
+          else
+            echo "Now using custom Anykernel3."
+          fi
+
+          if [[ -f "$IMAGE_DIR/Image.gz-dtb" ]]; then
+            cp -fp $IMAGE_DIR/Image.gz-dtb tmp
+            echo "Found Image.gz-dtb !"
+          elif [[ -f "$IMAGE_DIR/Image.gz" ]]; then
+            cp -fp $IMAGE_DIR/Image.gz tmp
+            echo "Found Image.gz !"
+          elif [[ -f "$IMAGE_DIR/Image" ]]; then
+            gzip -c $IMAGE_DIR/Image > $IMAGE_DIR/Image.gz
+            cp -fp $IMAGE_DIR/Image.gz tmp
+            echo "Found Image ! Automatic convert Image.gz ! "
+          fi
+
+          if [[ -f "$IMAGE_DIR/dtbo.img" ]]; then
+            cp -fp $IMAGE_DIR/dtbo.img tmp
+            echo "Found dtbo.img !"
+          else
+            echo "Doesn't found dtbo.img! Your device maybe needn't the file."
+          fi
+
+          if [ -f "$IMAGE_DIR/dtb" ]; then
+            echo "Found DTB!"
+            cp -fp $IMAGE_DIR/dtb tmp
+          else
+            echo "Doesn't found DTB! Your device maybe needn't the file."
+          fi
+
+          cp -rp ./Anykernel3/* tmp
+          cd tmp
+          7za a -mx9 tmp.zip *
+          cd ..
+          cp -fp tmp/tmp.zip ${{ env.DEVICE_CODENAME }}-${{ env.ROM_TEXT }}-$TIME-${{ env.PACK_METHOD }}.zip
+          rm -rf tmp
+
+          echo "PACK_NAME=${{ env.DEVICE_CODENAME }}-${{ env.ROM_TEXT }}-$TIME-${{ env.PACK_METHOD }}.zip" >> $GITHUB_ENV
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
