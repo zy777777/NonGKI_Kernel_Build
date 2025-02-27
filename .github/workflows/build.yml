@@ -70,12 +70,12 @@ jobs:
       RELEASE_NOTES: |
         Below is the codename reference table. Please select the image or archive you need based on this table.
 
-        | Device Name | Codename | System | Android | Method | KernelSU | SuSFS |
+        | Device Name | Codename | System | Android | Method | KernelSU | SuSFS | LXC/Docker |
         |----------|----------|----------|----------|----------|----------|----------|
-        | OnePlus 8 (CN) | instantnoodle | OxygenOS/ColorOS 13.1 | 13 | AnyKernel3 | Magic | Yes |
-        | Xiaomi MIX2S (CN) | polaris | Evolution X 10.2.1 | 15 | Boot Image | Next | Yes |
-        | Redmi K20 Pro (CN) | raphael | AOSP-based | 15 | AnyKernel3 | Next | Yes |
-        | Redmi Note 4X (CN) | mido | AOSP-based | 13 | AnyKernel3 | Next | Yes |
+        | OnePlus 8 (CN) | instantnoodle | OxygenOS/ColorOS 13.1 | 13 | AnyKernel3 | Magic | Yes | No |
+        | Xiaomi MIX2S (CN) | polaris | Evolution X 10.2.1 | 15 | AnyKernel3 | Next | Yes | No |
+        | Redmi K20 Pro (CN) | raphael | AOSP-based | 15 | AnyKernel3 | Next | Yes | No |
+        | Redmi Note 4X (CN) | mido | AOSP-based | 13 | AnyKernel3 | Next | Yes | No |
 
         - Redmi Note 4X (CN) can only be used for the **Qualcomm** version. Please do not attempt it on the MediaTek version.
         - OnePlus 8 (CN) has been tested and can be used on the OnePlus 9R. Theoretically, it should also work on the OnePlus 8T/8Pro.
