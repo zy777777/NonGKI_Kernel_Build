@@ -261,7 +261,8 @@ jobs:
           cd $GITHUB_WORKSPACE
 
           FORMAT_MKBOOTING=$(echo `mkboottools/unpack_bootimg.py --boot_img=boot_source_${{ env.DEVICE_NAME }}.img --format mkbootimg`)
-          mkboottools/unpack_bootimg.py --boot_img $GITHUB_WORKSPACE/boot_source_${{ env.DEVICE_NAME }}.img
+          mkboottools/unpack_bootimg.py --boot_img boot_source_${{ env.DEVICE_NAME }}.img
+          rm -f out/kernel
           cp $IMAGE_DIR/Image.gz-dtb out/kernel
           eval "mkboottools/mkbootimg.py $FORMAT_MKBOOTING -o ${{ env.DEVICE_CODENAME }}-${{ env.ROM_TEXT }}-$TIME-image.img"
 
@@ -273,4 +274,6 @@ jobs:
         with:
           name: Kernel-${{ env.DEVICE_CODENAME }}-${{ env.ROM_TEXT }}-image
           path: |
+            device_kernel/out/arch/arm64/boot/Image.gz-dtb
+            out/ramdisk
             ${{ env.PACK_NAME }}
