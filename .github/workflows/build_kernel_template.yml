@@ -39,6 +39,7 @@ jobs:
               AK3_SOURCE
               AK3_BRANCH
               BOOT_SOURCE
+              LXC_ENABLE
               ROM_TEXT
 
           )
@@ -245,6 +246,35 @@ jobs:
           echo "CONFIG_INIT_STACK_NONE=y" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
           sed -i 's/# CONFIG_SECCOMP is not set/CONFIG_SECCOMP=y/' ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
 
+      - name: Setup LXC
+        if: env.LXC_ENABLE == 'true'
+        run: |
+          cd $GITHUB_WORKSPACE/device_kernel
+          rm -rf utils
+          git clone https://github.com/tomxi1997/lxc-docker-support-for-android.git utils
+          echo 'source "utils/Kconfig"' >> "Kconfig"
+
+          echo "CONFIG_DOCKER=y" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
+
+          sed -i '/CONFIG_ANDROID_PARANOID_NETWORK/d' ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
+          echo "# CONFIG_ANDROID_PARANOID_NETWORK is not set" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
+          
+          #sed -i '/CONFIG_LOCALVERSION/d' ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
+          #echo 'CONFIG_LOCALVERSION="-LXC-KernelSU-support_Pdx"' >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
+          
+          chmod +x $GITHUB_WORKSPACE/device_kernel/utils/runcpatch.sh
+          if [ -f $GITHUB_WORKSPACE/device_kernel/kernel/cgroup/cgroup.c ]; then
+              sh $GITHUB_WORKSPACE/device_kernel/utils/runcpatch.sh $GITHUB_WORKSPACE/kernel_workspace/android-kernel/kernel/cgroup/cgroup.c
+          fi
+
+          if [ -f $GITHUB_WORKSPACE/device_kernel/kernel/cgroup.c ]; then
+              sh $GITHUB_WORKSPACE/device_kernel/utils/runcpatch.sh $GITHUB_WORKSPACE/kernel_workspace/android-kernel/kernel/cgroup.c
+          fi
+
+          if [ -f $GITHUB_WORKSPACE/device_kernel/net/netfilter/xt_qtaguid.c ]; then
+              patch -p0 < $GITHUB_WORKSPACE/device_kernel/utils/xt_qtaguid.patch
+          fi
+          
       - name: Patch Kernel of SUSFS
         if: env.SUSFS_ENABLE == 'true'
         run: |

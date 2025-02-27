@@ -39,6 +39,8 @@ Automatic build Non-GKI Kernel with KSU and SUSFS
 
 **BOOT_SOURCE** - 若你已经启用MKBOOTIMG的方式，要填写原始干净内核的地址，仅限img格式  
 
+**LXC_ENABLE** - (实验性⚠)启用自动化内核LXC/Docker支持，true或false  
+
 **ROM_TEXT** - 用于编译成功后用于上传文件标题，声明内核可用的ROM  
 
 ## .github/workflow/build_kernel_设备简称_型号_ROM_Android版本.yml
