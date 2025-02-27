@@ -99,6 +99,8 @@ jobs:
           # Fetch the latest tag from GitHub (this is the latest tag based on the GitHub API)
           LATEST_TAG=$(gh api repos/$REPO_OWNER/$REPO_NAME/tags --jq '.[0].name')
           if [ -z "$LATEST_TAG" ]; then
+            LATEST_TAG="v1.0-prelease" # if have no any releases.
+          else
             LATEST_TAG="v1.1"
           fi
 
