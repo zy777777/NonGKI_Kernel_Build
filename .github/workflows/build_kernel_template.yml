@@ -82,42 +82,47 @@ jobs:
           cd $GITHUB_WORKSPACE
 
           # Set GCC Aarch64
-          if [[ "${{ env.GCC_64_SOURCE }}" == *".git" ]]; then
-            git clone ${{ env.GCC_64_SOURCE }} -b ${{ env.GCC_64_BRANCH }} gcc-64 --depth=1
-            export GCC_64_BIN=aarch64-linux-android-
+          if [ -z "${{ env.GCC_64_SOURCE }}" ]; then
+            echo "Not set GCC 64!"
+          else
+            if [[ "${{ env.GCC_64_SOURCE }}" == *".git" ]]; then
+              git clone ${{ env.GCC_64_SOURCE }} -b ${{ env.GCC_64_BRANCH }} gcc-64 --depth=1
+            fi
+            if [[ ${{ env.GCC_64_SOURCE }} == *'.tar.gz' ]]; then
+              wget -O gcc-64.tar.gz ${{ env.GCC_64_SOURCE }}
+              mkdir gcc-64
+              tar -C gcc-64/ -zxvf gcc-64.tar.gz
+            fi
+            if [[ ${{ env.GCC_64_SOURCE }} == *'.zip' ]]; then
+              wget -O gcc-64.zip ${{ env.GCC_64_SOURCE }}
+              mkdir gcc-64
+              unzip gcc-64.zip -d gcc-64/
+            fi
+            GCC_64_BIN=aarch64-linux-android-
+            echo "GCC_64=CROSS_COMPILE=$GITHUB_WORKSPACE/gcc-64/bin/$GCC_64_BIN" >> $GITHUB_ENV
           fi
-          if [[ ${{ env.GCC_64_SOURCE }} == *'.tar.gz' ]]; then
-            wget -O gcc-64.tar.gz ${{ env.GCC_64_SOURCE }}
-            mkdir gcc-64
-            tar -C gcc-64/ -zxvf gcc-64.tar.gz
-            export GCC_64_BIN=aarch64-linux-android-
-          fi
-          if [[ ${{ env.GCC_64_SOURCE }} == *'.zip' ]]; then
-            wget -O gcc-64.zip ${{ env.GCC_64_SOURCE }}
-            mkdir gcc-64
-            unzip gcc-64.zip -d gcc-64/
-            export GCC_64_BIN=aarch64-linux-android-
-          fi
-          echo "GCC_64=CROSS_COMPILE=$GITHUB_WORKSPACE/gcc-64/bin/$GCC_64_BIN" >> $GITHUB_ENV
+
 
           # Set GCC ARM32
-          if [[ ${{ env.GCC_32_SOURCE }} == *".git" ]]; then
-            git clone ${{ env.GCC_32_SOURCE }} -b ${{ env.GCC_32_BRANCH }} gcc-32 --depth=1
-            export GCC_32_BIN=arm-linux-androideabi-
+          if [ -z "${{ env.GCC_32_SOURCE }}" ]; then
+            echo "Not set GCC 32!"
+          else
+            if [[ ${{ env.GCC_32_SOURCE }} == *".git" ]]; then
+              git clone ${{ env.GCC_32_SOURCE }} -b ${{ env.GCC_32_BRANCH }} gcc-32 --depth=1
+            fi
+            if [[ ${{ env.GCC_32_SOURCE }} == *'.tar.gz' ]]; then
+              wget -O gcc-32.tar.gz ${{ env.GCC_32_SOURCE }}
+              mkdir gcc-32
+              tar -C gcc-32/ -zxvf gcc-32.tar.gz
+            fi
+            if [[ ${{ env.GCC_32_SOURCE }} == *'.zip' ]]; then
+              wget -O gcc-32.zip ${{ env.GCC_32_SOURCE }}
+              mkdir gcc-32
+              unzip gcc-32.zip -d gcc-32/
+            fi
+            GCC_32_BIN=arm-linux-androideabi-
+            echo "GCC_32=CROSS_COMPILE_ARM32=$GITHUB_WORKSPACE/gcc-32/bin/$GCC_32_BIN" >> $GITHUB_ENV
           fi
-          if [[ ${{ env.GCC_32_SOURCE }} == *'.tar.gz' ]]; then
-            wget -O gcc-32.tar.gz ${{ env.GCC_32_SOURCE }}
-            mkdir gcc-32
-            tar -C gcc-32/ -zxvf gcc-32.tar.gz
-            export GCC_32_BIN=arm-linux-androideabi-
-          fi
-          if [[ ${{ env.GCC_32_SOURCE }} == *'.zip' ]]; then
-            wget -O gcc-32.zip ${{ env.GCC_32_SOURCE }}
-            mkdir gcc-32
-            unzip gcc-32.zip -d gcc-32/
-            export GCC_32_BIN=arm-linux-androideabi-
-          fi
-          echo "GCC_32=CROSS_COMPILE_ARM32=$GITHUB_WORKSPACE/gcc-32/bin/$GCC_32_BIN" >> $GITHUB_ENV
 
           # Set Clang
           if [[ ${{ env.CLANG_SOURCE }} == *".git" ]]; then
@@ -140,6 +145,8 @@ jobs:
             wget ${{ env.CLANG_SOURCE }} -O antman
             chmod +x antman
             bash antman -S
+          else
+            echo "Not supported format of Clang!"
           fi
 
       - name: Get Kernel Source
@@ -178,8 +185,7 @@ jobs:
           # Variable
           SUSFS_SOURCE=https://gitlab.com/simonpunk/susfs4ksu.git
           SUSFS_BRANCH=kernel-${{ env.KERNEL_VERSION }}
-          KERNEL_PATCHES=https://github.com/[your_name]/[your_patch].git
-          PACK_METHOD=Anykernel3 # Anykernel3 need SOURCE and BRANCH,but MKBOOTIMG needn't it.
+          PACK_METHOD=Anykernel3 # Anykernel3 need SOURCE and BRANCH, MKBOOTIMG needn't it.
           KERNELSU_METHOD=shell # shell and manual
 
           # Set $PACK_METHOD and KernelSU
@@ -218,22 +224,24 @@ jobs:
           echo "UPLOADNAME=-${{ env.KERNELSU_NAME }}_$KSU_VERSION" >> $GITHUB_ENV
 
           # Set SUSFS
-          git clone $SUSFS_SOURCE -b $SUSFS_BRANCH susfs4ksu --depth=1
-          git clone $KERNEL_PATCHES -b [patch_branch] NonGKI_Kernel_Patches --depth=1 # It's not necessary.
-          cp susfs4ksu/kernel_patches/fs/* fs/
-          cp susfs4ksu/kernel_patches/include/linux/* include/linux/
+          if [[ ${{ env.SUSFS_ENABLE }} == true ]]; then
+            if [[ ${{ env.SUSFS_FIXED }} == true ]]; then
+              PATCHES_SOURCE=https://github.com/[your_name]/[your_patch].git
+              PATCHES_BRANCH=[your_branch]
+              git clone $KERNEL_PATCHES -b $PATCHES_BRANCH NonGKI_Kernel_Patches --depth=1 # It's not necessary.
+            fi
+            git clone $SUSFS_SOURCE -b $SUSFS_BRANCH susfs4ksu --depth=1
+            cp susfs4ksu/kernel_patches/fs/* fs/
+            cp susfs4ksu/kernel_patches/include/linux/* include/linux/
+          else
+            echo "Disabled SUSFS !"
+          fi
 
       - name: Patch Kernel for no-kprobe
         run: |
-          cd $GITHUB_WORKSPACE/device_kernel
-          if [[ -d "NonGKI_Kernel_Patches" ]]; then
-            echo "Folder existed."
-          else
-            git clone https://github.com/JackA1ltman/NonGKI_Kernel_Patches.git -b op_kernel NonGKI_Kernel_Patches
-          fi
-
-          cp NonGKI_Kernel_Patches/patches.sh ./
-
+          cd $GITHUB_WORKSPACE
+          cp Patches/patches.sh device_kernel/
+          cd device_kernel
           bash patches.sh
 
       - name: Extra Kernel Options
@@ -251,8 +259,8 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/device_kernel
           rm -rf utils
-          git clone https://github.com/tomxi1997/lxc-docker-support-for-android.git utils
-          echo 'source "utils/Kconfig"' >> "Kconfig"
+          git clone https://github.com/tomxi1997/lxc-docker-support-for-android.git lxc
+          echo 'source "lxc/Kconfig"' >> "Kconfig"
 
           echo "CONFIG_DOCKER=y" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
 
@@ -260,19 +268,19 @@ jobs:
           echo "# CONFIG_ANDROID_PARANOID_NETWORK is not set" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
           
           #sed -i '/CONFIG_LOCALVERSION/d' ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
-          #echo 'CONFIG_LOCALVERSION="-LXC-KernelSU-support_Pdx"' >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
+          #echo 'CONFIG_LOCALVERSION="-LXC"' >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
           
-          chmod +x $GITHUB_WORKSPACE/device_kernel/utils/runcpatch.sh
+          chmod +x $GITHUB_WORKSPACE/device_kernel/lxc/runcpatch.sh
           if [ -f $GITHUB_WORKSPACE/device_kernel/kernel/cgroup/cgroup.c ]; then
-              sh $GITHUB_WORKSPACE/device_kernel/utils/runcpatch.sh $GITHUB_WORKSPACE/kernel_workspace/android-kernel/kernel/cgroup/cgroup.c
+              sh $GITHUB_WORKSPACE/device_kernel/lxc/runcpatch.sh $GITHUB_WORKSPACE/kernel_workspace/android-kernel/kernel/cgroup/cgroup.c
           fi
 
           if [ -f $GITHUB_WORKSPACE/device_kernel/kernel/cgroup.c ]; then
-              sh $GITHUB_WORKSPACE/device_kernel/utils/runcpatch.sh $GITHUB_WORKSPACE/kernel_workspace/android-kernel/kernel/cgroup.c
+              sh $GITHUB_WORKSPACE/device_kernel/lxc/runcpatch.sh $GITHUB_WORKSPACE/kernel_workspace/android-kernel/kernel/cgroup.c
           fi
 
           if [ -f $GITHUB_WORKSPACE/device_kernel/net/netfilter/xt_qtaguid.c ]; then
-              patch -p0 < $GITHUB_WORKSPACE/device_kernel/utils/xt_qtaguid.patch
+              patch -p0 < $GITHUB_WORKSPACE/device_kernel/lxc/xt_qtaguid.patch
           fi
           
       - name: Patch Kernel of SUSFS
