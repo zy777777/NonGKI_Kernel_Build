@@ -162,7 +162,7 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/device_kernel
           echo "CONFIG_KSU=y" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
-          if [[ ${{ env.SUSFS_ENABLE }} == "true" ]]; then
+          if [[ "${{ env.SUSFS_ENABLE }}" == "true" ]]; then
             echo "CONFIG_KSU_SUSFS=y" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
             echo "CONFIG_KSU_SUSFS_HAS_MAGIC_MOUNT=y" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
             echo "CONFIG_KSU_SUSFS_SUS_PATH=y" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
@@ -223,8 +223,8 @@ jobs:
           echo "UPLOADNAME=-${{ env.KERNELSU_NAME }}_$KSU_VERSION" >> $GITHUB_ENV
 
           # Set SUSFS
-          if [[ ${{ env.SUSFS_ENABLE }} == true ]]; then
-            if [[ ${{ env.SUSFS_FIXED }} == true ]]; then
+          if [[ "${{ env.SUSFS_ENABLE }}" == true ]]; then
+            if [[ "${{ env.SUSFS_FIXED }}" == true ]]; then
               PATCHES_SOURCE=https://github.com/[your_name]/[your_patch].git
               PATCHES_BRANCH=[your_branch]
               git clone $KERNEL_PATCHES -b $PATCHES_BRANCH NonGKI_Kernel_Patches --depth=1 # It's not necessary.
