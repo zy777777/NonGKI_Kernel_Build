@@ -1,4 +1,4 @@
-name: Build Kernel Template (Cannot be used for compilation directly)
+name: Build Kernel Black Shark 4 (MIUI 12-A11) with KSU and SUSFS
 on:
   workflow_call:
   workflow_dispatch:
@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Prepare Configuration
         run: |
-          CONFIG_ENV=$(grep -w "CONFIG_ENV" Profiles/codename_rom_template.env | head -n 1 | cut -d "=" -f 2)
+          CONFIG_ENV=$(grep -w "CONFIG_ENV" Profiles/penrose_miui_a11.env | head -n 1 | cut -d "=" -f 2)
           CONFIG_LIST=(
               DEVICE_NAME
               DEVICE_CODENAME
@@ -38,7 +38,6 @@ jobs:
               SUSFS_FIXED
               AK3_SOURCE
               AK3_BRANCH
-              BOOT_SOURCE
               LXC_ENABLE
               ROM_TEXT
 
@@ -54,7 +53,7 @@ jobs:
 
           # Move patch folder to tmp
           mv $GITHUB_WORKSPACE/Patches /tmp/
-
+          
       - name: Maximize build space
         uses: easimon/maximize-build-space@master
         with:
@@ -68,6 +67,7 @@ jobs:
 
       - name: Install necessary packages
         run: |
+          mv /tmp/Patches $GITHUB_WORKSPACE/
           lsb_release -a
           UBUNTU_VERSION=$(lsb_release -sr)
           sudo apt-get update
@@ -228,10 +228,9 @@ jobs:
           # Set SUSFS
           if [[ "${{ env.SUSFS_ENABLE }}" == true ]]; then
             if [[ "${{ env.SUSFS_FIXED }}" == true ]]; then
-              PATCHES_SOURCE=[your_name]/[your_patch]
+              PATCHES_SOURCE=https://github.com/[your_name]/[your_patch].git
               PATCHES_BRANCH=[your_branch]
-              git clone https://github.com/PATCHES_SOURCE.git -b $PATCHES_BRANCH NonGKI_Kernel_Patches --depth=1 # It's not necessary.
-              # git clone https://${{ github.actor }}:${{ secrets.SPECIAL_COMMAND }}@github.com/$PATCHES_SOURCE -b $PATCHES_BRANCH NonGKI_Kernel_Patches # if u need.
+              git clone $KERNEL_PATCHES -b $PATCHES_BRANCH NonGKI_Kernel_Patches --depth=1 # It's not necessary.
             fi
             git clone $SUSFS_SOURCE -b $SUSFS_BRANCH susfs4ksu --depth=1
             cp susfs4ksu/kernel_patches/fs/* fs/
@@ -255,11 +254,11 @@ jobs:
         run: |
           # Only ${{ env.DEVICE_NAME }} use it.
           cd $GITHUB_WORKSPACE/device_kernel
-          echo "CONFIG_CPU_BIG_ENDIAN=n" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
-          echo "CONFIG_COMPAT_VDSO=y" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
-          echo "CONFIG_LTO_NONE=y" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
-          echo "CONFIG_INIT_STACK_NONE=y" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
-          sed -i 's/# CONFIG_SECCOMP is not set/CONFIG_SECCOMP=y/' ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
+          echo "CONFIG_BUILD_ARM64_APPENDED_DTB_IMAGE=y" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
+          echo "CONFIG_BUILD_ARM64_APPENDED_KERNEL_IMAGE_NAME=\"Image.gz-dtb\"" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
+          echo "CONFIG_BUILD_ARM64_APPENDED_DTB_IMAGE_NAMES=\"\"" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
+          echo "CONFIG_BUILD_ARM64_KERNEL_COMPRESSION_GZIP=y" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
+          
 
       - name: Setup LXC
         if: env.LXC_ENABLE == 'true'
@@ -299,13 +298,13 @@ jobs:
           patch -p1 < 50_add_susfs_in_kernel-${{ env.KERNEL_VERSION }}.patch || true
 
           if [[ ${{ env.KERNELSU_NAME }}  == "KernelSU-Next" ]]; then
-            if [[ ${{ env.KERNELSU_SOURCE }} =~ ".sh" && ${{ env.KERNELSU_BRANCH }} != *"susfs" ]]; then
+            if [[ ${{ env.KERNELSU_SOURCE }} =~ ".sh" ]]; then
                 git clone https://github.com/KernelSU-Next/KernelSU-Next.git -b ${{ env.KERNELSU_BRANCH }}-susfs susfs_fixed
-            elif [[ ${{ env.KERNELSU_BRANCH }} != *"susfs" ]]
+            else
                 git clone ${{ env.KERNELSU_SOURCE }} -b ${{ env.KERNELSU_BRANCH }}-susfs susfs_fixed
             fi
             rsync -av --exclude='.git' susfs_fixed/kernel/ KernelSU-Next/kernel/
-          elif [[ ${{ env.KERNELSU_BRANCH }} != *"susfs" ]]
+          else
             cp susfs4ksu/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch ./${{ env.KERNELSU_NAME }}
             cd ${{ env.KERNELSU_NAME }}
             patch -p1 < 10_enable_susfs_for_ksu.patch || true
