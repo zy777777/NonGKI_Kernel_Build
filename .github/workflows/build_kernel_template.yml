@@ -52,13 +52,15 @@ jobs:
               fi
           done
 
+          # Move patch folder to tmp
+          mv $GITHUB_WORKSPACE/Patch /tmp/
+
       - name: Maximize build space
         uses: easimon/maximize-build-space@master
         with:
           root-reserve-mb: 8192
           temp-reserve-mb: 4096
           swap-size-mb: 8192
-          build-mount-path: "/mnt/build"
           remove-dotnet: "true"
           remove-android: "false"
           remove-haskell: "true"
@@ -240,8 +242,8 @@ jobs:
       - name: Patch Kernel for no-kprobe
         run: |
           cd $GITHUB_WORKSPACE
-          if [[ -f "Patches/patches.sh" ]]; then
-            cp Patches/patches.sh device_kernel/
+          if [[ -f "/tmp/Patches/patches.sh" ]]; then
+            cp /tmp/Patches/patches.sh device_kernel/
             cd device_kernel
             bash patches.sh
           else
