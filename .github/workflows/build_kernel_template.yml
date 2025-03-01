@@ -53,7 +53,7 @@ jobs:
           done
 
           # Move patch folder to tmp
-          mv $GITHUB_WORKSPACE/Patch /tmp/
+          mv $GITHUB_WORKSPACE/Patches /tmp/
 
       - name: Maximize build space
         uses: easimon/maximize-build-space@master
