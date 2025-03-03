@@ -90,7 +90,7 @@ jobs:
         - Redmi Note 4X (CN) can only be used for the **Qualcomm** version. Please do not attempt it on the MediaTek version.
         - OnePlus 8 (CN) has been tested and can be used on the OnePlus 9R. Theoretically, it should also work on the OnePlus 8T/8Pro.
         - Black Shark 4 is temporarily unable to support SUSFS due to potential kernel vulnerabilities.
-        - The version of KernelSU Magic patched with SuSFS is not the latest.
+        - The KernelSU version is for reference only. It is normal for the KernelSU version embedded in SUSFS to be lower.
 
     steps:
       # Checkout the code
@@ -135,6 +135,8 @@ jobs:
           KSU_NEXT_VERSION=$(cd KernelSU-Next && expr $(/usr/bin/git rev-list --count HEAD) + 10200)
           git clone -b magic https://github.com/backslashxx/KernelSU.git KernelSU-Magic
           KSU_MAGIC_VERSION=$(cd KernelSU-Magic && expr $(/usr/bin/git rev-list --count HEAD) + 10200 - 32)
+          git clone -b main https://github.com/rsuntk/KernelSU.git KernelSU-rsuntk
+          KSU_RSUNTK_VERSION=$(cd KernelSU-rsuntk && expr $(/usr/bin/git rev-list --count HEAD) + 10200)
 
           # Input release note
           echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
