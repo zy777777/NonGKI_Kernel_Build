@@ -136,7 +136,7 @@ jobs:
           git clone -b main https://github.com/rsuntk/KernelSU.git KernelSU-rsuntk
           KSU_RSUNTK_VERSION=$(cd KernelSU-rsuntk && expr $(/usr/bin/git rev-list --count HEAD) + 10200)
           git clone -b non-gki https://github.com/lightsummer233/KernelSU.git KernelSU-lightsummer233
-          KSU_LIGHTSUMMER233_VERSION=$(cd KernelSU-LIGHTSUMMER233 && expr $(/usr/bin/git rev-list --count HEAD) + 10200)
+          KSU_LIGHTSUMMER233_VERSION=$(cd KernelSU-lightsummer233 && expr $(/usr/bin/git rev-list --count HEAD) + 10200)
 
           # Input release note
           echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
