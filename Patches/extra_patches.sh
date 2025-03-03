@@ -21,7 +21,7 @@ for i in "${patch_files[@]}"; do
 
     # fs/ changes
     ## fs/devpts/inode.c
-    s/devpts/inode.c)
+    fs/devpts/inode.c)
     sed -i -e '/void \*devpts_get_priv(struct dentry \*dentry)/i\extern int ksu_handle_devpts(struct inode*);\n' \
        -e '/if (dentry->d_sb->s_magic != DEVPTS_SUPER_MAGIC)/i\    ksu_handle_devpts(dentry->d_inode);'
        fs/devpts/inode.c
