@@ -202,6 +202,7 @@ jobs:
           cp NonGKI_Kernel_Patches/extra_patches.sh ./
 
           bash patches.sh
+          cd $GITHUB_WORKSPACE/device_kernel
           bash extra_patches.sh
 
       - name: Extra Kernel Options
