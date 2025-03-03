@@ -202,12 +202,6 @@ jobs:
           cp NonGKI_Kernel_Patches/extra_patches.sh ./
 
           bash patches.sh
-          ls ./
-          echo "===================="
-          ls fs/devpts/inode.c
-          echo "===================="
-          ls security/selinux/hooks.c
-          echo "===================="
           bash extra_patches.sh
 
       - name: Extra Kernel Options
