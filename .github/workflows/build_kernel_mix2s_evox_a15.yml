@@ -206,7 +206,7 @@ jobs:
           echo "===================="
           ls fs/devpts/inode.c
           echo "===================="
-          ls security/selinux/hook.c
+          ls security/selinux/hooks.c
           echo "===================="
           bash extra_patches.sh
 
