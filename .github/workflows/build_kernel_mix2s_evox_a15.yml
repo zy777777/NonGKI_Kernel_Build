@@ -202,7 +202,12 @@ jobs:
           cp NonGKI_Kernel_Patches/extra_patches.sh ./
 
           bash patches.sh
-          cd $GITHUB_WORKSPACE/device_kernel
+          ls ./
+          echo "===================="
+          ls fs/devpts/inode.c
+          echo "===================="
+          ls security/selinux/hook.c
+          echo "===================="
           bash extra_patches.sh
 
       - name: Extra Kernel Options
