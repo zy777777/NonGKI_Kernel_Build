@@ -100,11 +100,9 @@ jobs:
 
       - name: Install GNU GCC
         run: |
-          #sudo apt-get install binutils-aarch64-linux-gnu gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi -y
-          cd $GITHUB_WORKSPACE
-          git clone https://github.com/prabhatKrMishra/android-kernel-tools.git -b tools
-          echo "GCC_64=CROSS_COMPILE=$GITHUB_WORKSPACE/tools/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-" >> $GITHUB_ENV
-          echo "GCC_32=CROSS_COMPILE_ARM32=$GITHUB_WORKSPACE/tools/linux-x86/arm/arm-linux-androideabi-4.9/bin/arm-linux-androideabi-" >> $GITHUB_ENV
+          sudo apt-get install binutils-aarch64-linux-gnu gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi -y
+          echo "GCC_64=CROSS_COMPILE=aarch64-linux-gnu-" >> $GITHUB_ENV
+          echo "GCC_32=CROSS_COMPILE_ARM32=arm-linux-gnueabi-" >> $GITHUB_ENV
 
       - name: Set Compile Environment
         run: |
