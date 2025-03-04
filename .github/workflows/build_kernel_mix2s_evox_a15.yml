@@ -207,13 +207,6 @@ jobs:
           bash patches.sh
           bash extra_patches.sh
 
-      - name: Patch Kernel of ReKernel (Experiment)
-        run: |
-         cd $GITHUB_WORKSPACE/device_kernel
-         cp /tmp/Patches/rekernel/rekernel.h include/linux/
-         cp /tmp/Patches/rekernel_mode1.patch ./
-         patch -p1 < rekernel_mode1.patch
-
       - name: Extra Kernel Options
         run: |
           # Only ${{ env.DEVICE_NAME }} use it.
