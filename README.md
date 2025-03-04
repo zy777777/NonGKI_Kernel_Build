@@ -71,6 +71,6 @@ Automatic build Non-GKI Kernel with KSU and SUSFS
   - 补充修补需要执行你重新制作的patch补丁
 
 - **Make [Pack Method]**
-  - 这一步分为AK3和MKBOOTIMG，受到Set Pack Method and KernelSU and SUSFS步骤中的变量控制，若无特殊需要，请使用我们提供的打包方案即可<br>
-  - MKBOOTIMG的方式可能会导致无法启动设备，我们对此有疑问，所以若可行尽可能使用AK3方式
+  - 这一步分为AK3和MKBOOTIMG，受到Set Pack Method and KernelSU and SUSFS步骤中的变量控制，若无特殊需要，请使用我们提供的打包方案即可
+  - ~~MKBOOTIMG的方式可能会导致无法启动设备，我们对此有疑问，所以若可行尽可能使用AK3方式~~我们已经修正了该问题，现在该功能完全正常
   - MKBOOTIMG需要提供干净的原始内核镜像文件，我们建议使用Github raw地址
