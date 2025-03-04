@@ -98,6 +98,12 @@ jobs:
             sudo apt-get install zstd libc6 binutils libc6-dev-i386 gcc g++ p7zip p7zip-full -y
           fi
 
+      - name: Install GNU GCC
+        run: |
+          sudo apt-get install binutils-aarch64-linux-gnu gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi -y
+          echo "GCC_64=CROSS_COMPILE=aarch64-linux-gnu-" >> $GITHUB_ENV
+          echo "GCC_32=CROSS_COMPILE_ARM32=arm-linux-gnueabi-" >> $GITHUB_ENV
+
       - name: Set Compile Environment
         run: |
           cd $GITHUB_WORKSPACE
