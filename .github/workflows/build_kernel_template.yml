@@ -25,6 +25,7 @@ jobs:
               KERNEL_BRANCH
               CLANG_SOURCE
               CLANG_BRANCH
+              GCC_GNU
               GCC_64_SOURCE
               GCC_64_BRANCH
               GCC_32_SOURCE
@@ -83,6 +84,18 @@ jobs:
           remove-android: "false"
           remove-haskell: "true"
           remove-codeql: "true"
+
+      - name: Install GNU GCC
+        if: env.GCC_GNU == 'true'
+        run: |
+          if [ -z ${{ env.GCC_64_SOURCE }} ] && [ -z ${{ env.GCC_32_SOURCE }} ]; then
+            sudo apt-get install binutils-aarch64-linux-gnu gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi -y
+            echo "GCC_64=CROSS_COMPILE=aarch64-linux-gnu-" >> $GITHUB_ENV
+            echo "GCC_32=CROSS_COMPILE_ARM32=arm-linux-gnueabi-" >> $GITHUB_ENV
+          else
+            echo "You needn't gcc powered by system."
+          fi
+
 
       - name: Install necessary packages
         run: |
@@ -288,6 +301,21 @@ jobs:
           echo "CONFIG_LTO_NONE=y" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
           echo "CONFIG_INIT_STACK_NONE=y" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
           sed -i 's/# CONFIG_SECCOMP is not set/CONFIG_SECCOMP=y/' ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
+
+      - name: Added dtc and mkdtboimg to kernel
+        if: env.DTC_DTBO_NEED == 'true'
+        run: |
+          # cd $GITHUB_WORKSPACE/device_kernel
+          # git clone https://github.com/libxzr/dtc-aosp.git -b standalone scripts/dtc
+          cd $GITHUB_WORKSPACE/device_kernel/scripts/dtc
+          wget https://android.googlesource.com/platform/system/libufdt/+archive/refs/heads/main/utils/src.tar.gz
+          tar zxvf src.tar.gz
+          rm -f src.tar.gz
+          # cd $GITHUB_WORKSPACE/device_kernel
+          sed -i '/targets := Image Image.bz2 Image.gz Image.lz4 Image.lzma Image.lzo/s/$/ dtbo.img/' ./arch/arm64/boot/Makefile
+          sed -i '/$(obj)\/Image\.gz-dtb: $(obj)\/Image\.gz $(DTB_OBJS) FORCE/a \#DTBO\n$(obj)\/dtbo.img: $(DTBO_OBJS) FORCE\n\t$(call if_changed,mkdtimg)' ./arch/arm64/boot/Makefile
+          sed -i '/KBUILD_DTBS\t:= dtbs/a \#DTBO\nKBUILD_DTBO_IMG := dtbo.img' ./arch/arm64/Makefile
+          sed -i '/dtc-tmp = $(subst $(comma),_,$(dot-target)\.dts\.tmp)/a \#DTBO\n# mkdtimg\n#----------------------------------------------------------------------------\nquiet_cmd_mkdtimg = DTBOIMG $@\ncmd_mkdtimg = python3 $(srctree)\/scripts\/dtc\/mkdtboimg.py create $@ --page_size=4096 $(filter-out FORCE,$^)'
 
       - name: Setup LXC
         if: env.LXC_ENABLE == 'true'
