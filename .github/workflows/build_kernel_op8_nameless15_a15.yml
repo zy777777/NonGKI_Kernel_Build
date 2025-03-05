@@ -409,10 +409,9 @@ jobs:
             echo "Found dtbo.img !"
           else
             echo "Doesn't found dtbo.img! Your device maybe needn't the file."
-            git clone https://github.com/zetaxbyte/create-dtbo-img-form-source-kernel.git -b zetaxbyte dtbo-create
-            cd dtbo-create/create-dtbo-img
-            bash make-dtbo.sh
-            cd $GITHUB_WORKSPACE/device_kernel/
+            wget https://android.googlesource.com/platform/system/libufdt/+archive/refs/heads/main/utils/src.tar.gz
+            tar zxvf src.tar.gz
+            python mkdtboimg.py create out/arch/arm64/boot/dtbo.img out/arch/arm64/boot/dts/qcom/*.dtbo
             cp -fp $IMAGE_DIR/dtbo.img tmp
           fi
 
