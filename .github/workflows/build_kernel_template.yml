@@ -41,6 +41,7 @@ jobs:
               AK3_BRANCH
               BOOT_SOURCE
               LXC_ENABLE
+              HAVE_NO_DTBO
               ROM_TEXT
 
           )
@@ -303,7 +304,7 @@ jobs:
           sed -i 's/# CONFIG_SECCOMP is not set/CONFIG_SECCOMP=y/' ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
 
       - name: Added mkdtboimg to kernel (Experiment)
-        if: env.DTBO_NEED == 'true'
+        if: env.HAVE_NO_DTBO == 'true'
         run: |
           cd $GITHUB_WORKSPACE/device_kernel/scripts/dtc
           wget https://android.googlesource.com/platform/system/libufdt/+archive/refs/heads/main/utils/src.tar.gz

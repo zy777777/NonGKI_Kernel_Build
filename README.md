@@ -22,6 +22,7 @@ Automatic build Non-GKI Kernel with KSU and SUSFS
 **CLANG_SOURCE** - Clang所在之处，但支持git、tar.gz、tar.xz  
 **CLANG_BRANCH** - Clang所需分支，但前提是git  
 
+**GCC_GNU** - 若你的内核需要GCC，但不需要自定义GCC，可通过选项启用系统提供的GNU-GCC，true或false  
 **GCC_XX_SOURCE** - GCC所在之处，但支持git、tar.gz、zip  
 **GCC_XX_BRANCH** - GCC所需分支，但前提是git  
 
@@ -41,6 +42,8 @@ Automatic build Non-GKI Kernel with KSU and SUSFS
 **BOOT_SOURCE** - 若你已经启用MKBOOTIMG的方式，要填写原始干净内核的地址，仅限img格式  
 
 **LXC_ENABLE** - (实验性⚠)启用自动化内核LXC/Docker支持，true或false  
+
+**HAVE_NO_DTBO** - (实验性⚠)若你的内核没有提供dtbo.img，且你的设备属于A/B分区且存在dtbo分区，则可启用本选项(true)，默认为false  
 
 **ROM_TEXT** - 用于编译成功后用于上传文件标题，声明内核可用的ROM  
 
