@@ -289,10 +289,14 @@ jobs:
         run: |
           # Only ${{ env.DEVICE_NAME }} use it.
           cd $GITHUB_WORKSPACE/device_kernel
-          echo "CONFIG_CPU_BIG_ENDIAN=n" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
-          echo "CONFIG_COMPAT_VDSO=y" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
+          echo "CONFIG_KASAN_STACK_ENABLE=n" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
           echo "CONFIG_LTO_NONE=y" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
-          echo "CONFIG_INIT_STACK_NONE=y" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
+          echo "CONFIG_SHADOW_CALL_STACKE=n" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
+          echo "CONFIG_BUILD_ARM64_KERNEL_COMPRESSION_GZIP=y" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
+          echo "CONFIG_BUILD_ARM64_DT_OVERLAY=y" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
+          echo "CONFIG_BUILD_ARM64_APPENDED_DTB_IMAGE=y" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
+          echo 'CONFIG_BUILD_ARM64_APPENDED_DTB_IMAGE_NAMES=""' >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
+          sed -i 's/^CONFIG_BUILD_ARM64_UNCOMPRESSED_KERNEL=y$/# CONFIG_BUILD_ARM64_UNCOMPRESSED_KERNEL is not set/' ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
           sed -i 's/# CONFIG_SECCOMP is not set/CONFIG_SECCOMP=y/' ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
 
       - name: Setup LXC
