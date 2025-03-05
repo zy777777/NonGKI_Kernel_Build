@@ -84,7 +84,7 @@ jobs:
     env:
       REPO_OWNER: JackA1ltman
       REPO_NAME: NonGKI_Kernel_Build
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.SPECIAL_COMMAND }}
       RELEASE_NAME: "NonGKI Kernel Pre-built"
       RELEASE_NOTES: |
         Below is the codename reference table. Please select the image or archive you need based on this table.
@@ -117,7 +117,7 @@ jobs:
       # Get the Latest Tag from GitHub
       - name: Generate and Create New Tag
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.SPECIAL_COMMAND }}
         run: |
           # Fetch the latest tag from GitHub (this is the latest tag based on the GitHub API)
           LATEST_TAG=$(gh api repos/$REPO_OWNER/$REPO_NAME/tags --jq '.[0].name')
