@@ -311,7 +311,7 @@ jobs:
           rm -f src.tar.gz
 
           cd $GITHUB_WORKSPACE/device_kernel
-          cp /tmp/temp_dtbo.patch ./
+          cp /tmp/Patches/temp_dtbo.patch ./
           patch -p1 < temp_dtbo.patch
           sed -i '/targets := Image Image.bz2 Image.gz Image.lz4 Image.lzma Image.lzo/s/$/ dtbo.img/' ./arch/arm64/boot/Makefile
           sed -i '/$(obj)\/Image\.gz-dtb: $(obj)\/Image\.gz $(DTB_OBJS) FORCE/a \#DTBO\n$(obj)\/dtbo.img: $(DTBO_OBJS) FORCE\n\t$(call if_changed,mkdtimg)' ./arch/arm64/boot/Makefile
