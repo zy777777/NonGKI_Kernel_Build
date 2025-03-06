@@ -1,4 +1,4 @@
-**Only Chinese:**
+**Only Chinese:**  
 | 设备名称 | 设备代号 | 内核/作者/名称 | 系统 | Android | 打包方式 | KernelSU | SuSFS | LXC | VFS Hook |
 |----------|----------|----------|----------|----------|----------|----------|----------|----------|
 | OnePlus 8 (CN) | instantnoodle | 4.19/ppajda/XTD | OxygenOS/ColorOS 13.1 | 13 | AnyKernel3 | Magic | Yes | No | No |
