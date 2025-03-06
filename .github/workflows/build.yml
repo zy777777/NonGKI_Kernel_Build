@@ -89,6 +89,7 @@ jobs:
       - build_kernel_note4x_aosp_a13
       - build_kernel_blackshark4_miui_a11
       - build_kernel_op8_nameless15_a15
+      - build_kernel_mi10s_aosp_a15
     if: ${{ inputs.make_release }}
     env:
       REPO_OWNER: JackA1ltman
