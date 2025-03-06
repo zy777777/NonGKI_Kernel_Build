@@ -74,7 +74,7 @@ jobs:
     secrets: inherit
     if: ${{ inputs.build_kernel_op8_nameless15_a15 }}
   build_kernel_mi10s_aosp_a15:
-    uses: ./.github/workflows/build_kernel_op8_nameless15_a15.yml
+    uses: ./.github/workflows/build_kernel_mi10s_aosp_a15.yml
     secrets: inherit
     if: ${{ inputs.build_kernel_mi10s_aosp_a15 }}
 
