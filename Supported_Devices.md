@@ -8,3 +8,11 @@
 | Redmi Note 4X (CN) | mido | 4.9/RaidenShogunSeggs/(Nothing) | Based-AOSP | 13 | AnyKernel3 | Next | Yes | No | No |  
 | Black Shark 4 | penrose | 4.19/DtHnAme/(Nothing) | MIUI/JoyUI 12 | 11 | AnyKernel3 | Next | No | No | Yes |  
 | Xiaomi 10S | thyme | 4.19/TIMISONG-dev/MagicTime | Based-AOSP | 15 | AnyKernel3 | Next | Yes | No | No |
+
+特别说明：
+  - 我们提供的KernelSU分支包括：[Next](https://github.com/KernelSU-Next/KernelSU-Next)、[Magic](https://github.com/backslashxx/KernelSU)、[rsuntk](https://github.com/rsuntk/KernelSU)、[lightsummer233](https://github.com/lightsummer233/KernelSU)、[酷友二创-mksu-skn](https://github.com/ShirkNeko/KernelSU)
+  - 打包方式：Anykernel3请在Recovery下刷入，Boot Image请在Recovery/Fastboot下选择刷入Boot分区
+  - All-代表该机型所有地区可用，CN-代表国区机型可用，其他同理
+  - 一加8 OxygenOS/ColorOS 13.1 经测试8、8t、8Pro、9r都可用，且该内核类原生设备同样可用（但会有某些Bugs）
+  - Redmi K20 Pro 通常仅高通可用，联发科设备不支持
+  - 黑鲨4 因机型内核缺陷（缺少ANDROID_KABI）无法修补SuSFS，为了提高隐藏性和安全性，因此是首款将常规手动Hook切换至[VFS Hook](https://github.com/backslashxx/KernelSU/issues/5)的设备
