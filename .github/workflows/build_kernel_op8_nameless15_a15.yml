@@ -274,9 +274,9 @@ jobs:
             cd device_kernel
             bash normal_patches.sh
             if [ $KERNEL -lt 5 ] && [ $PATCHLEVEL -lt 14 ]; then
-                cp /tmp/Patches/extra_normal_patches.sh device_kernel/
+                cp /tmp/Patches/extra_patches.sh device_kernel/
                 cd device_kernel
-                bash extra_normal_patches.sh
+                bash extra_patches.sh
             else
                 echo "your kernel needn't the patch."
             fi
