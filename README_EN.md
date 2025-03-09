@@ -1,7 +1,7 @@
 # Non-GKI Kernel with KSU and SUSFS
 ![GitHub branch check runs](https://img.shields.io/github/check-runs/JackA1ltman/NonGKI_Kernel_Build/main)![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/JackA1ltman/NonGKI_Kernel_Build/latest/total)  
 [Supported Devices](Supported_Devices.md) | [中文文档](README.md) | English  
-Automatic build for Non-GKI Kernel with KSU and SUSFS  
+
 **Non-GKI**: What we commonly refer to as Non-GKI includes both GKI1.0 (kernel versions 4.19-5.4) (5.4 is QGKI) and true Non-GKI (kernel versions ≤ 4.14).  
 Due to severe fragmentation in Non-GKI kernels, which not only prevents universal compatibility but also results in inconsistent build environments—including but not limited to system versions, GCC versions, and Clang versions—we have decided to start an automated Non-GKI kernel compilation project.  
 This project welcomes forks for personal modifications, contributions through pull requests, and collaborations.  
@@ -9,44 +9,44 @@ This project welcomes forks for personal modifications, contributions through pu
 # Usage Example
 ## Profiles/DeviceCodename_ROMName.env
 Each profile consists of the following elements:  
-**CONFIG_ENV** - Specifies the exact configuration file location within the Action environment.
+**CONFIG_ENV** - Specifies the exact configuration file location within the Action environment.  
 
-**DEVICE_NAME** - Full device name, format: Brand_Model_Region
-**DEVICE_CODENAME** - Device codename.
+**DEVICE_NAME** - Full device name, format: Brand_Model_Region  
+**DEVICE_CODENAME** - Device codename.  
 
-**CUSTOM_CMDS** - Typically used to specify the compiler/alternative compiler.
-**EXTRA_CMDS** - Custom parameters required by the compiler.
+**CUSTOM_CMDS** - Typically used to specify the compiler/alternative compiler.  
+**EXTRA_CMDS** - Custom parameters required by the compiler.  
 
-**KERNEL_SOURCE** - Location of the kernel source code.
-**KERNEL_BRANCH** - The required branch of the kernel source.
+**KERNEL_SOURCE** - Location of the kernel source code.  
+**KERNEL_BRANCH** - The required branch of the kernel source.  
 
-**CLANG_SOURCE** - Location of Clang (supports git, tar.gz, tar.xz).
-**CLANG_BRANCH** - Required branch for Clang (only applicable if using git).
+**CLANG_SOURCE** - Location of Clang (supports git, tar.gz, tar.xz).  
+**CLANG_BRANCH** - Required branch for Clang (only applicable if using git).  
 
-**GCC_GNU** - If your kernel requires GCC but does not need a custom GCC, you can enable the system-provided GNU-GCC with true or false.
-**GCC_XX_SOURCE** - Location of GCC (supports git, tar.gz, zip).
-**GCC_XX_BRANCH** - Required branch for GCC (only applicable if using git).
+**GCC_GNU** - If your kernel requires GCC but does not need a custom GCC, you can enable the system-provided GNU-GCC with true or false.  
+**GCC_XX_SOURCE** - Location of GCC (supports git, tar.gz, zip).  
+**GCC_XX_BRANCH** - Required branch for GCC (only applicable if using git).  
 
-**DEFCONFIG_SOURCE** - If you need a custom DEFCONFIG file, provide the specific file path.
-**DEFCONFIG_NAME** - The required DEFCONFIG file for compilation, usually formatted as device_defconfig or vendor/device_defconfig.
+**DEFCONFIG_SOURCE** - If you need a custom DEFCONFIG file, provide the specific file path.  
+**DEFCONFIG_NAME** - The required DEFCONFIG file for compilation, usually formatted as device_defconfig or vendor/device_defconfig.  
 
-**KERNELSU_SOURCE** - You can specify the source of KernelSU. By default, it uses setup.sh, but if necessary, manual installation can be enabled (in which case, this should be a git repository).
-**KERNELSU_BRANCH** - The branch of KernelSU to use.
-**KERNELSU_NAME** - Some KernelSU branches have different names, so you must specify the correct name. The default is KernelSU.
+**KERNELSU_SOURCE** - You can specify the source of KernelSU. By default, it uses setup.sh, but if necessary, manual installation can be enabled (in which case, this should be a git repository).  
+**KERNELSU_BRANCH** - The branch of KernelSU to use.  
+**KERNELSU_NAME** - Some KernelSU branches have different names, so you must specify the correct name. The default is KernelSU.  
 
-**SUSFS_ENABLE** - Whether to enable SUSFS during compilation (true or false).
-**SUSFS_FIXED** - Whether to apply additional patches to fix SUSFS-related issues during kernel compilation.
+**SUSFS_ENABLE** - Whether to enable SUSFS during compilation (true or false).  
+**SUSFS_FIXED** - Whether to apply additional patches to fix SUSFS-related issues during kernel compilation.  
 
-**AK3_SOURCE** - Location of AnyKernel3 (if needed, only supports git).
-**AK3_BRANCH** - Required branch for AnyKernel3.
+**AK3_SOURCE** - Location of AnyKernel3 (if needed, only supports git).  
+**AK3_BRANCH** - Required branch for AnyKernel3.  
 
-**BOOT_SOURCE** - If you have enabled MKBOOTIMG packaging, specify the location of the original clean kernel image (must be in .img format).
+**BOOT_SOURCE** - If you have enabled MKBOOTIMG packaging, specify the location of the original clean kernel image (must be in .img format).  
 
-**LXC_ENABLE** - (Experimental ⚠) Enable automated kernel support for LXC/Docker (true or false).
+**LXC_ENABLE** - (Experimental ⚠) Enable automated kernel support for LXC/Docker (true or false).  
 
-**HAVE_NO_DTBO** - (Experimental ⚠) If your kernel does not provide a dtbo.img but your device uses an A/B partitioning scheme with a dtbo partition, you can enable this option (true). The default is false.
+**HAVE_NO_DTBO** - (Experimental ⚠) If your kernel does not provide a dtbo.img but your device uses an A/B partitioning scheme with a dtbo partition, you can enable this option (true). The default is false.  
 
-**ROM_TEXT** - Used in the final filename of the compiled kernel to indicate which ROM it is compatible with.
+**ROM_TEXT** - Used in the final filename of the compiled kernel to indicate which ROM it is compatible with.  
 
 ## .github/workflows/build_kernel_Device_Model_ROM_AndroidVersion.yml
 We have provided example .env and .yml files for compilation. Below is an overview of the .yml structure.  
