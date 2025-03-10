@@ -220,6 +220,12 @@ jobs:
             echo "CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG=y" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
             echo "CONFIG_KSU_SUSFS_OPEN_REDIRECT=y" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
           fi
+          if [[ ${{ env.LXC_ENABLE }} == "true" ]]; then
+           echo "CONFIG_VIRTUALIZATION=y" >> android-kernel/arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
+           echo "CONFIG_KVM=y" >> android-kernel/arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
+           echo "CONFIG_VHOST_NET=y" >> android-kernel/arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
+           echo "CONFIG_VHOST_CROSS_ENDIAN_LEGACY=y" >> android-kernel/arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
+          fi
 
       - name: Set Pack Method and KernelSU and SUSFS
         run: |
@@ -286,41 +292,45 @@ jobs:
           cd $GITHUB_WORKSPACE
           KERNEL=$(echo "${{ env.KERNEL_VERSION }}" | awk -F '.' '{print $1}')
           PATCHLEVEL=$(echo "${{ env.KERNEL_VERSION }}" | awk -F '.' '{print $2}')
-          if [[ ${{ env.HOOK_METHOD }} == "normal" ]]; then
-            if [[ -f "/tmp/Patches/normal_patches.sh" ]]; then
-                cp /tmp/Patches/normal_patches.sh device_kernel/
-                cd device_kernel
-                bash normal_patches.sh
-                if [ $KERNEL -lt 5 ] && [ $PATCHLEVEL -lt 14 ]; then
-                    cp /tmp/Patches/extra_patches.sh device_kernel/
-                    cd device_kernel
-                    bash extra_patches.sh
-                else
-                    echo "your kernel needn't the patch."
-                fi
-            else
-                echo "Cannot found normal_patches.sh in build project , please check u file existed in build project !"
-                exit
-            fi
-          elif [[ ${{ env.HOOK_METHOD }} == "vfs" ]]; then
-            if [[ -f "/tmp/Patches/vfs_hook_patches.sh" ]]; then
-                cp /tmp/Patches/vfs_hook_patches.sh device_kernel/
-                cd device_kernel
-                bash vfs_hook_patches.sh
-                if [ $KERNEL -lt 5 ] && [ $PATCHLEVEL -lt 14 ]; then
-                    cp /tmp/Patches/extra_patches.sh device_kernel/
-                    cd device_kernel
-                    bash extra_patches.sh
-                else
-                    echo "your kernel needn't the patch."
-                fi
-            else
-                echo "Cannot found vfs_hook_patches.sh in build project , please check u file existed in build project !"
-                exit
-            fi
+          if grep -q "CONFIG_KSU" "device_kernel/fs/exec.c"; then
+            echo "Your kernel source code appears to have been manually patched, so this step is skipped."
           else
-            echo "please input vaild option!"
-            exit
+            if [[ ${{ env.HOOK_METHOD }} == "normal" ]]; then
+              if [[ -f "/tmp/Patches/normal_patches.sh" ]]; then
+                  cp /tmp/Patches/normal_patches.sh device_kernel/
+                  cd device_kernel
+                  bash normal_patches.sh
+                  if [ $KERNEL -lt 5 ] && [ $PATCHLEVEL -lt 14 ]; then
+                      cp /tmp/Patches/extra_patches.sh device_kernel/
+                      cd device_kernel
+                      bash extra_patches.sh
+                  else
+                      echo "your kernel needn't the patch."
+                  fi
+              else
+                  echo "Cannot found normal_patches.sh in build project , please check u file existed in build project !"
+                  exit
+              fi
+            elif [[ ${{ env.HOOK_METHOD }} == "vfs" ]]; then
+              if [[ -f "/tmp/Patches/vfs_hook_patches.sh" ]]; then
+                  cp /tmp/Patches/vfs_hook_patches.sh device_kernel/
+                  cd device_kernel
+                  bash vfs_hook_patches.sh
+                  if [ $KERNEL -lt 5 ] && [ $PATCHLEVEL -lt 14 ]; then
+                      cp /tmp/Patches/extra_patches.sh device_kernel/
+                      cd device_kernel
+                      bash extra_patches.sh
+                  else
+                      echo "your kernel needn't the patch."
+                  fi
+              else
+                  echo "Cannot found vfs_hook_patches.sh in build project , please check u file existed in build project !"
+                  exit
+              fi
+            else
+              echo "please input vaild option!"
+              exit
+            fi
           fi
 
       - name: Extra Kernel Options
