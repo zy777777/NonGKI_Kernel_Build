@@ -3,6 +3,7 @@
 [支持列表](Supported_Devices.md) | 中文文档 | [English](README_EN.md)  
 
 **Non-GKI**：我们常说的Non-GKI包括了GKI1.0（内核版本4.19-5.4）(5.4为QGKI)和真正Non-GKI（内核版本≤4.14）  
+
 由于Non-GKI内核存在严重的碎片化，不仅仅体现在内核无法通用，更是存在编译环境参差不齐，包括但不限于系统版本，GCC版本，Clang版本等等，因此决定开始自动化编译Non-GKI内核项目  
 本项目欢迎Fork后自行编辑使用，也欢迎增加修改后提交合并，或者成为合作伙伴  
 
@@ -54,10 +55,15 @@
 
 - **env:** - 设置必要修改的变量，独立于Profiles
   - PACK_METHOD - 打包方式，分为MKBOOTIMG，和[Anykernel3](https://github.com/osm0sis/AnyKernel3)，默认为Anykernel3
-  - KERNELSU_METHOD - 嵌入KernelSU的方式，通常情况下使用shell方式即可，但如果你提供了非setup.sh的方式，或者该方式报错，请将其修改manual，manual虽然是手动安装，但实际上并不需要维护者修改任何内容
+  - KERNELSU_METHOD - 嵌入KernelSU的方式：
+    - 通常情况下使用shell方式即可
+    - 但如果你提供了非setup.sh的方式，或者该方式报错，请将其修改manual，manual虽然是手动安装，但实际上并不需要维护者修改任何内容
+    - 若你的内核已经存在KernelSU，但你想要替换，可使用only，仅执行git不执行修补
   - PATCHES_SOURCE - 使用susfs不可避免需要手动修补，这是用来填写你存放patch的github项目地址，当然如果你不采用susfs，则不需要填写，可参考我的用于Patch的git项目
   - PATCHES_BRANCH - patch项目所需的分支，一般为main
-  - HOOK_METHOD - 我们提供了两种方式用于KernelSU手动修补，normal代表最常见的修补方式，一般不会出问题，[vfs](https://github.com/backslashxx/KernelSU/issues/5)是最新的最小化修补方式，似乎会提高隐藏，但是在低版本clang下可能会有ISO编译规范问题
+  - HOOK_METHOD - 我们提供了两种方式用于KernelSU手动修补：
+    - normal代表最常见的修补方式，一般不会出问题
+    - [vfs](https://github.com/backslashxx/KernelSU/issues/5)是最新的最小化修补方式，似乎会提高隐藏，但是在低版本clang下可能会有ISO编译规范问题
 
 - **runs-on: ubuntu-XX.XX** 
   - 不同内核所需系统不同，默认为22.04，我们预先提供了两套包安装选项（适配22.04和24.04），我们通过检测系统版本进行决定包安装

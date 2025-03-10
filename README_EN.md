@@ -3,6 +3,7 @@
 [Supported Devices](Supported_Devices.md) | [中文文档](README.md) | English  
 
 **Non-GKI**: What we commonly refer to as Non-GKI includes both GKI1.0 (kernel versions 4.19-5.4) (5.4 is QGKI) and true Non-GKI (kernel versions ≤ 4.14).  
+
 Due to severe fragmentation in Non-GKI kernels, which not only prevents universal compatibility but also results in inconsistent build environments—including but not limited to system versions, GCC versions, and Clang versions—we have decided to start an automated Non-GKI kernel compilation project.  
 This project welcomes forks for personal modifications, contributions through pull requests, and collaborations.  
 
@@ -53,13 +54,16 @@ We have provided example .env and .yml files for compilation. Below is an overvi
 Only key configurable sections are highlighted; modifying steps and sequences extensively is not recommended.  
 
 - **env:** - Define essential variables independently from the Profiles configuration.
-    - PACK_METHOD - Packaging method, either MKBOOTIMG or Anykernel3 (default: Anykernel3).
-    - KERNELSU_METHOD - The method for embedding KernelSU. The default is shell. If setup.sh is not used or encounters errors, change this to manual. Although manual means manual installation, no manual intervention is required.
-    - PATCHES_SOURCE - SUSFS typically requires manual patches. Provide the GitHub repository URL containing the patches. If you are not using SUSFS, this can be left blank.
-    - PATCHES_BRANCH - The required branch for the patch repository (default: main).
-    - HOOK_METHOD - Two KernelSU patching methods are available:
+    - **PACK_METHOD** - Packaging method, either MKBOOTIMG or [Anykernel3](https://github.com/osm0sis/AnyKernel3) (default: Anykernel3).
+    - **KERNELSU_METHOD** - The method for embedding KernelSU:
+        - The default is "**shell**". 
+        - If setup.sh is not used or encounters errors, change this to "**manual**". Although manual means manual installation, no manual intervention is required.
+        - If your kernel already has KernelSU but you want to replace it, you can use "**only**" to execute Git operations without applying patches.
+    - **PATCHES_SOURCE** - SUSFS typically requires manual patches. Provide the GitHub repository URL containing the patches. If you are not using SUSFS, this can be left blank.
+    - **PATCHES_BRANCH** - The required branch for the patch repository (default: main).
+    - **HOOK_METHOD** - Two KernelSU patching methods are available:
         - normal: Standard patching, works in most cases.
-        - vfs: Minimal patching method, which may improve hiding KernelSU but might cause ISO compliance issues with older Clang versions.
+        - [vfs](https://github.com/backslashxx/KernelSU/issues/5): Minimal patching method, which may improve hiding KernelSU but might cause ISO compliance issues with older Clang versions.
 
 - **runs-on:** ubuntu-XX.XX 
     - Different kernels may require different Ubuntu versions. The default is 22.04, but support for both 22.04 and 24.04 is available. The system version determines which package installation method is used.
@@ -70,8 +74,8 @@ Only key configurable sections are highlighted; modifying steps and sequences ex
     - Clang sources can be in git, tar.gz, tar.xz, zip, or managed via antman.
 
 - **Set Pack Method, KernelSU, and SUSFS**
-    - Anykernel3 - If AnyKernel3 is not found in the kernel source, the one specified in env is used. Only git is supported.
-    - MKBOOTIMG - Requires a clean kernel image. The recommended method is using a GitHub raw URL.
+    - **Anykernel3** - If AnyKernel3 is not found in the kernel source, the one specified in env is used. Only git is supported.
+    - **MKBOOTIMG** - Requires a clean kernel image. The recommended method is using a GitHub raw URL.
 
 - **Extra Kernel Options**
     - Some kernels require additional settings during compilation. 
