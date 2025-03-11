@@ -1,4 +1,4 @@
-name: Build Kernel Template (Cannot be used for compilation directly)
+name: Build Kernel Unisoc Devices with KSU and SUSFS
 on:
   workflow_call:
   workflow_dispatch:
@@ -8,7 +8,6 @@ env:
   PATCHES_SOURCE : "author/source" # [your_name]/[your_patch] -> gooder123/NonGKI_Patcher
   PATCHES_BRANCH : "branch" # [your_branch] -> main
   HOOK_METHOD : "normal" # manual hook method,can choice vfs and normal.
-  PROFILE_NAME : "codename_rom_template.env" # your profile name.
 
 jobs:
   build:
@@ -22,7 +21,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Prepare Configuration
         run: |
-          CONFIG_ENV=$(grep -w "CONFIG_ENV" Profiles/${{ env.PROFILE_NAME }} | head -n 1 | cut -d "=" -f 2)
+          CONFIG_ENV=$(grep -w "CONFIG_ENV" Profiles/unisoc_special.env | head -n 1 | cut -d "=" -f 2)
           CONFIG_LIST=(
               DEVICE_NAME
               DEVICE_CODENAME
