@@ -52,6 +52,7 @@ Each profile consists of the following elements:
 ## .github/workflows/build_kernel_Device_Model_ROM_AndroidVersion.yml
 We have provided example .env and .yml files for compilation. Below is an overview of the .yml structure.  
 Only key configurable sections are highlighted; modifying steps and sequences extensively is not recommended.  
+These are the example files we provide: **codename_rom_template.env** and **build_kernel_template.yml**.  
 
 - **env:** - Define essential variables independently from the Profiles configuration.
     - **PACK_METHOD** - Packaging method, either MKBOOTIMG or [Anykernel3](https://github.com/osm0sis/AnyKernel3) (default: Anykernel3).
@@ -64,6 +65,7 @@ Only key configurable sections are highlighted; modifying steps and sequences ex
     - **HOOK_METHOD** - Two KernelSU patching methods are available:
         - **normal**: Standard patching, works in most cases.
         - [vfs](https://github.com/backslashxx/KernelSU/issues/5): Minimal patching method, which may improve hiding KernelSU but might cause ISO compliance issues with older Clang versions，And there are issues with support for kernels ≤4.9. It is recommended to enable this only for higher kernel versions.
+    - **PROFILE_NAME** - Enter the name of your modified ENV environment variable file, such as codename_rom_template.env.
 
 - **runs-on:** ubuntu-XX.XX 
     - Different kernels may require different Ubuntu versions. The default is 22.04, but support for both 22.04 and 24.04 is available. The system version determines which package installation method is used.

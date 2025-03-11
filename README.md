@@ -52,6 +52,7 @@
 ## .github/workflow/build_kernel_设备简称_型号_ROM_Android版本.yml
 我们编写了env和用于编译的yml的例本，接下来是对yml例本的解析  
 这里仅指出大概可供修改的地方，具体可按需求修改，我们不建议过度修改步骤和顺序  
+这是我们提供的示例文件：**codename_rom_template.env**和**build_kernel_template.yml**  
 
 - **env:** - 设置必要修改的变量，独立于Profiles
   - **PACK_METHOD** - 打包方式，分为MKBOOTIMG，和[Anykernel3](https://github.com/osm0sis/AnyKernel3)，默认为Anykernel3
@@ -64,6 +65,7 @@
   - **HOOK_METHOD** - 我们提供了两种方式用于KernelSU手动修补：
     - **normal**代表最常见的修补方式，一般不会出问题
     - [vfs](https://github.com/backslashxx/KernelSU/issues/5)是最新的最小化修补方式，似乎会提高隐藏，但是在低版本clang下可能会有ISO编译规范问题，且对于版本≤4.9的内核的支持存在问题，仅更高版本内核建议启用
+  - **PROFILE_NAME** - 填写成你修改好的env环境变量文件的名称，例如codename_rom_template.env
 
 - **runs-on: ubuntu-XX.XX** 
   - 不同内核所需系统不同，默认为22.04，我们预先提供了两套包安装选项（适配22.04和24.04），我们通过检测系统版本进行决定包安装
