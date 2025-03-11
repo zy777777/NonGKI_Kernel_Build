@@ -86,7 +86,7 @@
 - **Added mkdtboimg to kernel (Experiment)** 
   - 如你所见，很多内核，或者说大部分内核都不需要该功能，有些内核例如nameless虽然没有dtbo,但实际上他的确不需要。而且仅限A/B分区的设备，且存在危险性，例如加上dtbo反而无法启动设备等等，三思而后行
 
-- **Setup LXC** 
+- **Setup LXC (Experiment)** 
   - 自动部署LXC，但许多内核并不支持该方式，可用于Fork后自行尝试，在本人的官方编译中应该不会选择支持LXC
   
 - **Patch Kernel**

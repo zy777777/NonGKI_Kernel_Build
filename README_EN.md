@@ -85,7 +85,7 @@ Only key configurable sections are highlighted; modifying steps and sequences ex
     - Most kernels do not need this feature. Some kernels, like Nameless, lack dtbo.img but do not require it.
     - This is only applicable to A/B partition devices. Enabling this could make the device unbootable, so proceed with caution.
 
-- **Setup LXC**
+- **Setup LXC (Experiment)**
     - Enables LXC support automatically. However, many kernels do not support this method.
     - This is mainly for testing and is not used in official builds.
 
