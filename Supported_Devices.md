@@ -15,5 +15,5 @@
   - All-代表该机型所有地区可用，CN-代表国区机型可用，其他同理
   - 一加8 OxygenOS/ColorOS 13.1 经测试8、8t、8Pro、9r都可用，且该内核类原生设备同样可用（但会有某些Bugs）
   - 红米 Note 4X 通常仅高通可用，联发科设备不支持
-  - 黑鲨4 因机型内核缺陷（缺少ANDROID_KABI）无法修补SuSFS
-  - 一加8 Nameless 15 9r设备存在WiFi失效的问题，请谨慎刷入
+  - 黑鲨4 因机型内核缺陷（缺少ANDROID_KABI）无法修补SuSFS，为了提高隐藏性和安全性，因此是首款将常规手动Hook切换至[VFS Hook](https://github.com/backslashxx/KernelSU/issues/5)的设备
+  - 一加8 Nameless 15 存在WiFi失效的问题，请谨慎刷入
