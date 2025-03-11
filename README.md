@@ -63,7 +63,7 @@
   - **PATCHES_BRANCH** - patch项目所需的分支，一般为main
   - **HOOK_METHOD** - 我们提供了两种方式用于KernelSU手动修补：
     - **normal**代表最常见的修补方式，一般不会出问题
-    - [vfs](https://github.com/backslashxx/KernelSU/issues/5)是最新的最小化修补方式，似乎会提高隐藏，但是在低版本clang下可能会有ISO编译规范问题
+    - [vfs](https://github.com/backslashxx/KernelSU/issues/5)是最新的最小化修补方式，似乎会提高隐藏，但是在低版本clang下可能会有ISO编译规范问题，且对于版本≤4.9的内核的支持存在问题，仅更高版本内核建议启用
 
 - **runs-on: ubuntu-XX.XX** 
   - 不同内核所需系统不同，默认为22.04，我们预先提供了两套包安装选项（适配22.04和24.04），我们通过检测系统版本进行决定包安装
