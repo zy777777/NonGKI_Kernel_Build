@@ -54,15 +54,15 @@
 这里仅指出大概可供修改的地方，具体可按需求修改，我们不建议过度修改步骤和顺序  
 
 - **env:** - 设置必要修改的变量，独立于Profiles
-  - PACK_METHOD - 打包方式，分为MKBOOTIMG，和[Anykernel3](https://github.com/osm0sis/AnyKernel3)，默认为Anykernel3
-  - KERNELSU_METHOD - 嵌入KernelSU的方式：
-    - 通常情况下使用shell方式即可
-    - 但如果你提供了非setup.sh的方式，或者该方式报错，请将其修改manual，manual虽然是手动安装，但实际上并不需要维护者修改任何内容
-    - 若你的内核已经存在KernelSU，但你想要替换，可使用only，仅执行git不执行修补
-  - PATCHES_SOURCE - 使用susfs不可避免需要手动修补，这是用来填写你存放patch的github项目地址，当然如果你不采用susfs，则不需要填写，可参考我的用于Patch的git项目
-  - PATCHES_BRANCH - patch项目所需的分支，一般为main
-  - HOOK_METHOD - 我们提供了两种方式用于KernelSU手动修补：
-    - normal代表最常见的修补方式，一般不会出问题
+  - **PACK_METHOD** - 打包方式，分为MKBOOTIMG，和[Anykernel3](https://github.com/osm0sis/AnyKernel3)，默认为Anykernel3
+  - **KERNELSU_METHOD** - 嵌入KernelSU的方式：
+    - 通常情况下使用**shell**方式即可
+    - 但如果你提供了非setup.sh的方式，或者该方式报错，请将其修改**manual**，manual虽然是手动安装，但实际上并不需要维护者修改任何内容
+    - 若你的内核已经存在KernelSU，但你想要替换，可使用**only**，仅执行git不执行修补
+  - **PATCHES_SOURCE** - 使用susfs不可避免需要手动修补，这是用来填写你存放patch的github项目地址，当然如果你不采用susfs，则不需要填写，可参考我的用于Patch的git项目
+  - **PATCHES_BRANCH** - patch项目所需的分支，一般为main
+  - **HOOK_METHOD** - 我们提供了两种方式用于KernelSU手动修补：
+    - **normal**代表最常见的修补方式，一般不会出问题
     - [vfs](https://github.com/backslashxx/KernelSU/issues/5)是最新的最小化修补方式，似乎会提高隐藏，但是在低版本clang下可能会有ISO编译规范问题
 
 - **runs-on: ubuntu-XX.XX** 

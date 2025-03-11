@@ -62,7 +62,7 @@ Only key configurable sections are highlighted; modifying steps and sequences ex
     - **PATCHES_SOURCE** - SUSFS typically requires manual patches. Provide the GitHub repository URL containing the patches. If you are not using SUSFS, this can be left blank.
     - **PATCHES_BRANCH** - The required branch for the patch repository (default: main).
     - **HOOK_METHOD** - Two KernelSU patching methods are available:
-        - normal: Standard patching, works in most cases.
+        - **normal**: Standard patching, works in most cases.
         - [vfs](https://github.com/backslashxx/KernelSU/issues/5): Minimal patching method, which may improve hiding KernelSU but might cause ISO compliance issues with older Clang versions.
 
 - **runs-on:** ubuntu-XX.XX 
