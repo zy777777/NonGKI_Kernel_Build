@@ -5,10 +5,10 @@ on:
 env:
   PACK_METHOD: "Anykernel3" # Anykernel3 need SOURCE and BRANCH, MKBOOTIMG needn't it.
   KERNELSU_METHOD: "shell" # shell, manual and only.
-  PATCHES_SOURCE : "author/source" # [your_name]/[your_patch] -> gooder123/NonGKI_Patcher
-  PATCHES_BRANCH : "branch" # [your_branch] -> main
-  HOOK_METHOD : "normal" # manual hook method,can choice vfs and normal.
-  PROFILE_NAME : "codename_rom_template.env" # your profile name.
+  PATCHES_SOURCE: "author/source" # [your_name]/[your_patch] -> gooder123/NonGKI_Patcher
+  PATCHES_BRANCH: "branch" # [your_branch] -> main
+  HOOK_METHOD: "normal" # manual hook method,can choice vfs and normal.
+  PROFILE_NAME: "codename_rom_template.env" # your profile name.
 
 jobs:
   build:
@@ -103,7 +103,6 @@ jobs:
           else
             echo "You needn't gcc powered by system."
           fi
-
 
       - name: Install necessary packages
         run: |
@@ -409,7 +408,7 @@ jobs:
 
           if [[ ${{ env.KERNELSU_NAME }}  == "KernelSU-Next" ]]; then
             if [[ ${{ env.KERNELSU_SOURCE }} =~ ".sh" && ${{ env.KERNELSU_BRANCH }} != *"susfs" ]]; then
-                git clone https://github.com/KernelSU-Next/KernelSU-Next.git -b ${{ env.KERNELSU_BRANCH }}-susfs susfs_fixed
+                git clone https://github.com/KernelSU-Next/KernelSU-Next.git -b ${{ env.KERNELSU_BRANCH }}-susfs-dev susfs_fixed
             elif [[ ${{ env.KERNELSU_BRANCH }} != *"susfs" ]]; then
                 git clone ${{ env.KERNELSU_SOURCE }} -b ${{ env.KERNELSU_BRANCH }}-susfs susfs_fixed
             fi
