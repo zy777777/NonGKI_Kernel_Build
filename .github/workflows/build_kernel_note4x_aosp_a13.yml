@@ -230,7 +230,7 @@ jobs:
           sed -i 's/# CONFIG_SECCOMP is not set/CONFIG_SECCOMP=y/' ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
 
       - name: Patch Kernel for no-kprobe
-        if: env.NOTHING == "nothing"
+        if: env.NOTHING == 'false'
         run: |
           cd $GITHUB_WORKSPACE/device_kernel
           if [[ -d "NonGKI_Kernel_Patches" ]]; then
