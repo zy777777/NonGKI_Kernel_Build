@@ -66,6 +66,7 @@ These are the example files we provide: **codename_rom_template.env** and **buil
         - **normal**: Standard patching, works in most cases.
         - [vfs](https://github.com/backslashxx/KernelSU/issues/5): Minimal patching method, which may improve hiding KernelSU but might cause ISO compliance issues with older Clang versions，And there are issues with support for kernels ≤4.9. It is recommended to enable this only for higher kernel versions.
     - **PROFILE_NAME** - Enter the name of your modified ENV environment variable file, such as codename_rom_template.env.
+    - **KERNELSU_SUS_PATCH** - If your KernelSU is not part of KernelSU-Next and does not have a patch branch for SuSFS, you can enable this option (true). However, we do not recommend doing so, as the KernelSU branches have been heavily modified, and manual patching is no longer suitable for the current era.
 
 - **runs-on:** ubuntu-XX.XX 
     - Different kernels may require different Ubuntu versions. The default is 22.04, but support for both 22.04 and 24.04 is available. The system version determines which package installation method is used.
