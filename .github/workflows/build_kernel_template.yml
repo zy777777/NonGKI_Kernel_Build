@@ -519,10 +519,8 @@ jobs:
             cp -fp $IMAGE_DIR/Image.gz out/kernel
             echo "Found Image.gz !"
           elif [[ -f "$IMAGE_DIR/Image" ]]; then
-            rm -f out/kernel
-            gzip -c $IMAGE_DIR/Image > $IMAGE_DIR/Image.gz
-            cp -fp $IMAGE_DIR/Image.gz out/kernel
-            echo "Found Image ! Automatic convert Image.gz ! "
+            cp -fp $IMAGE_DIR/Image out/kernel
+            echo "Found Image !"
           fi
 
           eval "mkboottools/mkbootimg.py $FORMAT_MKBOOTING -o ${{ env.DEVICE_CODENAME }}-${{ env.ROM_TEXT }}-$TIME-image${{ env.LXC_STATUS }}.img"
