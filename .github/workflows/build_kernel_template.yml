@@ -519,6 +519,7 @@ jobs:
             cp -fp $IMAGE_DIR/Image.gz out/kernel
             echo "Found Image.gz !"
           elif [[ -f "$IMAGE_DIR/Image" ]]; then
+            rm -f out/kernel
             cp -fp $IMAGE_DIR/Image out/kernel
             echo "Found Image !"
           fi
