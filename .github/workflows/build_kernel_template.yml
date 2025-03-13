@@ -248,7 +248,7 @@ jobs:
             wget ${{ env.BOOT_SOURCE }} -O $GITHUB_WORKSPACE/boot_source_${{ env.DEVICE_NAME }}.img
             cd device_kernel
           else
-            exit
+            false
           fi
           echo "PACK_METHOD=${{ env.PACK_METHOD }}" >> $GITHUB_ENV
 
@@ -266,7 +266,7 @@ jobs:
             git clone ${{ env.KERNELSU_SOURCE }} -b ${{ env.KERNELSU_BRANCH }} ${{ env.KERNELSU_NAME }}
             echo "KernelSU git done."
           else
-            exit
+            false
           fi
           echo "KERNELSU_METHOD=${{ env.KERNELSU_METHOD }}" >> $GITHUB_ENV
           KSU_VERSION=$(cd ${{ env.KERNELSU_NAME }} && expr $(/usr/bin/git rev-list --count HEAD) + 10200)
@@ -277,12 +277,12 @@ jobs:
             if [[ "${{ env.SUSFS_FIXED }}" == true ]]; then
               if [ -z "${{ env.PATCHES_SOURCE }}" ] || [ -z "${{ env.PATCHES_BRANCH }}" ]; then
                 echo "Please input vaild source and branch!"
-                exit
+                false
               elif [[ ${{ env.PATCHES_SOURCE }} == *".git" ]]; then
-                git clone https://github.com/${{ env.PATCHES_SOURCE }}.git -b ${{ env.PATCHES_BRANCH }} NonGKI_Kernel_Patches --depth=1 # It's not necessary.
+                echo "Please do not set a full URL in PATCH_SOURCE!"
+                false
               else
-                echo "Patches source only supported .git!"
-                exit
+                git clone https://github.com/${{ env.PATCHES_SOURCE }}.git -b ${{ env.PATCHES_BRANCH }} NonGKI_Kernel_Patches --depth=1 # It's not necessary.
               fi
             fi
             git clone $SUSFS_SOURCE -b $SUSFS_BRANCH susfs4ksu --depth=1
@@ -316,7 +316,7 @@ jobs:
                   fi
               else
                   echo "Cannot found normal_patches.sh in build project , please check u file existed in build project !"
-                  exit
+                  false
               fi
             elif [[ ${{ env.HOOK_METHOD }} == "vfs" ]]; then
               if [[ -f "/tmp/Patches/vfs_hook_patches.sh" ]]; then
@@ -334,11 +334,11 @@ jobs:
                   fi
               else
                   echo "Cannot found vfs_hook_patches.sh in build project , please check u file existed in build project !"
-                  exit
+                  false
               fi
             else
               echo "please input vaild option!"
-              exit
+              false
             fi
           fi
 
