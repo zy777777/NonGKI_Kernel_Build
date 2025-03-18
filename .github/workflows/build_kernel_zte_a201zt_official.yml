@@ -1,4 +1,4 @@
-name: Build Kernel Template (Cannot be used for compilation directly)
+name: Build Kernel ZTE A201ZT (Official) with KSU and SUSFS
 on:
   workflow_call:
   workflow_dispatch:
