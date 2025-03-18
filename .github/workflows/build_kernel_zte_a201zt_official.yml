@@ -196,7 +196,7 @@ jobs:
           cd $GITHUB_WORKSPACE
           # git clone --recursive ${{ env.KERNEL_SOURCE }} -b ${{ env.KERNEL_BRANCH }} device_kernel --depth=1
           if [[ "${{ env.KERNEL_SOURCE }}" == *'.tar.gz' ]]; then
-              wget -O more_files.tar.gz ${{ env.KERNEL_SOURCE }}
+              wget -O more_files.tar.gz "${{ env.KERNEL_SOURCE }}"
               mkdir more_files
               tar -C more_files/ -zxvf more_files.tar.gz
               mv more_files/kernel-4.19 ./device_kernel
