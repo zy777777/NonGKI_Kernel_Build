@@ -198,8 +198,8 @@ jobs:
           wget -O more_files.tar.gz "${{ env.KERNEL_SOURCE }}"
           mkdir more_files
           tar -C more_files/ -zxvf more_files.tar.gz
-          mv more_files/kernel-4.19 more_files/device_kernel
-          mv more_files/device_kernel ./
+          mv more_files/Z3150S/kernel-4.19 more_files/Z3150S/device_kernel
+          mv more_files/Z3150S/device_kernel ./
           if [[ -n "${{ env.DEFCONFIG_SOURCE }}" ]]; then
             wget ${{ env.DEFCONFIG_SOURCE }} -O device_kernel/arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
           fi
