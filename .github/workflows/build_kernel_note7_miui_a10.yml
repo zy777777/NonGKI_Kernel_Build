@@ -97,6 +97,7 @@ jobs:
       - name: Install GNU GCC
         if: env.GCC_GNU == 'true'
         run: |
+          ls -al /tmp/Patches
           if [ -z ${{ env.GCC_64_SOURCE }} ] && [ -z ${{ env.GCC_32_SOURCE }} ]; then
             sudo apt-get install binutils-aarch64-linux-gnu gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi -y
             echo "GCC_64=CROSS_COMPILE=aarch64-linux-gnu-" >> $GITHUB_ENV
