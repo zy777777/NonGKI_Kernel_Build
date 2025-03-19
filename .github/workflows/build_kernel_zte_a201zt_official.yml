@@ -506,14 +506,6 @@ jobs:
           rm -rf tmp
 
           ls -al ./
-          echo "================="
-          ls -al ./tmp
-          if [[ -z "${{ env.DEVICE_CODENAME }}-${{ env.ROM_TEXT }}-$TIME-${{ env.PACK_METHOD }}${{ env.LXC_STATUS }}.zip" ]]; then
-            echo "successfully!"
-          else
-            echo "NO"
-            false
-          fi
 
           echo "PACK_NAME=${{ env.DEVICE_CODENAME }}-${{ env.ROM_TEXT }}-$TIME-${{ env.PACK_METHOD }}${{ env.LXC_STATUS }}.zip" >> $GITHUB_ENV
 
