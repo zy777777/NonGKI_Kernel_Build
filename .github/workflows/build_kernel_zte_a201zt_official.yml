@@ -544,4 +544,4 @@ jobs:
         with:
           name: Kernel-${{ env.PACK_NAME }}
           path: |
-            ${{ env.PACK_NAME }}
+            device_kernel/${{ env.PACK_NAME }}
