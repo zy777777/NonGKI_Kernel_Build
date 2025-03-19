@@ -107,8 +107,6 @@ jobs:
 
       - name: Install necessary packages
         run: |
-          ls -al /tmp/Patches
-          false
           lsb_release -a
           UBUNTU_VERSION=$(lsb_release -sr)
           sudo apt-get update
@@ -309,8 +307,7 @@ jobs:
                   bash normal_patches.sh
                   echo "execuated patch successfully."
                   if [ $KERNEL -lt 5 ] && [ $PATCHLEVEL -lt 14 ]; then
-                      cp /tmp/Patches/extra_patches.sh device_kernel/
-                      cd device_kernel
+                      cp /tmp/Patches/extra_patches.sh ./
                       bash extra_patches.sh
                       echo "execuated extra patch successfully."
                   else
@@ -327,8 +324,7 @@ jobs:
                   bash vfs_hook_patches.sh
                   echo "execuated vfs patch successfully."
                   if [ $KERNEL -lt 5 ] && [ $PATCHLEVEL -lt 14 ]; then
-                      cp /tmp/Patches/extra_patches.sh device_kernel/
-                      cd device_kernel
+                      cp /tmp/Patches/extra_patches.sh ./
                       bash extra_patches.sh
                       echo "execuated extra patch successfully."
                   else
