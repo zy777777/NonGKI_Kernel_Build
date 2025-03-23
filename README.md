@@ -55,6 +55,7 @@
 ## .github/workflow/build_kernel_设备简称_型号_ROM_Android版本.yml
 我们编写了env和用于编译的yml的例本，接下来是对yml例本的解析  
 这里仅指出大概可供修改的地方，具体可按需求修改，我们不建议过度修改步骤和顺序  
+本项目提供的所有补丁均不能保证在≤4.4内核能够正常使用__
 这是我们提供的示例文件：**codename_rom_template.env**和**build_kernel_template.yml**  
 
 - **env:** - 设置必要修改的变量，独立于Profiles

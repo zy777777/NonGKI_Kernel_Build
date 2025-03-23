@@ -55,6 +55,7 @@ Each profile consists of the following elements:
 ## .github/workflows/build_kernel_Device_Model_ROM_AndroidVersion.yml
 We have provided example .env and .yml files for compilation. Below is an overview of the .yml structure.  
 Only key configurable sections are highlighted; modifying steps and sequences extensively is not recommended.  
+All patches provided by this project are not guaranteed to work properly on kernel versions ≤4.4.  
 These are the example files we provide: **codename_rom_template.env** and **build_kernel_template.yml**.  
 
 - **env:** - Define essential variables independently from the Profiles configuration.

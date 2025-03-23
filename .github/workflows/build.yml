@@ -111,8 +111,8 @@ jobs:
             LATEST_TAG="v1.2" # if have no any releases.
           fi
 
-          NEW_TAG=$(echo "$LATEST_TAG" | awk -F'-r' '{suffix=$2; if (!suffix) suffix=0; suffix++; printf "%s-r%d", $1, suffix}')
-          # NEW_TAG="v1.2-r1"
+          # NEW_TAG=$(echo "$LATEST_TAG" | awk -F'-r' '{suffix=$2; if (!suffix) suffix=0; suffix++; printf "%s-r%d", $1, suffix}')
+          NEW_TAG="v1.3-r1"
 
           # Output the new tag to be used
           echo "New tag: $NEW_TAG"
@@ -127,8 +127,8 @@ jobs:
           git push --tags
 
           # Get KernelSU version
-          git clone -b next-susfs https://github.com/KernelSU-Next/KernelSU-Next.git
-          KSU_NEXT_VERSION=$(cd KernelSU-Next && expr $(/usr/bin/git rev-list --count HEAD) + 10200)
+          # git clone -b next-susfs https://github.com/KernelSU-Next/KernelSU-Next.git
+          # KSU_NEXT_VERSION=$(cd KernelSU-Next && expr $(/usr/bin/git rev-list --count HEAD) + 10200)
           git clone -b magic https://github.com/backslashxx/KernelSU.git KernelSU-Magic
           KSU_MAGIC_VERSION=$(cd KernelSU-Magic && expr $(/usr/bin/git rev-list --count HEAD) + 10200 - 32)
           git clone -b main https://github.com/rsuntk/KernelSU.git KernelSU-rsuntk
@@ -141,7 +141,8 @@ jobs:
           # Input release note
           echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
           echo "$RELEASE_NOTES" >> $GITHUB_ENV
-          echo "[KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next) Version: $KSU_NEXT_VERSION  " >> $GITHUB_ENV
+          # echo "[KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next) Version: $KSU_NEXT_VERSION  " >> $GITHUB_ENV
+          echo "[KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next) Not Supported ❌ !  " >> $GITHUB_ENV
           echo "[KernelSU-Magic](https://github.com/backslashxx/KernelSU) Version: $KSU_MAGIC_VERSION  " >> $GITHUB_ENV
           echo "[KernelSU-rsuntk](https://github.com/rsuntk/KernelSU) Version: $KSU_RSUNTK_VERSION  " >> $GITHUB_ENV
           echo "[KernelSU-lightsummer233](https://github.com/lightsummer233/KernelSU) Version: $KSU_LIGHTSUMMER233_VERSION  " >> $GITHUB_ENV
