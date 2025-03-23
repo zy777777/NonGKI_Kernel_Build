@@ -2,7 +2,7 @@
 ![GitHub branch check runs](https://img.shields.io/github/check-runs/JackA1ltman/NonGKI_Kernel_Build/main)![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/JackA1ltman/NonGKI_Kernel_Build/latest/total)  
 [支持列表](Supported_Devices.md) | 中文文档 | [English](README_EN.md) | [更新日志](Updated.md)  
 
-**Ver**.1.3 Fixed 2
+**Ver**.1.3 Fixed 3
 
 **Non-GKI**：我们常说的Non-GKI包括了GKI1.0（内核版本4.19-5.4）（5.4为QGKI）和真正Non-GKI（内核版本≤4.14）  
 
@@ -55,7 +55,7 @@
 ## .github/workflow/build_kernel_设备简称_型号_ROM_Android版本.yml
 我们编写了env和用于编译的yml的例本，接下来是对yml例本的解析  
 这里仅指出大概可供修改的地方，具体可按需求修改，我们不建议过度修改步骤和顺序  
-本项目提供的所有补丁均不能保证在≤4.4内核能够正常使用__
+本项目提供的所有补丁均不能保证在≤4.4内核能够正常使用  
 这是我们提供的示例文件：**codename_rom_template.env**和**build_kernel_template.yml**  
 
 - **env:** - 设置必要修改的变量，独立于Profiles
