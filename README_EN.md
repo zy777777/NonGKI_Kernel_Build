@@ -1,6 +1,8 @@
 # Non-GKI Kernel with KSU and SUSFS
 ![GitHub branch check runs](https://img.shields.io/github/check-runs/JackA1ltman/NonGKI_Kernel_Build/main)![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/JackA1ltman/NonGKI_Kernel_Build/latest/total)  
-[Supported Devices](Supported_Devices.md) | [中文文档](README.md) | English  
+[Supported Devices](Supported_Devices.md) | [中文文档](README.md) | English | [Updated Logs](Updated.md)  
+
+**Ver**.1.3
 
 **Non-GKI**: What we commonly refer to as Non-GKI includes both GKI1.0 (kernel versions 4.19-5.4) (5.4 is QGKI) and true Non-GKI (kernel versions ≤ 4.14).  
 
@@ -30,6 +32,7 @@ Each profile consists of the following elements:
 
 **DEFCONFIG_SOURCE** - If you need a custom DEFCONFIG file, provide the specific file path.  
 **DEFCONFIG_NAME** - The required DEFCONFIG file for compilation, usually formatted as device_defconfig or vendor/device_defconfig.  
+**DEFCONFIG_ORIGIN_IMAGE** - (Experimental ⚠) If you do not need the default DEFCONFIG from the kernel source and cannot provide a custom DEFCONFIG, you can extract the DEFCONFIG file from the Image file you obtained (Image.gz and Image.gz-dtb need to be manually decompressed before uploading). **DEFCONFIG_NAME** must be specified and cannot be empty.  
 
 **KERNELSU_SOURCE** - You can specify the source of KernelSU. By default, it uses setup.sh, but if necessary, manual installation can be enabled (in which case, this should be a git repository).  
 **KERNELSU_BRANCH** - The branch of KernelSU to use.  
@@ -55,6 +58,7 @@ Only key configurable sections are highlighted; modifying steps and sequences ex
 These are the example files we provide: **codename_rom_template.env** and **build_kernel_template.yml**.  
 
 - **env:** - Define essential variables independently from the Profiles configuration.
+    - **SYSTEM_OS** - Optional Ubuntu version number, defaults to 22.04. You can specify latest, 24.04, etc., but other operating systems are not supported yet.
     - **PACK_METHOD** - Packaging method, either MKBOOTIMG or [Anykernel3](https://github.com/osm0sis/AnyKernel3) (default: Anykernel3).
     - **KERNELSU_METHOD** - The method for embedding KernelSU:
         - The default is "**shell**". 
@@ -67,6 +71,7 @@ These are the example files we provide: **codename_rom_template.env** and **buil
         - [vfs](https://github.com/backslashxx/KernelSU/issues/5): Minimal patching method, which may improve hiding KernelSU but might cause ISO compliance issues with older Clang versions，And there are issues with support for kernels ≤4.9. It is recommended to enable this only for higher kernel versions.
     - **PROFILE_NAME** - Enter the name of your modified ENV environment variable file, such as codename_rom_template.env.
     - **KERNELSU_SUS_PATCH** - If your KernelSU is not part of KernelSU-Next and does not have a patch branch for SuSFS, you can enable this option (true). However, we do not recommend doing so, as the KernelSU branches have been heavily modified, and manual patching is no longer suitable for the current era.
+    - **BUILD_DEBUGGER** - Enables error reporting if needed. Currently, it provides output for patch error .rej files, with more features expected in future updates.
 
 - **runs-on:** ubuntu-XX.XX 
     - Different kernels may require different Ubuntu versions. The default is 22.04, but support for both 22.04 and 24.04 is available. The system version determines which package installation method is used.
