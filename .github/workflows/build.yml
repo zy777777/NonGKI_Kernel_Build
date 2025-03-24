@@ -37,7 +37,7 @@ on:
         required: true
         type: boolean
         default: true
-      build_kernel_s20_oneui5.1_a13:
+      build_kernel_s20_oneui5_a13:
         description: "Build Kernel Samsung S20 5G (OneUI 5.1) (Snapdragon Only)?"
         required: true
         type: boolean
@@ -76,7 +76,7 @@ jobs:
   build_kernel_s20_oneui5_a13:
     uses: ./.github/workflows/build_kernel_s20_oneui5.1_a13.yml
     secrets: inherit
-    if: ${{ inputs.build_kernel_s20_oneui5.1_a13 }}
+    if: ${{ inputs.build_kernel_s20_oneui5_a13 }}
 
   trigger-release:
     runs-on: ubuntu-latest
