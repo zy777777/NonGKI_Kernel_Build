@@ -2,6 +2,8 @@ name: Build Kernel Redmi K20Pro (Soviet-Star-OSS)(Based-AOSP A15) with KSU and S
 on:
   workflow_call:
   workflow_dispatch:
+env:
+  HOOK_METHOD: "normal" # manual hook method,can choice vfs and normal.
 
 jobs:
   build:
@@ -139,16 +141,61 @@ jobs:
 
       - name: Patch Kernel for no-kprobe
         run: |
-          cd $GITHUB_WORKSPACE/device_kernel
-          if [[ -d "NonGKI_Kernel_Patches" ]]; then
-            echo "Folder existed."
+          cd $GITHUB_WORKSPACE
+          KERNEL=$(echo "${{ env.KERNEL_VERSION }}" | awk -F '.' '{print $1}')
+          PATCHLEVEL=$(echo "${{ env.KERNEL_VERSION }}" | awk -F '.' '{print $2}')
+          if grep -q "CONFIG_KSU" "device_kernel/fs/exec.c"; then
+            echo "Your kernel source code appears to have been manually patched, so this step is skipped."
           else
-            git clone https://github.com/JackA1ltman/NonGKI_Kernel_Patches.git -b mi_kernel NonGKI_Kernel_Patches
+            if [[ ${{ env.HOOK_METHOD }} == "normal" ]]; then
+              if [[ -f "/tmp/Patches/normal_patches.sh" ]]; then
+                  cp /tmp/Patches/normal_patches.sh device_kernel/
+                  cd device_kernel
+                  bash normal_patches.sh
+                  echo "execuated patch successfully."
+                  if [ $KERNEL -lt 5 ] && [ $PATCHLEVEL -lt 14 ]; then
+                      cp /tmp/Patches/extra_patches.sh ./
+                      bash extra_patches.sh
+                      echo "execuated extra patch successfully."
+                  else
+                      echo "your kernel needn't the patch."
+                  fi
+                  if [[ "${{ env.KERNELSU_NAME }}" != "KernelSU-Next" ]]; then
+                      cp /tmp/Patches/backport_patches.sh ./
+                      bash backport_patches.sh
+                      echo "execuated backport patch successfully."
+                  fi
+              else
+                  echo "Cannot found normal_patches.sh in build project , please check u file existed in build project !"
+                  false
+              fi
+            elif [[ ${{ env.HOOK_METHOD }} == "vfs" ]]; then
+              if [[ -f "/tmp/Patches/vfs_hook_patches.sh" ]]; then
+                  cp /tmp/Patches/vfs_hook_patches.sh device_kernel/
+                  cd device_kernel
+                  bash vfs_hook_patches.sh
+                  echo "execuated vfs patch successfully."
+                  if [ $KERNEL -lt 5 ] && [ $PATCHLEVEL -lt 14 ]; then
+                      cp /tmp/Patches/extra_patches.sh ./
+                      bash extra_patches.sh
+                      echo "execuated extra patch successfully."
+                  else
+                      echo "your kernel needn't extra patch."
+                  fi
+                  if [[ "${{ env.KERNELSU_NAME }}" != "KernelSU-Next" ]]; then
+                      cp /tmp/Patches/backport_patches.sh ./
+                      bash backport_patches.sh
+                      echo "execuated backport patch successfully."
+                  fi
+              else
+                  echo "Cannot found vfs_hook_patches.sh in build project , please check u file existed in build project !"
+                  false
+              fi
+            else
+              echo "please input vaild option!"
+              false
+            fi
           fi
-
-          cp NonGKI_Kernel_Patches/patches.sh ./
-
-          bash patches.sh
 
       - name: Extra Kernel Options
         run: |

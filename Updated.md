@@ -1,4 +1,10 @@
 ## 项目更新日志
+- **Ver.1.3 Fixed 10**
+    - 将 一加8 Nameless 15 切换为KernelSU-rsuntk
+    - 将 红米 K20 Pro 切换为KernelSU-rsuntk
+    - 将 黑鲨 4 切换为KernelSU-rsuntk
+    - 将 小米 10S 切换为KernelSU-rsuntk
+
 - **Ver.1.3 Fixed 9**
     - 增加说明页面中对切换KernelSU分支的内容
     - 更正分支mksu-skn的名称为SukiSU
