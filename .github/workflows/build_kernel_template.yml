@@ -326,14 +326,14 @@ jobs:
                   if [ $KERNEL -lt 5 ] && [ $PATCHLEVEL -lt 14 ]; then
                       cp /tmp/Patches/extra_patches.sh ./
                       bash extra_patches.sh
-                      if [[ "${{ env.KERNELSU_NAME }}" != "KernelSU-Next" ]]; then
-                        cp /tmp/Patches/backport_patches.sh ./
-                        bash backport_patches.sh
-                        echo "execuated backport patch successfully."
-                      fi
                       echo "execuated extra patch successfully."
                   else
                       echo "your kernel needn't the patch."
+                  fi
+                  if [[ "${{ env.KERNELSU_NAME }}" != "KernelSU-Next" ]]; then
+                      cp /tmp/Patches/backport_patches.sh ./
+                      bash backport_patches.sh
+                      echo "execuated backport patch successfully."
                   fi
               else
                   echo "Cannot found normal_patches.sh in build project , please check u file existed in build project !"
@@ -348,14 +348,14 @@ jobs:
                   if [ $KERNEL -lt 5 ] && [ $PATCHLEVEL -lt 14 ]; then
                       cp /tmp/Patches/extra_patches.sh ./
                       bash extra_patches.sh
-                      if [[ "${{ env.KERNELSU_NAME }}" != "KernelSU-Next" ]]; then
-                        cp /tmp/Patches/backport_patches.sh ./
-                        bash backport_patches.sh
-                        echo "execuated backport patch successfully."
-                      fi
                       echo "execuated extra patch successfully."
                   else
                       echo "your kernel needn't extra patch."
+                  fi
+                  if [[ "${{ env.KERNELSU_NAME }}" != "KernelSU-Next" ]]; then
+                      cp /tmp/Patches/backport_patches.sh ./
+                      bash backport_patches.sh
+                      echo "execuated backport patch successfully."
                   fi
               else
                   echo "Cannot found vfs_hook_patches.sh in build project , please check u file existed in build project !"

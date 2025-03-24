@@ -1,4 +1,4 @@
-name: Build Kernel Samsung s20-5G (oneui 5.1) Snapdragon Only with KSU and SUSFS
+name: Build Kernel Samsung S20 5G (OneUI 5.1) (Snapdragon Only) with KSU and SUSFS
 on:
   workflow_call:
   workflow_dispatch:
@@ -281,6 +281,11 @@ jobs:
                 bash extra_patches.sh
             else
                 echo "your kernel needn't the patch."
+            fi
+            if [[ "${{ env.KERNELSU_NAME }}" != "KernelSU-Next" ]]; then
+                cp /tmp/Patches/backport_patches.sh ./
+                bash backport_patches.sh
+                echo "execuated backport patch successfully."
             fi
           else
             echo "Cannot found normal_patches.sh in build project , please check u file existed in build project !"
