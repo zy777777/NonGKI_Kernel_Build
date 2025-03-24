@@ -26,7 +26,16 @@ for i in "${patch_files[@]}"; do
     ## exec.c
     fs/exec.c)
         sed -i '/int do_execve(struct filename \*filename,/i\#ifdef CONFIG_KSU\nextern bool ksu_execveat_hook __read_mostly;\nextern int ksu_handle_execveat(int *fd, struct filename **filename_ptr, void *argv,\n\t\t\tvoid *envp, int *flags);\nextern int ksu_handle_execveat_sucompat(int *fd, struct filename **filename_ptr,\n\t\t\t\tvoid *argv, void *envp, int *flags);\n#endif' fs/exec.c
-        sed -i '0,/struct user_arg_ptr envp = { .ptr.native = __envp };/!b;//a\#ifdef CONFIG_KSU\n\tif (unlikely(ksu_execveat_hook))\n\t\tksu_handle_execveat((int *)AT_FDCWD, &filename, &argv, &envp, 0);\n\telse\n\t\tksu_handle_execveat_sucompat((int *)AT_FDCWD, &filename, NULL, NULL, NULL);\n#endif'  fs/exec.c
+        sed -i '/do_execve *(/,/^}/ {
+/struct user_arg_ptr envp = { .ptr.native = __envp };/a\
+#ifdef CONFIG_KSU\
+\tif (unlikely(ksu_execveat_hook))\
+\t\tksu_handle_execveat((int *)AT_FDCWD, &filename, &argv, &envp, 0);\
+\telse\
+\t\tksu_handle_execveat_sucompat((int *)AT_FDCWD, &filename, NULL, NULL, NULL);\
+#endif
+}' fs/exec.c
+
         sed -i ':a;N;$!ba;s/\(return do_execveat_common(AT_FDCWD, filename, argv, envp, 0);\)/\n#ifdef CONFIG_KSU\n\tif (!ksu_execveat_hook)\n\t\tksu_handle_execveat_sucompat((int *)AT_FDCWD, \&filename, NULL, NULL, NULL); \/* 32-bit su *\/\n#endif\n\1/2' fs/exec.c
         ;;
 
