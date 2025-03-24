@@ -69,7 +69,7 @@ jobs:
 
       - name: Install necessary packages
         run: |
-          mv /tmp/Patches $GITHUB_WORKSPACE/
+          cp -r /tmp/Patches $GITHUB_WORKSPACE/
           lsb_release -a
           UBUNTU_VERSION=$(lsb_release -sr)
           sudo apt-get update
