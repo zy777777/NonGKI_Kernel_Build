@@ -10,6 +10,7 @@
 | 小米 10S | thyme | 4.19/TIMISONG-dev/MagicTime | Based-AOSP | 15 | AnyKernel3 | Next | ✅ | ❌ | ❌ | Stable |  
 | 中兴 A201ZT | a201zt | 4.19/官方内核 | 未知 | Null | AnyKernel3 | Next | ❌ | ❌ | ❌ | Suspend |  
 | 三星 S20-5G | x1q | 4.19/官方内核 | Oneui 5.1/6.1 | 13/14 | Boot Image | Official | ❌ | ❌ | ❌ | Suspend |  
+| 红米 Note 7 | lavender | 4.4/Stormbreaker/Predator | MIUI 12 | 10 | AnyKernel3 | rsuntk | ❌ | ❌ | ❌ | Suspend |  
 
 特别说明：
   - 我们提供的KernelSU分支包括：[Next](https://github.com/KernelSU-Next/KernelSU-Next)、[Magic](https://github.com/backslashxx/KernelSU)、[rsuntk](https://github.com/rsuntk/KernelSU)、[lightsummer233](https://github.com/lightsummer233/KernelSU)、[酷友二创-mksu-skn](https://github.com/ShirkNeko/KernelSU)
@@ -21,3 +22,4 @@
   - 黑鲨4 因机型内核缺陷（缺少ANDROID_KABI）无法修补SuSFS，为了提高隐藏性和安全性，因此是首款将常规手动Hook切换至[VFS Hook](https://github.com/backslashxx/KernelSU/issues/5)的设备
   - 一加8 Nameless 15 存在WiFi失效的问题，请谨慎刷入
   - 中兴 Z201ZT 由于源代码并非Git方式获得，因此修改了yml文件中对应的获取方式，由于存在较多未知信息，因此该内核仅研究学习使用，若有需要可自行Fork编译
+  - 红米 Note 7 需要在内核刷入后再刷入[Oldcam+WiFi补丁](https://sourceforge.net/projects/syylg/files/MengT/MIUI_Q_PATCH/OldCam%2BWiFi-Patch-v2.zip/download)才能正常使用
