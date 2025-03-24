@@ -46,6 +46,9 @@ jobs:
               fi
           done
 
+          # Move patch folder to tmp
+          mv $GITHUB_WORKSPACE/Patches /tmp/
+
       - name: Maximize build space
         uses: easimon/maximize-build-space@master
         with:
@@ -126,7 +129,7 @@ jobs:
 
           # Set KernelSU(Manual)
           git clone ${{ env.KERNELSU_SOURCE }} -b ${{ env.KERNELSU_BRANCH }} ${{ env.KERNELSU_NAME }}
-          ln -sf "$(realpath --relative-to="$KERNEL_LOCATION/drivers" "$KERNEL_LOCATION/KernelSU-Next/kernel")" "kernelsu"
+          ln -sf "$(realpath --relative-to="$KERNEL_LOCATION/drivers" "$KERNEL_LOCATION/${{ env.KERNELSU_NAME }}/kernel")" "kernelsu"
           grep -q "kernelsu" "$KERNEL_LOCATION/drivers/Makefile" || printf "\nobj-\$(CONFIG_KSU) += kernelsu/\n" >> $KERNEL_LOCATION/drivers/Makefile
           grep -q "source \"drivers/kernelsu/Kconfig\"" "$KERNEL_LOCATION/drivers/Kconfig" || sed -i "/endmenu/i\source \"drivers/kernelsu/Kconfig\"" "$KERNEL_LOCATION/drivers/Kconfig"
           echo "KernelSU Settings done."

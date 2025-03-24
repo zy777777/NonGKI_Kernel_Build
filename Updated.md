@@ -1,4 +1,9 @@
 ## 项目更新日志
+- **Ver.1.3 Fixed 11**
+    - 修复 红米 K20Pro 采用手动Hook时产生的编译错误
+    - 修复 黑鲨 4 编译时无法找到新补丁的问题
+    - 修复 一加8 Nameless 15 编译时提示重复定义的问题
+
 - **Ver.1.3 Fixed 10**
     - 将 一加8 Nameless 15 切换为KernelSU-rsuntk
     - 将 红米 K20 Pro 切换为KernelSU-rsuntk
