@@ -309,7 +309,7 @@ jobs:
                   if [ $KERNEL -lt 5 ] && [ $PATCHLEVEL -lt 14 ]; then
                       cp /tmp/Patches/extra_patches.sh ./
                       bash extra_patches.sh
-                      if [[ "${{ env.KERNELSU_NAME }}" != "KernelSU-Next" ]];
+                      if [[ "${{ env.KERNELSU_NAME }}" != "KernelSU-Next" ]]; then
                         cp /tmp/Patches/backport_patches.sh ./
                         bash backport_patches.sh
                         echo "execuated backport patch successfully."
