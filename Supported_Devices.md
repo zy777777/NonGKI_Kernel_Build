@@ -3,7 +3,7 @@
 |----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|  
 | 一加 8 (CN) | instantnoodle | 4.19/ppajda/XTD | OxygenOS/ColorOS 13.1 | 13 | AnyKernel3 | Magic | ✅ | ❌ | ❌ | Stable |  
 | 一加 8 (All) | instantnoodle | 4.19/Nameless/Nameless | Nameless 15 | 15 | AnyKernel3 | Next | ✅ | ❌ | ❌ | Beta |  
-| 小米 MIX2S (CN) | polaris | 4.9/EvoX/EvoX | Evolution X 10.2.1 | 15 | Boot Image | Next | ✅ | ❌ | ❌ | Stable |  
+| 小米 MIX2S (CN) | polaris | 4.9/EvoX/EvoX | Evolution X 10.2.1 | 15 | Boot Image | SukiSU | ✅ | ❌ | ❌ | Stable |  
 | 红米 K20 Pro (CN) | raphael | 4.14/SOVIET-ANDROID/SOVIET-STAR-OSS | Based-AOSP | 15 | AnyKernel3 | Next | ✅ | ❌ | ❌ | Stable |  
 | 红米 Note 4X (CN) | mido | 4.9/RaidenShogunSeggs/(Nothing) | Based-AOSP | 13 | AnyKernel3 | Next | ✅ | ❌ | ❌ | Suspend |  
 | 黑鲨4 | penrose | 4.19/DtHnAme/(Nothing) | MIUI/JoyUI 12 | 11 | AnyKernel3 | Next | ❌ | ❌ | ✅ | Stable |  
@@ -13,7 +13,7 @@
 | 红米 Note 7 | lavender | 4.4/Stormbreaker/Predator | MIUI 12 | 10 | AnyKernel3 | rsuntk | ❌ | ❌ | ❌ | Suspend |  
 
 特别说明：
-  - 我们提供的KernelSU分支包括：[Next](https://github.com/KernelSU-Next/KernelSU-Next)、[Magic](https://github.com/backslashxx/KernelSU)、[rsuntk](https://github.com/rsuntk/KernelSU)、[lightsummer233](https://github.com/lightsummer233/KernelSU)、[酷友二创-mksu-skn](https://github.com/ShirkNeko/KernelSU)
+  - 我们提供的KernelSU分支包括：[Next](https://github.com/KernelSU-Next/KernelSU-Next)、[Magic](https://github.com/backslashxx/KernelSU)、[rsuntk](https://github.com/rsuntk/KernelSU)、[lightsummer233](https://github.com/lightsummer233/KernelSU)、[酷友二创-SukiSU](https://github.com/ShirkNeko/KernelSU)
   - 打包方式：Anykernel3请在Recovery下刷入，Boot Image请在Recovery/Fastboot下选择刷入Boot分区
   - 部分机型由于内核问题将暂停（Suspend）维护，但仍可通过Action的方式Fork后自行编译
   - All-代表该机型所有地区可用，CN-代表国区机型可用，其他同理

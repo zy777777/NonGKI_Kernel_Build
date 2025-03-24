@@ -9,6 +9,8 @@
 Due to severe fragmentation in Non-GKI kernels, which not only prevents universal compatibility but also results in inconsistent build environments—including but not limited to system versions, GCC versions, and Clang versions—we have decided to start an automated Non-GKI kernel compilation project.  
 This project welcomes forks for personal modifications, contributions through pull requests, and collaborations.  
 
+**Switching to Another KernelSU Branch**: Simply install the APK package of the new KernelSU branch on your current device, then flash the kernel with the modified branch to seamlessly switch KernelSU branches.  
+
 # Usage Example
 ## Profiles/DeviceCodename_ROMName.env
 Each profile consists of the following elements:  

@@ -1,4 +1,9 @@
 ## 项目更新日志
+- **Ver.1.3 Fixed 9**
+    - 增加说明页面中对切换KernelSU分支的内容
+    - 更正分支mksu-skn的名称为SukiSU
+    - 修正 支持列表 和 发布列表 中对 小米Mix2s 设备对KernelSU分支的描述
+
 - **Ver.1.3 Fixed 8**
     - 修正 小米 Mix2s 对新补丁的执行
     - 修正发布用yaml存在的缺失
