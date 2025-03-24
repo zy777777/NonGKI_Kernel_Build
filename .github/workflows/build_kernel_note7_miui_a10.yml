@@ -309,6 +309,10 @@ jobs:
                   if [ $KERNEL -lt 5 ] && [ $PATCHLEVEL -lt 14 ]; then
                       cp /tmp/Patches/extra_patches.sh ./
                       bash extra_patches.sh
+                      if [[ "${{ env.KERNELSU_NAME }}" != "KernelSU-Next" ]]; then
+                        bash backport_patches.sh
+                        echo "execuated backport patch successfully."
+                      fi
                       echo "execuated extra patch successfully."
                   else
                       echo "your kernel needn't the patch."
@@ -326,6 +330,10 @@ jobs:
                   if [ $KERNEL -lt 5 ] && [ $PATCHLEVEL -lt 14 ]; then
                       cp /tmp/Patches/extra_patches.sh ./
                       bash extra_patches.sh
+                      if [[ "${{ env.KERNELSU_NAME }}" != "KernelSU-Next" ]]; then
+                        bash backport_patches.sh
+                        echo "execuated backport patch successfully."
+                      fi
                       echo "execuated extra patch successfully."
                   else
                       echo "your kernel needn't extra patch."
