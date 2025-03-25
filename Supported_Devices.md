@@ -9,7 +9,7 @@
 | 黑鲨 4 | penrose | 4.19/DtHnAme/(Nothing) | MIUI/JoyUI 12 | 11 | AnyKernel3 | rsuntk | ❌ | ❌ | ✅ | Stable |  
 | 小米 10S | thyme | 4.19/TIMISONG-dev/MagicTime | Based-AOSP | 15 | AnyKernel3 | rsuntk | ✅ | ❌ | ❌ | Stable |  
 | 中兴 A201ZT | a201zt | 4.19/官方内核 | 未知 | Null | AnyKernel3 | Next | ❌ | ❌ | ❌ | Suspend |  
-| 三星 S20 5G | x1q | 4.19/官方内核 | Oneui 5.1/6.1 | 13/14 | Boot Image | rsuntk | ❌ | ❌ | ❌ | Beta |  
+| 三星 S20 5G | x1q | 4.19/官方内核 | OneUI 5.1/6.1 | 13/14 | Boot Image | rsuntk | ❌ | ❌ | ❌ | Beta |  
 | 红米 Note 7 | lavender | 4.4/Stormbreaker/Predator | MIUI 12 | 10 | AnyKernel3 | rsuntk | ❌ | ❌ | ❌ | Suspend |  
 
 特别说明：
