@@ -61,7 +61,6 @@
 这是我们提供的示例文件：**codename_rom_template.env**和**build_kernel_template.yml**  
 
 - **env:** - 设置必要修改的变量，独立于Profiles
-  - **SYSTEM_OS** - 可选Ubuntu的版本号，默认为22.04,可选latest，24.04等，但暂不支持其他系统
   - **PYTHON_VERSION** - Ubuntu的Python命令默认为Python3，但2仍有需求，因此增加该变量，可填写**2**或**3**
   - **PACK_METHOD** - 打包方式，分为MKBOOTIMG，和[Anykernel3](https://github.com/osm0sis/AnyKernel3)，默认为Anykernel3
   - **KERNELSU_METHOD** - 嵌入KernelSU的方式：

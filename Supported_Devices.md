@@ -3,6 +3,7 @@
 |----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|  
 | 一加 8 (CN) | instantnoodle | 4.19/ppajda/XTD | OxygenOS/ColorOS 13.1 | 13 | AnyKernel3 | Magic | ✅ | ❌ | ❌ | Stable |  
 | 一加 8 (All) | instantnoodle | 4.19/Nameless/Nameless | Nameless 15 | 15 | AnyKernel3 | rsuntk | ✅ | ❌ | ❌ | Beta |  
+| 一加 8 (All) | instantnoodle | 4.19/Rohail33/Realking | OxygenOS/ColorOS 13.1 | 13 | AnyKernel3 | rsuntk | ✅ | ❌ | ❌ | Suspend |  
 | 小米 MIX2S (CN) | polaris | 4.9/EvoX/EvoX | Evolution X 10.2.1 | 15 | Boot Image | SukiSU | ✅ | ❌ | ❌ | Stable |  
 | 红米 K20 Pro (CN) | raphael | 4.14/SOVIET-ANDROID/SOVIET-STAR-OSS | Based-AOSP | 15 | AnyKernel3 | rsuntk | ✅ | ❌ | ❌ | Stable |  
 | 红米 Note 4X (CN) | mido | 4.9/RaidenShogunSeggs/(Nothing) | Based-AOSP | 13 | AnyKernel3 | Next | ✅ | ❌ | ❌ | Suspend |  

@@ -1,5 +1,8 @@
 ## 项目更新日志
 - **Ver.1.3 Fixed 14**
+    - 回滚 系统版本 设置
+
+- **Ver.1.3 Fixed 14**
     - 增加 一加8 Realking OOS13.1 设备
     - 修改 BUILD_DEBUGGER 中 cat命令的输出
 

@@ -61,7 +61,6 @@ All patches provided by this project are not guaranteed to work properly on kern
 These are the example files we provide: **codename_rom_template.env** and **build_kernel_template.yml**.  
 
 - **env:** - Define essential variables independently from the Profiles configuration.
-    - **SYSTEM_OS** - Optional Ubuntu version number, defaults to 22.04. You can specify latest, 24.04, etc., but other operating systems are not supported yet.
     - **PACK_METHOD** - Packaging method, either MKBOOTIMG or [Anykernel3](https://github.com/osm0sis/AnyKernel3) (default: Anykernel3).
     - **KERNELSU_METHOD** - The method for embedding KernelSU:
         - The default is "**shell**". 
