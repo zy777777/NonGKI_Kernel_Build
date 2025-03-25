@@ -1,4 +1,4 @@
-name: Build Kernel Template (Cannot be used for compilation directly)
+name: Build Kernel OnePlus 8 (Realking)(OOS13.1) with KSU and SUSFS
 on:
   workflow_call:
   workflow_dispatch:
@@ -254,7 +254,7 @@ jobs:
           # Set ${{ env.PACK_METHOD }} and KernelSU
           if [[ ${{ env.PACK_METHOD }} == "Anykernel3" ]]; then
             cd $GITHUB_WORKSPACE/device_kernel
-            if [[ -d "Anykernel3" ]]; then
+            if [[ -d "anykernel" ]]; then
               echo "Found Anykernel3 in Kernel!"
             else
               git clone ${{ env.AK3_SOURCE }} -b ${{ env.AK3_BRANCH }} Anykernel3 --depth=1
@@ -269,6 +269,9 @@ jobs:
           fi
           echo "PACK_METHOD=${{ env.PACK_METHOD }}" >> $GITHUB_ENV
 
+          wget https://raw.githubusercontent.com/JackA1ltman/NonGKI_Kernel_Patches/refs/heads/op_kernel/kona_oos/realking_op8_rm_next_and_backport.patch
+          rm -rf KernelSU-Next
+          patch -p1 < realking_op8_rm_next_and_backport.patch
           if [[ ${{ env.KERNELSU_METHOD }} == "shell" ]]; then
             curl -sSL ${{ env.KERNELSU_SOURCE }} | bash -s ${{ env.KERNELSU_BRANCH }}
           elif [[ ${{ env.KERNELSU_METHOD }} == "manual" ]]; then
@@ -535,7 +538,7 @@ jobs:
             echo "Doesn't found DTB! Your device maybe needn't the file."
           fi
 
-          cp -rp ./Anykernel3/* tmp
+          cp -rp ./anykernel/* tmp
           cd tmp
           7za a -mx9 tmp.zip *
           cd ..

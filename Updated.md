@@ -1,4 +1,8 @@
 ## 项目更新日志
+- **Ver.1.3 Fixed 14**
+    - 增加 一加8 Realking OOS13.1 设备
+    - 修改 BUILD_DEBUGGER 中 cat命令的输出
+
 - **Ver.1.3 Fixed 13**
     - 调整 发布页面 和 支持列表 部分文字大小写
     - 将 发布Tag 版本号递增规则调整回来
