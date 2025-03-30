@@ -12,7 +12,7 @@
 | 中兴 A201ZT | a201zt | 4.19/官方内核 | 未知 | Null | AnyKernel3 | Next | ❌ | ❌ | ❌ | Suspend |  
 | 三星 S20 5G | x1q | 4.19/官方内核 | OneUI 5.1/6.1 | 13/14 | Boot Image | rsuntk | ❌ | ❌ | ❌ | Beta |  
 | 红米 Note 7 | lavender | 4.4/Stormbreaker/Predator | MIUI 12 | 10 | Boot Image | rsuntk | ❌ | ❌ | ❌ | Suspend |  
-| 小米 8 | dipper | 4.9/MingBeifen/官改 | MIUI 12 | 10 | AnyKernel3 | rsuntk | ✅ | ❌ | ❌ | Suspend |  
+| 小米 8 | dipper | 4.9/MingBeifen/官改 | MIUI 12 | 10 | AnyKernel3 | rsuntk | ✅ | ❌ | ❌ | Stop |  
 
 特别说明：
   - 我们提供的KernelSU分支包括：[Next](https://github.com/KernelSU-Next/KernelSU-Next)、[Magic](https://github.com/backslashxx/KernelSU)、[rsuntk](https://github.com/rsuntk/KernelSU)、[lightsummer233](https://github.com/lightsummer233/KernelSU)、[酷友二创-SukiSU](https://github.com/ShirkNeko/KernelSU)
@@ -26,3 +26,4 @@
   - 中兴 Z201ZT 由于源代码并非Git方式获得，因此修改了yml文件中对应的获取方式，由于存在较多未知信息，因此该内核仅研究学习使用，若有需要可自行Fork编译
   - 三星 S20 5G 仅支持**高通版本**，猎户座版本请勿尝试
   - 红米 Note 7 需要在内核刷入后再刷入[Oldcam+WiFi补丁](https://sourceforge.net/projects/syylg/files/MengT/MIUI_Q_PATCH/OldCam%2BWiFi-Patch-v2.zip/download)才能正常使用
+  - 小米 8 仍在进行调试，暂时无法正确编译
