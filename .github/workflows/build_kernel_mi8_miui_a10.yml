@@ -293,6 +293,8 @@ jobs:
             rm -rf KernelSU && rm -rf KernelSU-Next && rm -rf drivers/kernelsu
             git clone ${{ env.KERNELSU_SOURCE }} -b ${{ env.KERNELSU_BRANCH }} ${{ env.KERNELSU_NAME }}
             ln -sf "$(realpath --relative-to="$GITHUB_WORKSPACE/device_kernel/drivers" "$GITHUB_WORKSPACE/device_kernel/${{ env.KERNELSU_NAME }}/kernel")" "kernelsu"
+            ls -al ./drivers
+            false
             echo "KernelSU git done."
           else
             false
