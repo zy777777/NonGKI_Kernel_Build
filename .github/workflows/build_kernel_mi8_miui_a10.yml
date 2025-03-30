@@ -211,7 +211,7 @@ jobs:
           GCC_32_BIN=arm-linux-androideabi-
           # Tools
           git clone --recursive https://github.com/prabhatKrMishra/android-kernel-tools.git -b tools toolchain --depth=1
-          echo "GCC_64=CROSS_COMPILE=$GITHUB_WORKSPACE/toolchain/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/$GCC_64_BIN" >> $GITHUB_ENV
+          echo "GCC_64=CROSS_COMPILE=$GITHUB_WORKSPACE/toolchain/gcc/linux-x86/aarch64/gcc-linaro-7.5.0/bin/$GCC_64_BIN" >> $GITHUB_ENV
           echo "GCC_32=CROSS_COMPILE_ARM32=$GITHUB_WORKSPACE/arm/arm-linux-androideabi-4.9/bin/$GCC_32_BIN" >> $GITHUB_ENV
           mv toolchain/clang/host/linux-x86/clang-r428724 toolchain/clang/host/linux-x86/clang-custom
           mv toolchain/clang/host/linux-x86/clang-custom ./clang-custom
