@@ -322,6 +322,7 @@ jobs:
           fi
 
       - name: Patch Kernel for no-kprobe
+        if: env.NOTHING == "true"
         run: |
           cd $GITHUB_WORKSPACE
           KERNEL=$(echo "${{ env.KERNEL_VERSION }}" | awk -F '.' '{print $1}')
