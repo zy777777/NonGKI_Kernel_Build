@@ -201,7 +201,7 @@ jobs:
             chmod +x antman
             bash antman -S
           else
-            echo "Not supported format of Clang!"
+            echo "You needn't clang!"
           fi
 
       - name: Get Kernel Source

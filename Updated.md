@@ -1,4 +1,10 @@
 ## 项目更新日志
+- **Ver.1.3 Fixed 16**
+    - 将 红米 Note7Pro(lavender) 打包方式修改成MKBOOTIMG
+    - 增加 小米8(dipper) MIUI Android 10
+    - 修改 Clang 在yaml示例文件中若未设置而产生的提示语
+    - 删除 testing yaml示例文件
+
 - **Ver.1.3 Fixed 15**
     - 回滚 系统版本 设置
 

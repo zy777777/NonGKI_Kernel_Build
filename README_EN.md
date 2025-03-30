@@ -81,6 +81,7 @@ These are the example files we provide: **codename_rom_template.env** and **buil
 - **Set Compile Environment**
     - If no GCC is needed, Clang-only compilation is selected automatically.
     - If GCC is needed, both 64-bit and 32-bit versions must be specified. The recommended format is git, but tar.gz and zip are also supported.
+    - You can choose to use only GCC without enabling Clang. Additionally, GCC allows using the system's default installed version. This can be enabled in the YAML file variables.
     - Clang sources can be in git, tar.gz, tar.xz, zip, or managed via antman.
 
 - **Get Kernel Source**
