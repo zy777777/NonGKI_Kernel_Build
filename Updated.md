@@ -1,4 +1,8 @@
 ## 项目更新日志
+- **Ver.1.3 Fixed 17**
+    - 增加 说明文件 KERNELSU_METHOD 的解释
+    - 对 小米8 产生的问题进行修正
+
 - **Ver.1.3 Fixed 16**
     - 将 红米 Note7Pro(lavender) 打包方式修改成MKBOOTIMG
     - 增加 小米8(dipper) MIUI Android 10

@@ -65,7 +65,7 @@
   - **PACK_METHOD** - 打包方式，分为MKBOOTIMG，和[Anykernel3](https://github.com/osm0sis/AnyKernel3)，默认为Anykernel3
   - **KERNELSU_METHOD** - 嵌入KernelSU的方式：
     - 通常情况下使用**shell**方式即可
-    - 但如果你提供了非setup.sh的方式，或者该方式报错，请将其修改**manual**，manual虽然是手动安装，但实际上并不需要维护者修改任何内容
+    - 但如果你提供了非setup.sh的方式，或者该方式报错，请将其修改**manual**，manual虽然是手动安装，但实际上并不需要维护者修改任何内容，但注意，选该模式仅能使用git
     - 若你的内核已经存在KernelSU，但你想要替换，可使用**only**，仅执行git不执行修补
   - **PATCHES_SOURCE** - 使用susfs不可避免需要手动修补，这是用来填写你存放patch的github项目地址，当然如果你不采用susfs，则不需要填写，可参考我的用于Patch的git项目
   - **PATCHES_BRANCH** - patch项目所需的分支，一般为main

@@ -64,7 +64,7 @@ These are the example files we provide: **codename_rom_template.env** and **buil
     - **PACK_METHOD** - Packaging method, either MKBOOTIMG or [Anykernel3](https://github.com/osm0sis/AnyKernel3) (default: Anykernel3).
     - **KERNELSU_METHOD** - The method for embedding KernelSU:
         - The default is "**shell**". 
-        - If setup.sh is not used or encounters errors, change this to "**manual**". Although manual means manual installation, no manual intervention is required.
+        - If setup.sh is not used or encounters errors, change this to "**manual**". Although manual means manual installation, no manual intervention is required. Pay attention to it that execute git in choose the mode only.
         - If your kernel already has KernelSU but you want to replace it, you can use "**only**" to execute Git operations without applying patches.
     - **PATCHES_SOURCE** - SUSFS typically requires manual patches. Provide the GitHub repository URL containing the patches. If you are not using SUSFS, this can be left blank.
     - **PATCHES_BRANCH** - The required branch for the patch repository (default: main).
