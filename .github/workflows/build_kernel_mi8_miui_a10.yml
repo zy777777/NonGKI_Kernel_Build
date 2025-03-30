@@ -293,9 +293,6 @@ jobs:
             rm -rf KernelSU && rm -rf KernelSU-Next && rm -rf drivers/kernelsu
             git clone ${{ env.KERNELSU_SOURCE }} -b ${{ env.KERNELSU_BRANCH }} ${{ env.KERNELSU_NAME }}
             ln -sf ../${{ env.KERNELSU_NAME }}/kernel drivers/kernelsu
-            ls -al ./drivers
-            ls -al ./drivers/kernelsu
-            false
             echo "KernelSU git done."
           else
             false
