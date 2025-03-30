@@ -207,7 +207,7 @@ jobs:
           # Set Toolchain
           # Only use it for Xiaomi 8
           # Variable
-          GCC_64_BIN=aarch64-linux-android-
+          GCC_64_BIN=aarch64-linux-gnu-
           GCC_32_BIN=arm-linux-androideabi-
           # Tools
           git clone --recursive https://github.com/prabhatKrMishra/android-kernel-tools.git -b tools toolchain --depth=1
