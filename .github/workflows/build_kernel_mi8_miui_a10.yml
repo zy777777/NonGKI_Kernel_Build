@@ -294,8 +294,6 @@ jobs:
             git clone ${{ env.KERNELSU_SOURCE }} -b ${{ env.KERNELSU_BRANCH }} ${{ env.KERNELSU_NAME }}
             ln -sf ../${{ env.KERNELSU_NAME }}/kernel drivers/kernelsu
             echo "KernelSU git done."
-          else
-            false
           fi
           echo "KERNELSU_METHOD=${{ env.KERNELSU_METHOD }}" >> $GITHUB_ENV
           KSU_VERSION=$(cd ${{ env.KERNELSU_NAME }} && expr $(/usr/bin/git rev-list --count HEAD) + 10200)
