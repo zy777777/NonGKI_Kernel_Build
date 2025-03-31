@@ -61,7 +61,7 @@
 这是我们提供的示例文件：**codename_rom_template.env**和**build_kernel_template.yml**  
 
 - **env:** - 设置必要修改的变量，独立于Profiles
-  - **PYTHON_VERSION** - Ubuntu的Python命令默认为Python3，但2仍有需求，因此增加该变量，可填写**2**或**3**
+  - **PYTHON_VERSION** - Ubuntu的Python命令默认为Python3，但2仍有需求，因此增加该变量，可填写**2**或**3**。如果你仅仅需要安装python2但不想修改默认python，那你可以在EXTRA_CMDS中增加PYTHON=/usr/bin/python2，便可以强制执行python2参与编译
   - **PACK_METHOD** - 打包方式，分为MKBOOTIMG，和[Anykernel3](https://github.com/osm0sis/AnyKernel3)，默认为Anykernel3
   - **KERNELSU_METHOD** - 嵌入KernelSU的方式：
     - 通常情况下使用**shell**方式即可

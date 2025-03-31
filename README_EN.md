@@ -61,6 +61,7 @@ All patches provided by this project are not guaranteed to work properly on kern
 These are the example files we provide: **codename_rom_template.env** and **build_kernel_template.yml**.  
 
 - **env:** - Define essential variables independently from the Profiles configuration.
+    - **PYTHON_VERSION** - The default Python command in Ubuntu is Python 3, but Python 2 is still needed in some cases. This variable allows you to specify 2 or 3. If you only need to install Python 2 without changing the default Python version, you can add PYTHON=/usr/bin/python2 to EXTRA_CMDS to force Python 2 to be used during compilation.
     - **PACK_METHOD** - Packaging method, either MKBOOTIMG or [Anykernel3](https://github.com/osm0sis/AnyKernel3) (default: Anykernel3).
     - **KERNELSU_METHOD** - The method for embedding KernelSU:
         - The default is "**shell**". 

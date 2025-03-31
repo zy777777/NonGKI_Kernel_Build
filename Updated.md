@@ -1,4 +1,9 @@
 ## 项目更新日志
+- **Ver.1.3 Fixed 18**
+    - 删除 小米8（dipper） MIUI Android 10 设备
+    - 增加 说明文件 中PYTHON_VERSION对强制执行 Python2 方法的说明
+    - 增加 英文说明文件 中缺失的项目
+
 - **Ver.1.3 Fixed 17**
     - 增加 说明文件 KERNELSU_METHOD 的解释
     - 对 小米8 产生的问题进行修正
