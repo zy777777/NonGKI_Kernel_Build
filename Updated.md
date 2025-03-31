@@ -1,4 +1,7 @@
 ## 项目更新日志
+- **Ver.1.3 Fixed 19**
+    - 为 一加8 Nameless15 yaml文件移植自动获取defconfig功能
+
 - **Ver.1.3 Fixed 18**
     - 修改 支持列表 和 发布列表 中SukiSU指向的Github项目至SukiSU-Ultra
     - 修改 小米Mix2s 中对SukiSU的KernelSU源和分支指向
