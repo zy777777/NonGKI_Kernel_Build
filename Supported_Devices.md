@@ -14,7 +14,7 @@
 | 红米 Note 7 | lavender | 4.4/Stormbreaker/Predator | MIUI 12 | 10 | Boot Image | rsuntk | ❌ | ❌ | ❌ | Suspend |  
 
 特别说明：
-  - 我们提供的KernelSU分支包括：[Next](https://github.com/KernelSU-Next/KernelSU-Next)、[Magic](https://github.com/backslashxx/KernelSU)、[rsuntk](https://github.com/rsuntk/KernelSU)、[lightsummer233](https://github.com/lightsummer233/KernelSU)、[酷友二创-SukiSU](https://github.com/ShirkNeko/KernelSU)
+  - 我们提供的KernelSU分支包括：[Next(❌)](https://github.com/KernelSU-Next/KernelSU-Next)、[Magic](https://github.com/backslashxx/KernelSU)、[rsuntk](https://github.com/rsuntk/KernelSU)、[lightsummer233](https://github.com/lightsummer233/KernelSU)、[酷友二创-SukiSU](https://github.com/ShirkNeko/SukiSU-Ultra)
   - 打包方式：Anykernel3请在Recovery下刷入，Boot Image请在Recovery/Fastboot下选择刷入Boot分区
   - 部分机型由于内核问题将暂停（Suspend）维护，但仍可通过Action的方式Fork后自行编译
   - All-代表该机型所有地区可用，CN-代表国区机型可用，其他同理
