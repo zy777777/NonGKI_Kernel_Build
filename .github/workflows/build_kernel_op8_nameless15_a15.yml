@@ -33,6 +33,7 @@ jobs:
               GCC_32_BRANCH
               DEFCONFIG_SOURCE
               DEFCONFIG_NAME
+              DEFCONFIG_ORIGIN_DEFCONFIG
               KERNELSU_SOURCE
               KERNELSU_BRANCH
               KERNELSU_NAME
