@@ -1,4 +1,8 @@
 ## 项目更新日志
+- **Ver.1.3 Fixed 20**
+    - 增加 生成DTB 功能
+    - 增加 说明文件 中对 生成DTB 功能的说明
+
 - **Ver.1.3 Fixed 19**
     - 为 一加8 Nameless15 yaml文件移植自动获取defconfig功能
 
