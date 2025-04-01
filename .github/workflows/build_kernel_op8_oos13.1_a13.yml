@@ -1,4 +1,4 @@
-name: Build Kernel OnePlus 8 (OOS13.1) with KSU and SUSFS
+name: Build Kernel OnePlus 8t (HOS11) with KSU and SUSFS
 on:
   workflow_call:
   workflow_dispatch:
